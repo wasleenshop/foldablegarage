@@ -262,6 +262,19 @@ export function MagneticCursor() {
     return () => clearInterval(cleanupRef.current);
   }, []);
 
+  // ── Pre-computed motion transforms ──────────────────
+  // These MUST be declared before the early-return guards below so the hook
+  // call count stays identical on every render (fixes React error #310).
+
+  const outerRingX = useTransform(springX, (v) => v - HALF_OUTER);
+  const outerRingY = useTransform(springY, (v) => v - HALF_OUTER);
+  const trailDotX = useTransform(trailX, (v) => v - HALF_TRAIL);
+  const trailDotY = useTransform(trailY, (v) => v - HALF_TRAIL);
+  const innerDotX = useTransform(springX, (v) => v - INNER_DOT_SIZE / 2);
+  const innerDotY = useTransform(springY, (v) => v - INNER_DOT_SIZE / 2);
+  const labelX = useTransform(springX, (v) => (v as number) + 20);
+  const labelY = useTransform(springY, (v) => (v as number) - 10);
+
   // ── Render ──────────────────────────────────────────
 
   // On first SSR/hydration render, show nothing to avoid hydration mismatch
@@ -326,8 +339,8 @@ export function MagneticCursor() {
           left: 0,
           width: OUTER_RING_SIZE,
           height: OUTER_RING_SIZE,
-          x: useTransform(springX, (v) => v - HALF_OUTER),
-          y: useTransform(springY, (v) => v - HALF_OUTER),
+          x: outerRingX,
+          y: outerRingY,
           scaleX: combinedScaleX,
           scaleY: combinedScaleY,
           rotate,
@@ -356,8 +369,8 @@ export function MagneticCursor() {
           left: 0,
           width: TRAIL_DOT_SIZE,
           height: TRAIL_DOT_SIZE,
-          x: useTransform(trailX, (v) => v - HALF_TRAIL),
-          y: useTransform(trailY, (v) => v - HALF_TRAIL),
+          x: trailDotX,
+          y: trailDotY,
           opacity: isVisible ? 0.5 : 0,
           borderRadius: '50%',
           background: `radial-gradient(circle, ${GOLD} 0.4) 0%, transparent 70%)`,
@@ -378,8 +391,8 @@ export function MagneticCursor() {
           left: 0,
           width: INNER_DOT_SIZE,
           height: INNER_DOT_SIZE,
-          x: useTransform(springX, (v) => v - INNER_DOT_SIZE / 2),
-          y: useTransform(springY, (v) => v - INNER_DOT_SIZE / 2),
+          x: innerDotX,
+          y: innerDotY,
           opacity: isVisible ? 1 : 0,
           borderRadius: '50%',
           backgroundColor: '#C9A84C',
@@ -398,8 +411,8 @@ export function MagneticCursor() {
           position: 'fixed',
           top: 0,
           left: 0,
-          x: useTransform(springX, (v) => (v as number) + 20),
-          y: useTransform(springY, (v) => (v as number) - 10),
+          x: labelX,
+          y: labelY,
           opacity: springDragLabel,
           zIndex: 9999,
           pointerEvents: 'none',
