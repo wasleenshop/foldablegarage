@@ -63,13 +63,74 @@ export function FeaturesSection() {
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.7, delay: index * 0.1 }}
               >
-                {/* Feature image */}
-                <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl border border-border-subtle bg-bg-card md:w-1/2">
+                {/* Feature image with animated gradient border */}
+                <div className="group relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-bg-card md:w-1/2">
+                  {/* Animated gradient border overlay */}
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                    {/* Conic gradient that rotates */}
+                    <div
+                      className="absolute -inset-[2px] rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      style={{
+                        background:
+                          'conic-gradient(from var(--angle, 0deg), transparent 0deg, #C9A84C 90deg, #00D4FF 180deg, #7C3AED 270deg, transparent 360deg)',
+                        animation: 'gradientBorderRotate 4s linear infinite',
+                      }}
+                    />
+                    {/* Inner mask to show only the border */}
+                    <div className="absolute inset-[1px] rounded-2xl bg-bg-card" />
+                  </div>
+
+                  {/* Static subtle border always visible */}
+                  <div className="absolute inset-0 rounded-2xl border border-border-subtle z-10" />
+
+                  {/* Animated laser lines on the border (SVG overlay) */}
+                  <svg
+                    className="absolute inset-0 z-20 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="none"
+                  >
+                    {/* Top line */}
+                    <line
+                      x1="2" y1="2" x2="98" y2="2"
+                      stroke="#00D4FF"
+                      strokeWidth="0.5"
+                      strokeDasharray="4 8"
+                      className="animate-laser-flow"
+                    />
+                    {/* Right line */}
+                    <line
+                      x1="98" y1="2" x2="98" y2="98"
+                      stroke="#C9A84C"
+                      strokeWidth="0.5"
+                      strokeDasharray="3 7"
+                      className="animate-laser-flow"
+                      style={{ animationDelay: '0.3s' }}
+                    />
+                    {/* Bottom line */}
+                    <line
+                      x1="98" y1="98" x2="2" y2="98"
+                      stroke="#7C3AED"
+                      strokeWidth="0.5"
+                      strokeDasharray="5 5"
+                      className="animate-laser-flow"
+                      style={{ animationDelay: '0.6s' }}
+                    />
+                    {/* Left line */}
+                    <line
+                      x1="2" y1="98" x2="2" y2="2"
+                      stroke="#00D4FF"
+                      strokeWidth="0.5"
+                      strokeDasharray="2 6"
+                      className="animate-laser-flow"
+                      style={{ animationDelay: '0.9s' }}
+                    />
+                  </svg>
+
                   <Image
                     src={imageSrc}
                     alt={`Wasleen ${f.title.toLowerCase()} — engineering detail and material quality`}
                     fill
-                    className="object-cover transition-all duration-500 hover:scale-105"
+                    className="object-cover transition-all duration-500 scale-100 group-hover:scale-105 relative z-[5]"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>

@@ -104,10 +104,10 @@ function AnimatedStat({ stat, index }: { stat: StatEntry; index: number }) {
 export function StatsSection() {
   return (
     <section className="relative bg-bg-primary py-20 md:py-24 overflow-hidden">
-      {/* Background image — subtle engineering diagram */}
-      <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
+      {/* Background — animated foldable mechanism SVG */}
+      <div className="absolute inset-0 opacity-[0.12] pointer-events-none">
         <Image
-          src="/images/foldable-garage-diagram-aluminium-alloy-by-wasleen-pergolas.webp"
+          src="/foldable-garage-svg.svg"
           alt=""
           fill
           className="object-cover"

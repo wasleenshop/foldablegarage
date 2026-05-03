@@ -32,13 +32,41 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-bg-primary/30" />
       </div>
 
+      {/* Foldable-style animated circles — like mechanism panels folding/unfolding */}
+      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden" aria-hidden="true">
+        {/* Circle 1 — Cyan, slides and morphs like a folding panel */}
+        <div
+          className="absolute top-1/4 -left-[10%] h-[50vh] w-[50vh] opacity-[0.06]"
+          style={{
+            background: 'radial-gradient(circle, #00D4FF 0%, transparent 70%)',
+            animation: 'foldCircle1 12s ease-in-out infinite',
+          }}
+        />
+        {/* Circle 2 — Violet, counter-slides like the opposing panel */}
+        <div
+          className="absolute bottom-1/4 -right-[10%] h-[55vh] w-[55vh] opacity-[0.05]"
+          style={{
+            background: 'radial-gradient(circle, #7C3AED 0%, transparent 70%)',
+            animation: 'foldCircle2 12s ease-in-out infinite',
+          }}
+        />
+        {/* Ambient pulse glow */}
+        <div
+          className="absolute top-1/2 left-1/2 h-[80vh] w-[80vh] -translate-x-1/2 -translate-y-1/2 opacity-[0.03]"
+          style={{
+            background: 'radial-gradient(circle, #C9A84C 0%, transparent 60%)',
+            animation: 'foldablePulse 8s ease-in-out infinite',
+          }}
+        />
+      </div>
+
       {/* Kinetic laser background overlay */}
-      <div className="absolute inset-0 z-[1]">
+      <div className="absolute inset-0 z-[2]">
         <KineticBackground />
       </div>
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 z-[2] bg-gradient-to-b from-transparent via-transparent to-bg-primary/60" />
+      <div className="absolute inset-0 z-[3] bg-gradient-to-b from-transparent via-transparent to-bg-primary/60" />
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-[1200px] px-4 text-center md:px-6 lg:px-8">
