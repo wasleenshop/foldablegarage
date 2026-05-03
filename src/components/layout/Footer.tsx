@@ -122,7 +122,16 @@ export function Footer() {
       <div className="relative z-10 border-t border-border-subtle">
         <Container className="flex flex-col items-center justify-between py-6 md:flex-row">
           <p className="text-xs text-text-tertiary">
-            © {currentYear} Wasleen. All rights reserved.
+            Designed by{' '}
+            <a
+              href="https://www.wasleen.com/wasleen-digital"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gradient-to-r from-accent-gold via-accent-cyan to-accent-violet bg-[length:200%_auto] bg-clip-text text-transparent animate-gradientX"
+            >
+              WASLEEN DIGITAL SOLUTIONS
+            </a>
+            . All rights reserved. © {currentYear}
           </p>
           <div className="mt-4 flex gap-6 md:mt-0">
             <Link href="/warranty" className="text-xs text-text-tertiary transition-colors hover:text-text-secondary">
