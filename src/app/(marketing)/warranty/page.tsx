@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { WarrantyContent } from '@/components/legal/WarrantyContent';
+import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Warranty Policy | Wasleen Foldable Garage Dubai',
@@ -8,5 +10,21 @@ export const metadata: Metadata = {
 };
 
 export default function WarrantyPage() {
-  return <WarrantyContent />;
+  const breadcrumbJson = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Warranty', url: '/warranty' },
+  ]);
+
+  return (
+    <>
+      {/* BreadcrumbList structured data */}
+      <Script
+        id="schema-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJson) }}
+      />
+
+      <WarrantyContent />
+    </>
+  );
 }

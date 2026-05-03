@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { QuoteHeroSection } from '@/components/quote/QuoteHeroSection';
 import { QuoteConfigurator } from '@/components/quote/QuoteConfigurator';
 import { QuoteProductVideo } from '@/components/quote/QuoteProductVideo';
 import { QuoteFeaturesSection } from '@/components/quote/QuoteFeaturesSection';
 import { QuoteSpecifications } from '@/components/quote/QuoteSpecifications';
+import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Get a Quote — Wasleen Foldable Premium Garage',
@@ -17,8 +19,20 @@ export const metadata: Metadata = {
 };
 
 export default function QuotePage() {
+  const breadcrumbJson = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Quote', url: '/quote' },
+  ]);
+
   return (
     <main className="min-h-screen bg-bg-primary">
+      {/* BreadcrumbList structured data */}
+      <Script
+        id="schema-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJson) }}
+      />
+
       {/* Hero section with animated gradient background */}
       <QuoteHeroSection />
 

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { ProductHero } from '@/components/product/ProductHero';
 import { TechSpecs } from '@/components/product/TechSpecs';
 import { TechDetails } from '@/components/product/TechDetails';
@@ -6,6 +7,7 @@ import { ColourSelector } from '@/components/product/ColourSelector';
 import { TechDiagram } from '@/components/product/TechDiagram';
 import { ProductReviews } from '@/components/product/ProductReviews';
 import { FooterCTA } from '@/components/homepage/FooterCTA';
+import { aggregateRatingSchema, breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Foldable Premium Garage | Wasleen Pergolas Dubai',
@@ -27,8 +29,28 @@ export const metadata: Metadata = {
 };
 
 export default function ProductPage() {
+  const ratingJson = aggregateRatingSchema();
+  const breadcrumbJson = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Product', url: '/product' },
+  ]);
+
   return (
     <main>
+      {/* AggregateRating structured data — shows star rating in search */}
+      <Script
+        id="schema-aggregate-rating"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ratingJson) }}
+      />
+
+      {/* BreadcrumbList structured data */}
+      <Script
+        id="schema-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJson) }}
+      />
+
       {/* Hero with image gallery + product info */}
       <ProductHero />
 

@@ -20,7 +20,8 @@ export type GTMEvent =
   | 'whatsapp_clicked'
   | 'abandoned_quote'
   | 'spec_downloaded'
-  | 'video_played';
+  | 'video_played'
+  | 'brochure_downloaded';
 
 /**
  * Pushes an event to the GTM dataLayer.

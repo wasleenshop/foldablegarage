@@ -46,6 +46,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/brochure" className="text-sm text-text-secondary transition-colors hover:text-accent-gold">
+                  Brochure
+                </Link>
+              </li>
+              <li>
                 <Link href="/gallery" className="text-sm text-text-secondary transition-colors hover:text-accent-gold">
                   Gallery
                 </Link>

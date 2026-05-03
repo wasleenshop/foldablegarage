@@ -10,6 +10,7 @@ import { GtmPageView } from '@/components/layout/GtmPageView';
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
 import { PageTransitionProvider } from '@/components/providers/PageTransitionProvider';
 import { MagneticCursor } from '@/components/ui/MagneticCursor';
+import { rootLayoutGraph } from '@/lib/schema';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -86,55 +87,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </noscript>
 
         <Suspense fallback={null}>
-          {/* Schema.org structured data — Product + LocalBusiness */}
+          {/* Schema.org structured data — Generated from src/lib/schema.ts */}
           <Script
             id="schema-org"
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                '@context': 'https://schema.org',
-                '@graph': [
-                  {
-                    '@type': 'Product',
-                    name: 'Wasleen Foldable Premium Garage',
-                    description:
-                      'Architectural-grade retractable carport engineered in Dubai. 6063-T5 aluminium alloy frame with PVDF coating.',
-                    brand: {
-                      '@type': 'Brand',
-                      name: 'Wasleen Pergolas',
-                    },
-                    offers: {
-                      '@type': 'AggregateOffer',
-                      priceCurrency: 'AED',
-                      lowPrice: 33600,
-                      highPrice: 120000,
-                      availability: 'https://schema.org/InStock',
-                      url: 'https://foldablegarage.wasleen.com/quote',
-                    },
-                    material: '6063-T5 Aluminium Alloy',
-                    color: [
-                      'Bronze / Tea',
-                      'Sapphire Blue',
-                      'Light Smoke',
-                      'Medium Smoke',
-                      'Dark Smoke',
-                    ],
-                    countryOfOrigin: 'AE',
-                  },
-                  {
-                    '@type': 'LocalBusiness',
-                    name: 'Wasleen Pergolas',
-                    url: 'https://foldablegarage.wasleen.com',
-                    telephone: '+971542330837',
-                    address: {
-                      '@type': 'PostalAddress',
-                      addressLocality: 'Dubai',
-                      addressCountry: 'AE',
-                    },
-                    openingHours: 'Sa-Th 09:00-19:00',
-                  },
-                ],
-              }),
+              __html: JSON.stringify(rootLayoutGraph()),
             }}
           />
   

@@ -1,0 +1,116 @@
+<svg viewBox="0 0 200 200" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 
+    Wasleen Foldable Garage — "W-Shape Pergola" Logo
+    Premium vector design with gold/copper gradients.
+    
+    Features a W-shaped pergola roof profile (two peaks),
+    horizontal rafter beams, decorative grill/lattice work
+    between columns, and rich gold-to-copper gradients.
+    
+    Gold gradient: warm Middle Eastern luxury aesthetic.
+  -->
+  <defs>
+    <!-- Primary Gold Gradient (vertical) -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F9D976"/>
+      <stop offset="25%" stop-color="#E8B84B"/>
+      <stop offset="60%" stop-color="#D4A02B"/>
+      <stop offset="100%" stop-color="#A67C00"/>
+    </linearGradient>
+
+    <!-- Copper Accent Gradient (diagonal) -->
+    <linearGradient id="copperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8A87C"/>
+      <stop offset="50%" stop-color="#CD7F32"/>
+      <stop offset="100%" stop-color="#A0652A"/>
+    </linearGradient>
+
+    <!-- Gold Highlight (for column shine effect) -->
+    <linearGradient id="goldHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F9D976" stop-opacity="0"/>
+      <stop offset="40%" stop-color="#F9D976" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#F9D976" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Drop shadow filter for depth -->
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="1"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- ============================================ -->
+  <!-- W-Shape Roof Profile                         -->
+  <!-- Two peaks forming the W, symbolic of the     -->
+  <!-- foldable/retractable roof mechanism          -->
+  <!-- ============================================ -->
+  <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" 
+    stroke="url(#goldGrad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"
+    filter="url(#glow)"/>
+
+  <!-- ============================================ -->
+  <!-- Rafters (horizontal roof beams)              -->
+  <!-- Three progressively spaced beams below the   -->
+  <!-- W roof line, creating architectural depth    -->
+  <!-- ============================================ -->
+  <!-- Rafter 1 (upper — between peaks and valley) -->
+  <line x1="42" y1="72" x2="158" y2="72" 
+    stroke="url(#goldGrad)" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+  
+  <!-- Rafter 2 (middle) -->
+  <line x1="38" y1="82" x2="162" y2="82" 
+    stroke="url(#goldGrad)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- Rafter 3 (lower — just above columns) -->
+  <line x1="35" y1="92" x2="165" y2="92" 
+    stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- ============================================ -->
+  <!-- Columns (two supporting pillars)             -->
+  <!-- Stylized vertical pillars with highlight     -->
+  <!-- ============================================ -->
+  <!-- Left Column -->
+  <rect x="30" y="95" width="10" height="88" rx="4" fill="url(#goldGrad)"/>
+  <rect x="32" y="97" width="6" height="84" rx="2" fill="url(#goldHighlight)" opacity="0.5"/>
+
+  <!-- Right Column -->
+  <rect x="160" y="95" width="10" height="88" rx="4" fill="url(#goldGrad)"/>
+  <rect x="162" y="97" width="6" height="84" rx="2" fill="url(#goldHighlight)" opacity="0.5"/>
+
+  <!-- ============================================ -->
+  <!-- Column Capitals (decorative tops)            -->
+  <!-- Slight widening at column tops for elegance  -->
+  <!-- ============================================ -->
+  <rect x="28" y="93" width="14" height="4" rx="2" fill="url(#goldGrad)" opacity="0.8"/>
+  <rect x="158" y="93" width="14" height="4" rx="2" fill="url(#goldGrad)" opacity="0.8"/>
+
+  <!-- ============================================ -->
+  <!-- Grills (decorative lattice/trellis)          -->
+  <!-- Cross-hatch pattern between columns          -->
+  <!-- ============================================ -->
+  <!-- Diagonal left-to-right -->
+  <line x1="40" y1="110" x2="160" y2="150" stroke="url(#copperGrad)" stroke-width="1.5" opacity="0.45"/>
+  <line x1="40" y1="130" x2="160" y2="170" stroke="url(#copperGrad)" stroke-width="1.5" opacity="0.45"/>
+  <line x1="40" y1="150" x2="160" y2="190" stroke="url(#copperGrad)" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Diagonal right-to-left -->
+  <line x1="160" y1="110" x2="40" y2="150" stroke="url(#copperGrad)" stroke-width="1.5" opacity="0.45"/>
+  <line x1="160" y1="130" x2="40" y2="170" stroke="url(#copperGrad)" stroke-width="1.5" opacity="0.45"/>
+  <line x1="160" y1="150" x2="40" y2="190" stroke="url(#copperGrad)" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Horizontal divider bars (grill support beams) -->
+  <line x1="40" y1="120" x2="160" y2="120" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.35"/>
+  <line x1="40" y1="140" x2="160" y2="140" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.35"/>
+  <line x1="40" y1="160" x2="160" y2="160" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- ============================================ -->
+  <!-- Base Platform                                -->
+  <!-- Grounding element beneath the structure      -->
+  <!-- ============================================ -->
+  <rect x="26" y="183" width="148" height="4" rx="2" fill="url(#goldGrad)" opacity="0.25"/>
+</svg>

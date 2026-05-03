@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { ReturnsContent } from '@/components/legal/ReturnsContent';
+import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Returns & Refund Policy | Wasleen Foldable Garage Dubai',
@@ -8,5 +10,21 @@ export const metadata: Metadata = {
 };
 
 export default function ReturnsPage() {
-  return <ReturnsContent />;
+  const breadcrumbJson = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Returns', url: '/returns' },
+  ]);
+
+  return (
+    <>
+      {/* BreadcrumbList structured data */}
+      <Script
+        id="schema-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJson) }}
+      />
+
+      <ReturnsContent />
+    </>
+  );
 }

@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { BlogPostContent } from '@/components/blog/BlogPostContent';
 import { getBlogPostBySlug } from '@/data/blog-posts';
+import { articleSchema, breadcrumbSchema } from '@/lib/schema';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -40,8 +42,29 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  const articleJson = articleSchema(post);
+  const breadcrumbJson = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
+    { name: post.titleEn, url: `/blog/${slug}` },
+  ]);
+
   return (
     <main>
+      {/* Article structured data for Google News / rich results */}
+      <Script
+        id="schema-article"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJson) }}
+      />
+
+      {/* BreadcrumbList structured data */}
+      <Script
+        id="schema-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJson) }}
+      />
+
       <BlogPostContent post={post} />
     </main>
   );

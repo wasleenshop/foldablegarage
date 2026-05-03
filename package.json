@@ -7,11 +7,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-brochure": "node scripts/generate-brochure.mjs",
+    "generate-brochure:dev": "npx tsx scripts/generate-brochure.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@paddle/paddle-js": "^1.2.0",
+    "@react-pdf/renderer": "^4.5.1",
     "@supabase/ssr": "^0.5.0",
     "@supabase/supabase-js": "^2.45.0",
     "clsx": "^2.1.0",
