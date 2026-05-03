@@ -6,6 +6,8 @@ import { PricingSection } from '@/components/homepage/PricingSection';
 import { FeaturesSection } from '@/components/homepage/FeaturesSection';
 import { VideoSection } from '@/components/homepage/VideoSection';
 import { ReviewsSection } from '@/components/homepage/ReviewsSection';
+import { SocialProof } from '@/components/homepage/SocialProof';
+import { FooterCTA } from '@/components/homepage/FooterCTA';
 
 export default function HomePage() {
   return (
@@ -33,6 +35,12 @@ export default function HomePage() {
 
       {/* Section 8 — Reviews Carousel */}
       <ReviewsSection />
+
+      {/* Section 9 — Social Proof (Bento Testimonial Grid) */}
+      <SocialProof />
+
+      {/* Section 10 — Final CTA */}
+      <FooterCTA />
     </main>
   );
 }

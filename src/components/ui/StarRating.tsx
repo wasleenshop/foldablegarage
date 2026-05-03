@@ -9,6 +9,8 @@ interface StarRatingProps {
   interactive?: boolean;
   onChange?: (rating: number) => void;
   className?: string;
+  showValue?: boolean;
+  showCount?: number;
 }
 
 const SIZE_MAP = {
@@ -28,9 +30,11 @@ export function StarRating({
   interactive = false,
   onChange,
   className,
+  showValue,
+  showCount,
 }: StarRatingProps) {
   return (
-    <div className={cn('flex items-center gap-0.5', className)} role={interactive ? 'radiogroup' : 'img'} aria-label={`${rating} out of ${maxRating} stars`}>
+    <div className={cn('flex items-center gap-1.5', className)} role={interactive ? 'radiogroup' : 'img'} aria-label={`${rating} out of ${maxRating} stars`}>
       {Array.from({ length: maxRating }, (_, i) => {
         const starValue = i + 1;
         const filled = starValue <= rating;
@@ -71,6 +75,16 @@ export function StarRating({
           </button>
         );
       })}
+      {showValue && (
+        <span className="text-sm font-semibold text-accent-gold">
+          {rating.toFixed(1)}
+        </span>
+      )}
+      {showCount !== undefined && (
+        <span className="text-xs text-text-tertiary">
+          ({showCount.toLocaleString()} reviews)
+        </span>
+      )}
     </div>
   );
 }
