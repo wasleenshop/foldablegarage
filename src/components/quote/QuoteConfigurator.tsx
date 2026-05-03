@@ -94,10 +94,23 @@ export function QuoteConfigurator() {
   const progress = ((currentStep + 1) / 3) * 100;
 
   return (
-    <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-20 lg:px-8">
-      <div className="flex flex-col gap-8 lg:flex-row">
-        {/* Main configurator */}
-        <div className="flex-1">
+    <section className="relative overflow-hidden">
+      {/* Animated SVG background */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <object
+          data="/foldable-garage-svg.svg"
+          type="image/svg+xml"
+          className="h-full w-full object-cover"
+          aria-label="Animated architectural background"
+        />
+        {/* Dark overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/70 via-bg-primary/40 to-bg-primary/70" />
+      </div>
+
+      <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-20 lg:px-8">
+        <div className="flex flex-col gap-8 lg:flex-row">
+          {/* Main configurator */}
+          <div className="flex-1">
           {/* Step indicators */}
           <div className="mb-8">
             <div className="flex items-center justify-between">
@@ -245,5 +258,6 @@ export function QuoteConfigurator() {
         </div>
       </div>
     </div>
+    </section>
   );
 }
