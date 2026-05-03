@@ -94,20 +94,7 @@ export function QuoteConfigurator() {
   const progress = ((currentStep + 1) / 3) * 100;
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Animated SVG background */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <object
-          data="/foldable-garage-svg.svg"
-          type="image/svg+xml"
-          className="h-full w-full object-cover"
-          aria-label="Animated architectural background"
-        />
-        {/* Dark overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/70 via-bg-primary/40 to-bg-primary/70" />
-      </div>
-
-      <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-20 lg:px-8">
+    <div className="mx-auto max-w-[1200px] px-4 py-12 md:py-20 lg:px-8">
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Main configurator */}
           <div className="flex-1">
@@ -158,9 +145,15 @@ export function QuoteConfigurator() {
             {/* Subtle top shimmer */}
             <div className="pointer-events-none absolute -inset-x-full top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmerSlide_3s_ease-in-out_infinite]" />
             
-            {/* Ambient glow */}
-            <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-accent-gold/5 blur-[60px]" />
-            <div className="pointer-events-none absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-accent-cyan/5 blur-[60px]" />
+            {/* Animated architectural SVG background */}
+            <div className="pointer-events-none absolute inset-0 opacity-40">
+              <object
+                data="/foldable-garage-svg.svg"
+                type="image/svg+xml"
+                className="h-full w-full object-cover"
+                aria-label=""
+              />
+            </div>
 
             <div className="relative z-10">
               <AnimatePresence mode="wait">
@@ -258,6 +251,5 @@ export function QuoteConfigurator() {
         </div>
       </div>
     </div>
-    </section>
   );
 }
