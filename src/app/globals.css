@@ -52,8 +52,20 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+html.lenis {
+  scroll-behavior: auto;
+}
+
+html.lenis body {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 body {

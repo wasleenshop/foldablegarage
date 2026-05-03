@@ -1,9 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FEATURES } from '@/lib/constants';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Feature entry type from constants.
@@ -11,8 +15,9 @@ import { FEATURES } from '@/lib/constants';
 type FeatureEntry = (typeof FEATURES)[number];
 
 /**
- * Section 6 — Feature cards with spec lists and real product images.
- * 5 cards showcasing key product benefits.
+ * Section 6 — Horizontal scrolling feature track.
+ * Phase 2: GSAP horizontal scroll with 5 cards, each 80vw wide.
+ * Per-card effects: Ken Burns zoom (1.1→1.0), gold underline draw-in, spec highlight.
  */
 
 const FEATURE_IMAGES: Record<string, string> = {
@@ -37,106 +42,154 @@ const FEATURE_DESCRIPTIONS: Record<string, string> = {
 };
 
 export function FeaturesSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
+    // Respect reduced motion
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // Calculate total scrollable distance
+      const scrollDistance = -(track.scrollWidth - window.innerWidth);
+
+      // Main horizontal track scroll
+      const mainScroll = gsap.to(track, {
+        x: scrollDistance,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          pin: true,
+          scrub: 1,
+          start: 'top top',
+          end: () => '+=' + track.scrollWidth,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            // Track which card is active based on progress
+            const cardCount = FEATURES.length;
+            const idx = Math.min(
+              Math.floor(self.progress * cardCount),
+              cardCount - 1
+            );
+            setActiveIndex(idx);
+
+            // Per-card Ken Burns zoom + gold underline
+            const cards = track.querySelectorAll('.feature-card');
+            cards.forEach((card, i) => {
+              const cardStart = i / cardCount;
+              const cardEnd = (i + 1) / cardCount;
+              const inView = self.progress >= cardStart && self.progress < cardEnd;
+
+              // Image zoom: 1.1→1.0 as card comes into focus
+              const img = card.querySelector('.feature-image') as HTMLElement | null;
+              if (img) {
+                const localT = Math.max(
+                  0,
+                  Math.min((self.progress - cardStart) / (cardEnd - cardStart), 1)
+                );
+                gsap.to(img, {
+                  scale: 1.1 - localT * 0.1,
+                  duration: 0.1,
+                  overwrite: 'auto',
+                });
+              }
+
+              // Gold underline: width 0→100%
+              const underline = card.querySelector('.feature-underline') as HTMLElement | null;
+              if (underline) {
+                const localT = Math.max(
+                  0,
+                  Math.min((self.progress - cardStart) / (cardEnd - cardStart), 1)
+                );
+                gsap.to(underline, {
+                  width: `${localT * 100}%`,
+                  duration: 0.1,
+                  overwrite: 'auto',
+                });
+              }
+            });
+          },
+        },
+      });
+    }, section);
+
+    return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <section className="relative bg-bg-primary py-20 md:py-24">
+    <section
+      ref={sectionRef}
+      className="features-wrapper relative overflow-hidden bg-bg-primary py-20 md:py-24"
+    >
+      {/* Heading (static — above the scroll track) */}
       <div className="mx-auto max-w-[1200px] px-4 md:px-6 lg:px-8">
         <SectionHeading
           title="Engineered for the UAE"
           subtitle="Every detail, from material selection to thermal performance, is optimised for the region's climate."
           align="center"
         />
+      </div>
 
-        <div className="mt-12 space-y-16 md:mt-16 md:space-y-24">
-          {FEATURES.map((feature, index) => {
-            const f = feature as FeatureEntry;
-            const isReversed = index % 2 === 1;
-            const imageSrc = FEATURE_IMAGES[f.id];
+      {/* Horizontal scroll track — data-cursor="drag" enables the "DRAG" magnetic cursor label */}
+      <div
+        ref={trackRef}
+        data-cursor="drag"
+        className="features-track mt-12 flex gap-8 md:mt-16 md:pl-[calc((100vw-1200px)/2)]"
+      >
+        {FEATURES.map((feature, index) => {
+          const f = feature as FeatureEntry;
+          const imageSrc = FEATURE_IMAGES[f.id];
+          const isActive = activeIndex === index;
 
-            return (
-              <motion.div
-                key={f.id}
-                className={`flex flex-col gap-8 md:flex-row md:items-center md:gap-16 ${
-                  isReversed ? 'md:flex-row-reverse' : ''
-                }`}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.7, delay: index * 0.1 }}
-              >
-                {/* Feature image with animated gradient border */}
-                <div className="group relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-bg-card md:w-1/2">
+          return (
+            <div
+              key={f.id}
+              className={`feature-card shrink-0 w-[80vw] max-w-[900px] rounded-2xl bg-bg-card border transition-colors duration-500 ${
+                isActive
+                  ? 'border-accent-gold/40 shadow-lg shadow-accent-gold/5'
+                  : 'border-border-subtle'
+              }`}
+            >
+              <div className="flex flex-col md:flex-row">
+                {/* Feature image with Ken Burns zoom */}
+                <div className="relative aspect-[3/2] w-full overflow-hidden rounded-l-2xl md:w-1/2">
+                  {/* Gold underline draw-in at top */}
+                  <div className="absolute top-0 left-0 z-10 h-[3px] bg-accent-gold feature-underline w-0" />
+
                   {/* Animated gradient border overlay */}
-                  <div className="absolute inset-0 rounded-2xl overflow-hidden">
-                    {/* Conic gradient that rotates */}
+                  <div className="absolute inset-0 rounded-l-2xl overflow-hidden pointer-events-none">
                     <div
-                      className="absolute -inset-[2px] rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      className="absolute -inset-[2px] rounded-l-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                       style={{
                         background:
                           'conic-gradient(from var(--angle, 0deg), transparent 0deg, #C9A84C 90deg, #00D4FF 180deg, #7C3AED 270deg, transparent 360deg)',
                         animation: 'gradientBorderRotate 4s linear infinite',
                       }}
                     />
-                    {/* Inner mask to show only the border */}
-                    <div className="absolute inset-[1px] rounded-2xl bg-bg-card" />
+                    <div className="absolute inset-[1px] rounded-l-2xl bg-bg-card" />
                   </div>
-
-                  {/* Static subtle border always visible */}
-                  <div className="absolute inset-0 rounded-2xl border border-border-subtle z-10" />
-
-                  {/* Animated laser lines on the border (SVG overlay) */}
-                  <svg
-                    className="absolute inset-0 z-20 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    viewBox="0 0 100 100"
-                    preserveAspectRatio="none"
-                  >
-                    {/* Top line */}
-                    <line
-                      x1="2" y1="2" x2="98" y2="2"
-                      stroke="#00D4FF"
-                      strokeWidth="0.5"
-                      strokeDasharray="4 8"
-                      className="animate-laser-flow"
-                    />
-                    {/* Right line */}
-                    <line
-                      x1="98" y1="2" x2="98" y2="98"
-                      stroke="#C9A84C"
-                      strokeWidth="0.5"
-                      strokeDasharray="3 7"
-                      className="animate-laser-flow"
-                      style={{ animationDelay: '0.3s' }}
-                    />
-                    {/* Bottom line */}
-                    <line
-                      x1="98" y1="98" x2="2" y2="98"
-                      stroke="#7C3AED"
-                      strokeWidth="0.5"
-                      strokeDasharray="5 5"
-                      className="animate-laser-flow"
-                      style={{ animationDelay: '0.6s' }}
-                    />
-                    {/* Left line */}
-                    <line
-                      x1="2" y1="98" x2="2" y2="2"
-                      stroke="#00D4FF"
-                      strokeWidth="0.5"
-                      strokeDasharray="2 6"
-                      className="animate-laser-flow"
-                      style={{ animationDelay: '0.9s' }}
-                    />
-                  </svg>
 
                   <Image
                     src={imageSrc}
                     alt={`Wasleen ${f.title.toLowerCase()} — engineering detail and material quality`}
                     fill
-                    className="object-cover transition-all duration-500 scale-100 group-hover:scale-105 relative z-[5]"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="feature-image object-cover relative z-[5]"
+                    style={{ transform: 'scale(1.1)' }}
+                    sizes="80vw"
                   />
                 </div>
 
                 {/* Content */}
-                <div className="md:w-1/2">
+                <div className="flex flex-col justify-center p-6 md:w-1/2 md:p-8">
                   <span className="text-xs font-medium uppercase tracking-widest text-accent-gold">
                     Feature {(index + 1).toString().padStart(2, '0')}
                   </span>
@@ -150,10 +203,15 @@ export function FeaturesSection() {
                   {/* Specs */}
                   {f.specs && f.specs.length > 0 && (
                     <ul className="mt-6 space-y-3">
-                      {f.specs.map((spec) => (
+                      {f.specs.map((spec, si) => (
                         <li
                           key={spec}
-                          className="flex items-start gap-3 text-sm text-text-secondary"
+                          className="flex items-start gap-3 text-sm text-text-secondary transition-all duration-300"
+                          style={{
+                            opacity: isActive ? 1 : 0.6,
+                            transform: isActive ? 'translateX(0)' : 'translateX(-8px)',
+                            transitionDelay: `${si * 100}ms`,
+                          }}
                         >
                           <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-gold" />
                           {spec}
@@ -162,10 +220,10 @@ export function FeaturesSection() {
                     </ul>
                   )}
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

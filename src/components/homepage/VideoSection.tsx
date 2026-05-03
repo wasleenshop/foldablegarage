@@ -1,18 +1,65 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { pushGTMEvent } from '@/lib/gtm';
 
+gsap.registerPlugin(ScrollTrigger);
+
 /**
- * Section 7 — Mechanism video showcase.
- * Phase 1: Video player with play/pause controls.
- * Phase 2 will add scroll-scrubbing via GSAP ScrollTrigger.
+ * Section 7 — Scroll-scrubbed video showcase.
+ * Phase 2: Video currentTime linked to scroll position via GSAP ScrollTrigger.
+ * Faster scroll = faster video playback. Pauses when scroll stops.
  */
 export function VideoSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isScrubbing, setIsScrubbing] = useState(false);
+
+  // ── GSAP ScrollTrigger — scroll-scrubbed video ──
+  useEffect(() => {
+    const video = videoRef.current;
+    const section = sectionRef.current;
+    if (!video || !section) return;
+
+    // Respect reduced motion
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+        onEnter: () => {
+          video.pause();
+          setIsScrubbing(true);
+        },
+        onUpdate: (self) => {
+          if (video.readyState >= 2 && video.duration) {
+            video.currentTime = self.progress * video.duration;
+          }
+          if (!isScrubbing) setIsScrubbing(true);
+        },
+        onLeave: () => {
+          setIsScrubbing(false);
+        },
+        onLeaveBack: () => {
+          setIsScrubbing(false);
+        },
+      });
+    }, section);
+
+    return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handlePlayPause = () => {
     if (!videoRef.current) return;
@@ -31,7 +78,7 @@ export function VideoSection() {
   };
 
   return (
-    <section className="relative bg-bg-secondary py-20 md:py-24">
+    <section ref={sectionRef} className="video-section relative bg-bg-secondary py-20 md:py-24">
       {/* Subtle divider */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
 
@@ -54,7 +101,7 @@ export function VideoSection() {
             ref={videoRef}
             className="h-full w-full object-cover"
             playsInline
-            preload="metadata"
+            preload="auto"
             onEnded={handleVideoEnded}
             poster="/images/foldable-garage-wasleen-pergolas-dubai-hero-image.webp"
           >
@@ -65,8 +112,18 @@ export function VideoSection() {
           {/* Gradient overlay at bottom for controls readability */}
           <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
 
-          {/* Play/Pause overlay — visible when paused */}
-          {!isPlaying && (
+          {/* Scroll-scrub indicator */}
+          <div
+            className="absolute inset-x-0 top-0 z-10 flex items-center justify-center px-4 py-2"
+            style={{ opacity: isScrubbing ? 1 : 0 }}
+          >
+            <span className="rounded-full bg-accent-gold/20 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-accent-gold backdrop-blur-sm transition-opacity duration-300">
+              Scroll to scrub
+            </span>
+          </div>
+
+          {/* Play/Pause overlay — visible when paused & not scrubbing */}
+          {!isPlaying && !isScrubbing && (
             <div
               className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/30 backdrop-blur-[1px] transition-all hover:bg-black/20"
               onClick={handlePlayPause}
@@ -109,6 +166,11 @@ export function VideoSection() {
             <span className="text-xs text-white/60">
               Wasleen Foldable Garage — Mechanism in Action
             </span>
+            {isScrubbing && (
+              <span className="ml-auto text-[10px] text-accent-gold/60">
+                ✦ scrub active
+              </span>
+            )}
           </div>
         </motion.div>
 

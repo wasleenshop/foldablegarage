@@ -1,8 +1,15 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { motion, useInView } from 'framer-motion';
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useMotionValueEvent,
+} from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { STATS } from '@/lib/constants';
 
@@ -13,7 +20,9 @@ type StatEntry = (typeof STATS)[number];
 
 /**
  * Section 3 — Stats counter with spring-animated count-up.
- * Each stat animates when scrolled into view. Background image shows the product diagram.
+ * Uses Framer Motion `useSpring` for compositor-thread smooth animation
+ * that doesn't jank on scroll — replaces legacy setInterval approach.
+ * Background image shows the product diagram.
  */
 
 function CountUp({
@@ -27,30 +36,31 @@ function CountUp({
   suffix: string;
   prefix: string;
 }) {
-  const [count, setCount] = useState(0);
+  const motionValue = useMotionValue(0);
 
+  const spring = useSpring(motionValue, {
+    stiffness: 50,
+    damping: 12,
+    mass: 0.5,
+  });
+
+  const rounded = useTransform(spring, (v) => Math.round(v));
+  const [displayValue, setDisplayValue] = useState(0);
+
+  // Sync motion value → React state for TypeScript-safe rendering
+  useMotionValueEvent(rounded, 'change', (v) => setDisplayValue(v));
+
+  // Trigger spring animation when component becomes active
   useEffect(() => {
-    if (!isActive) return;
-
-    let current = 0;
-    const duration = 1500; // ms
-    const step = Math.max(1, Math.floor(target / 60));
-    const interval = setInterval(() => {
-      current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(interval);
-      }
-      setCount(current);
-    }, duration / (target / step));
-
-    return () => clearInterval(interval);
-  }, [isActive, target]);
+    if (isActive) {
+      motionValue.set(target);
+    }
+  }, [isActive, target, motionValue]);
 
   return (
     <span>
       {prefix}
-      {count.toLocaleString()}
+      {displayValue.toLocaleString()}
       {suffix}
     </span>
   );
@@ -79,7 +89,7 @@ function AnimatedStat({ stat, index }: { stat: StatEntry; index: number }) {
         <span className="text-xl">{icons[index]}</span>
       </div>
 
-      {/* Animated number */}
+      {/* Animated number — spring-driven for zero-jank scroll performance */}
       <div className="font-sans text-[clamp(2rem,4vw,3.5rem)] font-bold leading-none text-text-primary">
         {isInView ? (
           <CountUp

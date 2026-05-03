@@ -7,6 +7,9 @@ import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { ScrollToTop } from '@/components/layout/ScrollToTop';
 import { GtmPageView } from '@/components/layout/GtmPageView';
+import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
+import { PageTransitionProvider } from '@/components/providers/PageTransitionProvider';
+import { MagneticCursor } from '@/components/ui/MagneticCursor';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -140,13 +143,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </Suspense>
         </Suspense>
 
-        <div className="flex min-h-screen flex-col">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <SmoothScrollProvider>
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">
+              <PageTransitionProvider>{children}</PageTransitionProvider>
+            </main>
+            <Footer />
+          </div>
+        </SmoothScrollProvider>
 
         {/* Floating UI */}
+        <MagneticCursor />
         <WhatsAppButton />
         <ScrollToTop />
       </body>
