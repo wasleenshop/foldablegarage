@@ -25,43 +25,44 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
   const [widthError, setWidthError] = useState('');
   const [lengthError, setLengthError] = useState('');
 
-  const sanitiseDimension = useCallback((value: string, min: number, max: number): number | null => {
+  // Only enforces minimum — no max cap
+  const sanitiseDimension = useCallback((value: string, min: number): number | null => {
     const num = parseFloat(value);
     if (isNaN(num)) return null;
     // Round to nearest step
     const rounded = Math.round(num / step) * step;
-    return Math.min(Math.max(rounded, min), max);
+    return Math.max(rounded, min);
   }, [step]);
 
   const handleWidthBlur = useCallback(() => {
-    const sanitised = sanitiseDimension(widthInput, minWidth, maxWidth);
+    const sanitised = sanitiseDimension(widthInput, minWidth);
     if (sanitised === null) {
       setWidthError('Please enter a valid number');
       return;
     }
-    if (sanitised < minWidth || sanitised > maxWidth) {
-      setWidthError(`Width must be between ${minWidth}m and ${maxWidth}m`);
+    if (sanitised < minWidth) {
+      setWidthError(`Minimum width is ${minWidth}m`);
       return;
     }
     setWidthError('');
     setWidthInput(String(sanitised));
     onUpdate({ width: sanitised });
-  }, [widthInput, minWidth, maxWidth, sanitiseDimension, onUpdate]);
+  }, [widthInput, minWidth, sanitiseDimension, onUpdate]);
 
   const handleLengthBlur = useCallback(() => {
-    const sanitised = sanitiseDimension(lengthInput, minLength, maxLength);
+    const sanitised = sanitiseDimension(lengthInput, minLength);
     if (sanitised === null) {
       setLengthError('Please enter a valid number');
       return;
     }
-    if (sanitised < minLength || sanitised > maxLength) {
-      setLengthError(`Length must be between ${minLength}m and ${maxLength}m`);
+    if (sanitised < minLength) {
+      setLengthError(`Minimum length is ${minLength}m`);
       return;
     }
     setLengthError('');
     setLengthInput(String(sanitised));
     onUpdate({ length: sanitised });
-  }, [lengthInput, minLength, maxLength, sanitiseDimension, onUpdate]);
+  }, [lengthInput, minLength, sanitiseDimension, onUpdate]);
 
   const handleWidthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setWidthInput(e.target.value);
@@ -110,12 +111,11 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
             type="number"
             step={step}
             min={minWidth}
-            max={maxWidth}
             value={widthInput}
             onChange={handleWidthChange}
             onBlur={handleWidthBlur}
             onKeyDown={handleWidthKeyDown}
-            placeholder={`${minWidth} – ${maxWidth} m`}
+            placeholder={`Min. ${minWidth}m`}
             className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3.5 text-lg font-semibold text-text-primary placeholder:text-text-tertiary/50 backdrop-blur-sm transition-all focus:outline-none ${
               widthError
                 ? 'border-error ring-1 ring-error/20'
@@ -136,7 +136,7 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
           </p>
         )}
         <p className="mt-1.5 text-xs text-text-tertiary">
-          Range: {minWidth}m – {maxWidth}m (in {step}m increments)
+          Min. {minWidth}m ({step}m increments)
         </p>
       </div>
 
@@ -150,12 +150,11 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
             type="number"
             step={step}
             min={minLength}
-            max={maxLength}
             value={lengthInput}
             onChange={handleLengthChange}
             onBlur={handleLengthBlur}
             onKeyDown={handleLengthKeyDown}
-            placeholder={`${minLength} – ${maxLength} m`}
+            placeholder={`Min. ${minLength}m`}
             className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3.5 text-lg font-semibold text-text-primary placeholder:text-text-tertiary/50 backdrop-blur-sm transition-all focus:outline-none ${
               lengthError
                 ? 'border-error ring-1 ring-error/20'
@@ -176,7 +175,7 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
           </p>
         )}
         <p className="mt-1.5 text-xs text-text-tertiary">
-          Range: {minLength}m – {maxLength}m (in {step}m increments)
+          Min. {minLength}m ({step}m increments)
         </p>
       </div>
 

@@ -72,17 +72,26 @@ export function StepColourAndOptions({
             <button
               key={colour.id}
               onClick={() => handleColourSelect(colour.id as ColourOption)}
-              className={`flex items-center gap-4 rounded-xl border p-4 text-left backdrop-blur-sm transition-all ${
+              className={`group relative flex items-center gap-4 overflow-hidden rounded-xl border p-4 text-left backdrop-blur-sm transition-all ${
                 config.colour === colour.id
                   ? 'border-accent-gold bg-accent-gold/5'
                   : 'border-white/10 bg-white/[0.02] hover:border-white/20'
               }`}
             >
-              {/* Colour swatch */}
-              <span
-                className="h-10 w-10 shrink-0 rounded-lg border border-border-subtle"
-                style={{ backgroundColor: colour.hex }}
-              />
+              {/* Animated glow ring behind the swatch */}
+              <span className="pointer-events-none absolute -inset-1 rounded-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                <span className="absolute inset-0 animate-[pulseGlowSlow_3s_ease-in-out_infinite] rounded-xl bg-gradient-to-r from-accent-gold/10 via-accent-cyan/10 to-accent-violet/10 blur-sm" />
+              </span>
+
+              {/* Colour swatch with animated border glow */}
+              <span className="relative">
+                <span
+                  className="relative block h-10 w-10 shrink-0 rounded-lg border border-border-subtle transition-shadow duration-500 group-hover:shadow-[0_0_12px_rgba(201,168,76,0.3)]"
+                  style={{ backgroundColor: colour.hex }}
+                />
+                {/* Animated corner sparkle on hover */}
+                <span className="pointer-events-none absolute -right-1 -top-1 h-3 w-3 rounded-full bg-accent-cyan/0 transition-all duration-500 group-hover:bg-accent-cyan/40 group-hover:animate-ping" />
+              </span>
               <div className="min-w-0 flex-1">
                 <span className="block text-sm font-medium text-text-primary">
                   {colour.name}

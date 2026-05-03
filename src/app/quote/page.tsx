@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { QuoteHeroSection } from '@/components/quote/QuoteHeroSection';
 import { QuoteConfigurator } from '@/components/quote/QuoteConfigurator';
+import { QuoteProductVideo } from '@/components/quote/QuoteProductVideo';
 import { QuoteFeaturesSection } from '@/components/quote/QuoteFeaturesSection';
 import { QuoteSpecifications } from '@/components/quote/QuoteSpecifications';
 
@@ -23,6 +24,9 @@ export default function QuotePage() {
 
       {/* Configuration section */}
       <QuoteConfigurator />
+
+      {/* Autoplay product video — full view, no controls */}
+      <QuoteProductVideo />
 
       {/* Features section — Precision in Every Detail */}
       <QuoteFeaturesSection />
