@@ -21,6 +21,31 @@ export function MechanismReveal() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [progress, setProgress] = useState(0);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  // ── IntersectionObserver: load video only when section is close to viewport ──
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || videoLoaded) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Set preload to auto when nearing viewport
+            video.preload = 'auto';
+            video.load();
+            setVideoLoaded(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [videoLoaded]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -32,26 +57,37 @@ export function MechanismReveal() {
     ).matches;
     if (prefersReducedMotion) return;
 
-    // Attempt autoplay
-    if (videoRef.current) {
+    // Attempt autoplay (only after video has been loaded)
+    if (videoRef.current && videoLoaded) {
       videoRef.current.play().catch(() => {});
     }
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: section,
-        pin: true,
-        scrub: 1,
-        start: 'top top',
-        end: '+=600',
-        onUpdate: (self) => {
-          setProgress(self.progress);
-        },
-      });
-    }, section);
+    try {
+      const ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: section,
+          pin: true,
+          scrub: 1,
+          start: 'top top',
+          end: '+=600',
+          onUpdate: (self) => {
+            // Only update state when progress changes meaningfully to reduce re-renders
+            setProgress((prev) => {
+              const diff = Math.abs(self.progress - prev);
+              return diff > 0.01 ? self.progress : prev;
+            });
+          },
+        });
+      }, section);
 
-    return () => ctx.revert();
-  }, []);
+      return () => ctx.revert();
+    } catch (err) {
+      console.warn(
+        'Wasleen — MechanismReveal ScrollTrigger creation failed:',
+        err
+      );
+    }
+  }, [videoLoaded]);
 
   // ── Panel transforms derived from scroll progress ──
 
@@ -95,9 +131,10 @@ export function MechanismReveal() {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="none"
         poster="/images/foldable-garage-wasleen-pergolas-dubai-hero-image.webp"
       >
+        <source src="/videos/foldable-garage-mechanism-video.webm" type="video/webm" />
         <source src="/videos/foldable-garage-mechanism-video.mp4" type="video/mp4" />
       </video>
 

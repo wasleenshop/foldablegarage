@@ -1,18 +1,69 @@
 import { HeroSection } from '@/components/homepage/HeroSection';
+import dynamic from 'next/dynamic';
+
+// Statically import above-the-fold sections for fastest LCP
 import { MechanismReveal } from '@/components/homepage/MechanismReveal';
 import { StatsSection } from '@/components/homepage/StatsSection';
-import { GallerySection } from '@/components/homepage/GallerySection';
-import { PricingSection } from '@/components/homepage/PricingSection';
-import { FeaturesSection } from '@/components/homepage/FeaturesSection';
-import { VideoSection } from '@/components/homepage/VideoSection';
-import { ReviewsSection } from '@/components/homepage/ReviewsSection';
-import { SocialProof } from '@/components/homepage/SocialProof';
-import { FooterCTA } from '@/components/homepage/FooterCTA';
+
+// Dynamically import below-the-fold sections to reduce initial JS bundle
+const GallerySection = dynamic(
+  () =>
+    import('@/components/homepage/GallerySection').then(
+      (mod) => mod.GallerySection
+    ),
+  { ssr: true }
+);
+
+const PricingSection = dynamic(
+  () =>
+    import('@/components/homepage/PricingSection').then(
+      (mod) => mod.PricingSection
+    ),
+  { ssr: true }
+);
+
+const FeaturesSection = dynamic(
+  () =>
+    import('@/components/homepage/FeaturesSection').then(
+      (mod) => mod.FeaturesSection
+    ),
+  { ssr: true }
+);
+
+const VideoSection = dynamic(
+  () =>
+    import('@/components/homepage/VideoSection').then(
+      (mod) => mod.VideoSection
+    ),
+  { ssr: true }
+);
+
+const ReviewsSection = dynamic(
+  () =>
+    import('@/components/homepage/ReviewsSection').then(
+      (mod) => mod.ReviewsSection
+    ),
+  { ssr: true }
+);
+
+const SocialProof = dynamic(
+  () =>
+    import('@/components/homepage/SocialProof').then(
+      (mod) => mod.SocialProof
+    ),
+  { ssr: true }
+);
+
+const FooterCTA = dynamic(
+  () =>
+    import('@/components/homepage/FooterCTA').then((mod) => mod.FooterCTA),
+  { ssr: true }
+);
 
 export default function HomePage() {
   return (
     <main>
-      {/* Section 1 — Hero */}
+      {/* Section 1 — Hero (above fold) */}
       <HeroSection />
 
       {/* Section 2 — Mechanism Reveal */}

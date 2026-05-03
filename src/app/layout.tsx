@@ -74,6 +74,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-59Z5PLJS');`,
           }}
         />
+
+        {/* Preload hero image for fastest LCP */}
+        <link
+          rel="preload"
+          href="/images/foldable-garage-wasleen-pergolas-dubai-hero-image.webp"
+          as="image"
+          type="image/webp"
+          fetchPriority="high"
+        />
       </head>
       <body className={`${plusJakartaSans.className} antialiased`}>
         {/* Google Tag Manager (noscript) */}

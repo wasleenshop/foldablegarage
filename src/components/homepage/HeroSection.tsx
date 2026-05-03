@@ -50,37 +50,48 @@ export function HeroSection() {
     ).matches;
     if (prefersReducedMotion) return;
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: hero,
-        start: 'top top',
-        end: '+=300',
-        pin: true,
-        scrub: 1,
-        onUpdate: (self) => {
-          const p = self.progress;
+    // Check for touch device — skip ScrollTrigger pinning on mobile
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouchDevice) return;
 
-          // 1. Fade lasers 1→0
-          gsap.to('.hero-lasers', { opacity: 1 - p, duration: 0.1 });
+    try {
+      const ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: hero,
+          start: 'top top',
+          end: '+=300',
+          pin: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            const p = self.progress;
 
-          // 2. Headline words — dissolve downward
-          gsap.to('.hero-headline span', {
-            y: p * 30,
-            opacity: 1 - p,
-            duration: 0.1,
-            stagger: 0.02 * p,
-          });
+            // 1. Fade lasers 1→0
+            gsap.to('.hero-lasers', { opacity: 1 - p, duration: 0.1 });
 
-          // 3. Background transition #0A0A0A → #111111
-          gsap.to(hero, {
-            backgroundColor: p > 0.5 ? '#111111' : '#0A0A0A',
-            duration: 0.1,
-          });
-        },
-      });
-    }, hero);
+            // 2. Headline words — dissolve downward
+            gsap.to('.hero-headline span', {
+              y: p * 30,
+              opacity: 1 - p,
+              duration: 0.1,
+              stagger: 0.02 * p,
+            });
 
-    return () => ctx.revert();
+            // 3. Background transition #0A0A0A → #111111
+            gsap.to(hero, {
+              backgroundColor: p > 0.5 ? '#111111' : '#0A0A0A',
+              duration: 0.1,
+            });
+          },
+        });
+      }, hero);
+
+      return () => ctx.revert();
+    } catch (err) {
+      console.warn(
+        'Wasleen — HeroSection ScrollTrigger creation failed:',
+        err
+      );
+    }
   }, []);
 
   return (

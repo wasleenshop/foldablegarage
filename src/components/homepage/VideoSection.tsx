@@ -19,6 +19,30 @@ export function VideoSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isScrubbing, setIsScrubbing] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  // ── IntersectionObserver: load video only when section is close to viewport ──
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || videoLoaded) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.preload = 'auto';
+            video.load();
+            setVideoLoaded(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [videoLoaded]);
 
   // ── GSAP ScrollTrigger — scroll-scrubbed video ──
   useEffect(() => {
@@ -32,34 +56,41 @@ export function VideoSection() {
     ).matches;
     if (prefersReducedMotion) return;
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1,
-        onEnter: () => {
-          video.pause();
-          setIsScrubbing(true);
-        },
-        onUpdate: (self) => {
-          if (video.readyState >= 2 && video.duration) {
-            video.currentTime = self.progress * video.duration;
-          }
-          if (!isScrubbing) setIsScrubbing(true);
-        },
-        onLeave: () => {
-          setIsScrubbing(false);
-        },
-        onLeaveBack: () => {
-          setIsScrubbing(false);
-        },
-      });
-    }, section);
+    try {
+      const ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+          onEnter: () => {
+            video.pause();
+            setIsScrubbing(true);
+          },
+          onUpdate: (self) => {
+            if (video.readyState >= 2 && video.duration) {
+              video.currentTime = self.progress * video.duration;
+            }
+            if (!isScrubbing) setIsScrubbing(true);
+          },
+          onLeave: () => {
+            setIsScrubbing(false);
+          },
+          onLeaveBack: () => {
+            setIsScrubbing(false);
+          },
+        });
+      }, section);
 
-    return () => ctx.revert();
+      return () => ctx.revert();
+    } catch (err) {
+      console.warn(
+        'Wasleen — VideoSection ScrollTrigger creation failed:',
+        err
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [videoLoaded]);
 
   const handlePlayPause = () => {
     if (!videoRef.current) return;
@@ -101,10 +132,11 @@ export function VideoSection() {
             ref={videoRef}
             className="h-full w-full object-cover"
             playsInline
-            preload="auto"
+            preload="none"
             onEnded={handleVideoEnded}
             poster="/images/foldable-garage-wasleen-pergolas-dubai-hero-image.webp"
           >
+            <source src="/videos/foldable-garage-wasleen-pergolas-video.webm" type="video/webm" />
             <source src="/videos/foldable-garage-wasleen-pergolas-video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>

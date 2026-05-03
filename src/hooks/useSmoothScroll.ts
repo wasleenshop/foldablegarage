@@ -46,45 +46,60 @@ export function useSmoothScroll({
       '(prefers-reduced-motion: reduce)'
     ).matches;
 
-    // Don't initialise if disabled or user prefers reduced motion
-    if (!enabled || prefersReducedMotion) {
+    // Check if touch device — disable Lenis on mobile to prevent scroll conflicts
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+    // Don't initialise if disabled, user prefers reduced motion, or touch device
+    if (!enabled || prefersReducedMotion || isTouchDevice) {
       // Ensure ScrollTrigger still works without Lenis
       ScrollTrigger.refresh();
       return;
     }
 
-    // Initialise Lenis
-    const lenis = new Lenis({
-      duration,
-      easing,
-      orientation: 'vertical',
-      smoothWheel: true,
-      touchMultiplier: 1.2,
-      infinite: false,
-    });
+    try {
+      // Initialise Lenis
+      const lenis = new Lenis({
+        duration,
+        easing,
+        orientation: 'vertical',
+        smoothWheel: true,
+        touchMultiplier: 1.2,
+        infinite: false,
+      });
 
-    lenisRef.current = lenis;
+      lenisRef.current = lenis;
 
-    // Connect Lenis scroll to GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
+      // Connect Lenis scroll to GSAP ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
 
-    // Pipe GSAP's ticker through Lenis for synced animations
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
+      // Pipe GSAP's ticker through Lenis for synced animations
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
 
-    // Refresh ScrollTrigger after Lenis has settled (DOM fully painted)
-    requestAnimationFrame(() => {
+      // Refresh ScrollTrigger after Lenis has settled (DOM fully painted)
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+
+      // Cleanup
+      return () => {
+        try {
+          lenis.destroy();
+          gsap.ticker.remove(lenis.raf);
+        } catch {
+          // Silently handle cleanup errors
+        }
+        lenisRef.current = null;
+      };
+    } catch (err) {
+      console.warn(
+        'Wasleen — Lenis initialisation failed, falling back to native scroll:',
+        err
+      );
       ScrollTrigger.refresh();
-    });
-
-    // Cleanup
-    return () => {
-      lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
-      lenisRef.current = null;
-    };
+    }
   }, [enabled, duration, easing]);
 
   return lenisRef;

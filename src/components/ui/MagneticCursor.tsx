@@ -42,6 +42,7 @@ export function MagneticCursor() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [ripples, setRipples] = useState<RippleRing[]>([]);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   // ── Mouse position (spring-smoothed) ────────────────
 
@@ -245,7 +246,12 @@ export function MagneticCursor() {
     };
   }, [isTouchDevice, prefersReducedMotion, handleMouseMove, handleMouseOver, handleMouseOut]);
 
-  // ── Ripple ring cleanup interval ────────────────────
+  // ── Hydration guard & ripple ring cleanup ───────────
+
+  useEffect(() => {
+    // Mark as hydrated after first client render
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
     cleanupRef.current = setInterval(() => {
@@ -258,11 +264,15 @@ export function MagneticCursor() {
 
   // ── Render ──────────────────────────────────────────
 
+  // On first SSR/hydration render, show nothing to avoid hydration mismatch
+  // (the cursor:none style + DOM structure only appears after client hydration)
+  if (!isHydrated) return null;
+
   if (isTouchDevice || prefersReducedMotion) return null;
 
   return (
     <>
-      {/* Hide default cursor */}
+      {/* Hide default cursor — injected only after hydration is confirmed */}
       <style>{`
         * { cursor: none !important; }
       `}</style>
