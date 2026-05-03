@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
+import { QuoteHeroSection } from '@/components/quote/QuoteHeroSection';
 import { QuoteConfigurator } from '@/components/quote/QuoteConfigurator';
+import { QuoteFeaturesSection } from '@/components/quote/QuoteFeaturesSection';
+import { QuoteSpecifications } from '@/components/quote/QuoteSpecifications';
 
 export const metadata: Metadata = {
   title: 'Get a Quote — Wasleen Foldable Premium Garage',
@@ -15,7 +18,17 @@ export const metadata: Metadata = {
 export default function QuotePage() {
   return (
     <main className="min-h-screen bg-bg-primary">
+      {/* Hero section with animated gradient background */}
+      <QuoteHeroSection />
+
+      {/* Configuration section */}
       <QuoteConfigurator />
+
+      {/* Features section — Precision in Every Detail */}
+      <QuoteFeaturesSection />
+
+      {/* Detailed specifications section */}
+      <QuoteSpecifications />
     </main>
   );
 }

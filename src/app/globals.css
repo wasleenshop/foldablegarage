@@ -221,6 +221,82 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════
+   Quote Page — Animated Gradient Background
+   ═══════════════════════════════════════════════════ */
+
+@keyframes gradientOrbRotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes pulseGlowSlow {
+  0%, 100% {
+    opacity: 0.06;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.12;
+    transform: scale(1.1);
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   Quote Page — Glassmorphism
+   ═══════════════════════════════════════════════════ */
+
+@keyframes glassShimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   Quote Page — Spec Section Animations
+   ═══════════════════════════════════════════════════ */
+
+@keyframes specBorderGlow {
+  0%, 100% {
+    border-color: rgba(201, 168, 76, 0.2);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.05);
+  }
+  50% {
+    border-color: rgba(201, 168, 76, 0.4);
+    box-shadow: 0 0 30px rgba(201, 168, 76, 0.1);
+  }
+}
+
+@keyframes shimmerSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes barExpand {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: var(--bar-width, 100%);
+  }
+}
+
+/* ═══════════════════════════════════════════════════
    Hero Section — Foldable Circle Animations
    ═══════════════════════════════════════════════════ */
 

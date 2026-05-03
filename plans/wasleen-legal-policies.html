@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Policies — Wasleen Foldable Garage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #0D0D0D;
+    --ink-mid:    #3A3A3A;
+    --ink-soft:   #6B6B6B;
+    --ink-muted:  #9A9A9A;
+    --gold:       #B8973A;
+    --gold-light: #D4B56A;
+    --cream:      #FAFAF7;
+    --cream-dark: #F2F2EE;
+    --rule:       #E2E2DC;
+    --white:      #FFFFFF;
+    --f-display:  'Cormorant Garamond', Georgia, serif;
+    --f-body:     'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 15px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ── NAV ──────────────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,250,247,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .nav-brand {
+    font-family: var(--f-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-brand span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ─────────────────────────────────────── */
+  .page-hero {
+    background: var(--ink);
+    color: var(--white);
+    padding: 80px 40px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    );
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+  .hero-kicker {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-kicker::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+  .hero-title {
+    font-family: var(--f-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+  }
+  .hero-meta-item strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2px;
+  }
+
+  /* ── TABS ─────────────────────────────────────── */
+  .tab-strip {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 20px 28px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── LAYOUT ───────────────────────────────────── */
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    gap: 0;
+  }
+
+  /* ── SIDEBAR ──────────────────────────────────── */
+  .sidebar {
+    padding: 48px 32px 48px 0;
+    border-right: 1px solid var(--rule);
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+  .sidebar-nav { list-style: none; }
+  .sidebar-nav li { margin-bottom: 2px; }
+  .sidebar-nav a {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .sidebar-nav a:hover {
+    color: var(--ink);
+    background: var(--cream-dark);
+  }
+  .sidebar-nav a.active {
+    color: var(--gold);
+    border-left-color: var(--gold);
+    background: rgba(184,151,58,0.06);
+  }
+
+  /* ── MAIN CONTENT ─────────────────────────────── */
+  .main-content {
+    padding: 56px 0 56px 56px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── POLICY SECTIONS ──────────────────────────── */
+  .policy-section {
+    margin-bottom: 56px;
+    scroll-margin-top: 88px;
+  }
+  .policy-section:last-child { margin-bottom: 0; }
+
+  .section-number {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--f-display);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .section-intro {
+    font-size: 15px;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    margin-bottom: 28px;
+    padding-left: 20px;
+    border-left: 3px solid var(--gold);
+    font-style: italic;
+    font-family: var(--f-display);
+    font-size: 17px;
+  }
+
+  .section-rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 40px 0;
+  }
+
+  /* Subsection */
+  .sub-section {
+    margin-bottom: 32px;
+  }
+  .sub-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sub-body {
+    font-size: 14.5px;
+    color: var(--ink-mid);
+    line-height: 1.8;
+  }
+  .sub-body p { margin-bottom: 14px; }
+  .sub-body p:last-child { margin-bottom: 0; }
+
+  /* Warranty tiers */
+  .warranty-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 28px 0;
+  }
+  .tier-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .tier-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .tier-years {
+    font-family: var(--f-display);
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .tier-years-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 14px;
+  }
+  .tier-component {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .tier-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* Numbered list */
+  .policy-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .policy-list li {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+  .policy-list li:last-child { border-bottom: none; }
+  .policy-list li::before {
+    content: attr(data-n);
+    font-family: var(--f-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    flex-shrink: 0;
+    width: 24px;
+    line-height: 1.6;
+  }
+
+  /* Alert box */
+  .alert-box {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .alert-box.caution {
+    border-left-color: #C9603A;
+    background: #FDF8F6;
+  }
+  .alert-title {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .alert-box.caution .alert-title { color: #C9603A; }
+  .alert-body {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+
+  /* Table */
+  .policy-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 20px 0;
+  }
+  .policy-table thead tr {
+    border-bottom: 2px solid var(--ink);
+  }
+  .policy-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 0 16px 12px 0;
+  }
+  .policy-table td {
+    padding: 14px 16px 14px 0;
+    color: var(--ink-mid);
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .policy-table td:first-child { color: var(--ink); font-weight: 500; }
+
+  /* Divider with label */
+  .labeled-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0;
+  }
+  .labeled-divider::before,
+  .labeled-divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid var(--rule);
+  }
+  .labeled-divider span {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.4);
+    padding: 40px;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .footer-brand {
+    font-family: var(--f-display);
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 8px;
+  }
+  .footer-brand span { color: var(--gold); }
+
+  /* Print / download strip */
+  .doc-strip {
+    background: var(--cream-dark);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .doc-strip-text { font-size: 12px; color: var(--ink-soft); }
+  .doc-strip-text strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 2px; }
+  .print-btn {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: none;
+    border: 1px solid var(--gold);
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .print-btn:hover { background: var(--gold); color: var(--white); }
+
+  @media (max-width: 860px) {
+    .content-wrap { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main-content { padding: 40px 0; }
+    nav { padding: 0 20px; }
+    .tab-strip { padding: 0 20px; }
+    .page-hero { padding: 60px 20px; }
+    .warranty-tiers { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Wasleen<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Product</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Legal Policies</div>
+    <h1 class="hero-title">Our Commitment<br>to You — In Writing</h1>
+    <p class="hero-subtitle">Every Wasleen structure is an investment. These policies are written to protect that investment — yours and ours — with complete transparency and mutual respect.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>Effective Date</strong>1 June 2025</div>
+      <div class="hero-meta-item"><strong>Jurisdiction</strong>Emirate of Dubai, UAE</div>
+      <div class="hero-meta-item"><strong>Governing Law</strong>UAE Federal Law</div>
+      <div class="hero-meta-item"><strong>Version</strong>2.0</div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tab-strip">
+  <button class="tab-btn active" onclick="showTab('warranty', this)">Warranty Policy</button>
+  <button class="tab-btn" onclick="showTab('returns', this)">Returns &amp; Exchanges</button>
+  <button class="tab-btn" onclick="showTab('terms', this)">Terms &amp; Conditions</button>
+  <button class="tab-btn" onclick="showTab('privacy', this)">Privacy Policy</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">On this page</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <!-- dynamically updated by JS -->
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- TAB 1: WARRANTY -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="tab-warranty" class="tab-panel active">
+
+      <div class="doc-strip">
+        <div class="doc-strip-text">
+          <strong>Wasleen Comprehensive Warranty Policy</strong>
+          Effective 1 June 2025 · Applies to all UAE installations
+        </div>
+        <button class="print-btn" onclick="window.print()">Download PDF</button>
+      </div>
+
+      <!-- 1. Warranty Introduction -->
+      <div class="policy-section" id="w-intro">
+        <div class="section-number">Section 01</div>
+        <h2 class="section-title">The Wasleen Comprehensive Warranty</h2>
+        <p class="section-intro">"We engineer our retractable garages to withstand the harsh Middle Eastern climate. Because we use premium, aviation-grade materials and precision manufacturing, we proudly stand behind our structures with one of the most robust warranties in the industry."</p>
+        <div class="sub-body">
+          <p>At Wasleen, our warranty is not a legal formality — it is the ultimate expression of our confidence in our engineering and craftsmanship. Each structure is custom-manufactured using internationally certified materials and installed by our accredited technical team. This policy reflects the standards we hold ourselves to, and the accountability we embrace as a premium fabricator and installer operating in the UAE.</p>
+          <p>This Warranty Policy applies to all retractable garage and carport structures installed by Wasleen's authorised technical team at the registered installation address. Coverage commences on the date of final installation sign-off and runs for the periods specified below.</p>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 2. Multi-Tier Coverage -->
+      <div class="policy-section" id="w-coverage">
+        <div class="section-number">Section 02</div>
+        <h2 class="section-title">Multi-Tiered Coverage</h2>
+        <div class="sub-body">
+          <p>Your Wasleen installation is protected by a structured, multi-tiered warranty that addresses each principal component of your structure individually — because different materials perform over different timescales, and our commitment to each reflects that reality.</p>
+        </div>
+
+        <div class="warranty-tiers">
+          <div class="tier-card">
+            <div class="tier-years">15</div>
+            <div class="tier-years-label">Year Guarantee</div>
+            <div class="tier-component">Aluminium Alloy Frame</div>
+            <div class="tier-desc">Structural integrity, severe warping, and manufacturing defects of the 6063-T5 aviation-grade aluminium framing system, extrusion profiles, and load-bearing components.</div>
+          </div>
+          <div class="tier-card">
+            <div class="tier-years">5</div>
+            <div class="tier-years-label">Year Guarantee</div>
+            <div class="tier-component">Enclosure Panels</div>
+            <div class="tier-desc">Premature degradation, severe discolouration beyond normal weathering tolerance, delamination, and structural failure of polycarbonate or laminated glass enclosure panels under normal use and conditions.</div>
+          </div>
+          <div class="tier-card">
+            <div class="tier-years">3</div>
+            <div class="tier-years-label">Year Guarantee</div>
+            <div class="tier-component">Motor &amp; Mechanical Systems</div>
+            <div class="tier-desc">The motorised retraction system, electronic control unit, sliding mechanisms, precision ground tracks, heavy-duty roller assemblies, and sealed bearing components.</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 3. What is Covered -->
+      <div class="policy-section" id="w-covered">
+        <div class="section-number">Section 03</div>
+        <h2 class="section-title">What Your Warranty Covers</h2>
+        <div class="sub-body">
+          <p>Wasleen's warranty covers defects that originate from the manufacturing process, material specification, or our installation workmanship. Specifically, coverage includes:</p>
+        </div>
+        <ul class="policy-list">
+          <li data-n="1">Structural failure or severe deformation of the aluminium frame caused by a manufacturing defect, not by external physical damage or unauthorised load-bearing.</li>
+          <li data-n="2">Coating failure of the PVDF fluorocarbon surface treatment that manifests as peeling, blistering, or colour change beyond the AAMA 2605 standard's accepted tolerance within the warranty period.</li>
+          <li data-n="3">Premature brittleness, cracking, or yellowing of polycarbonate panels that occurs under normal operating conditions and within the warranty period, attributable to material or manufacturing defect.</li>
+          <li data-n="4">Failure of the motorised retraction mechanism, including the motor unit, control board, remote receiver, or rail system, arising from manufacturing or installation defect — not from power surge, user error, or physical damage.</li>
+          <li data-n="5">Water or air ingress through the sealed perimeter system that results from a manufacturing or installation defect in the gasket or sealing system, identified within the warranty period.</li>
+          <li data-n="6">Any defect in workmanship attributable to Wasleen's installation team, including misaligned rails, improperly secured anchors, or incorrect motor calibration.</li>
+        </ul>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 4. What is NOT Covered -->
+      <div class="policy-section" id="w-exclusions">
+        <div class="section-number">Section 04</div>
+        <h2 class="section-title">Warranty Exclusions</h2>
+        <div class="sub-body">
+          <p>In the interest of complete transparency, the following circumstances fall outside the scope of this warranty. We present these exclusions clearly so that expectations are fully aligned from the outset of your project.</p>
+        </div>
+
+        <div class="alert-box caution">
+          <div class="alert-title">Important — Please Read Carefully</div>
+          <div class="alert-body">The following exclusions are standard across the premium outdoor structure industry and reflect events or actions that are outside Wasleen's control, scope of supply, or responsibility.</div>
+        </div>
+
+        <table class="policy-table">
+          <thead>
+            <tr>
+              <th style="width:35%">Exclusion Category</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Acts of God &amp; Extreme Weather</td>
+              <td>Damage resulting from unprecedented natural events including exceptional sandstorms (Category 5 or beyond regional norms), flooding, seismic activity, lightning strike, hail, or wind events exceeding the structure's rated specification. Our structures are engineered and rated for UAE climatic norms — not extraordinary events beyond design parameters.</td>
+            </tr>
+            <tr>
+              <td>Unauthorised Modifications</td>
+              <td>Any structural or mechanical alteration carried out by a party other than Wasleen's authorised technical personnel, including additions of weight loads (e.g., solar panels, satellite dishes) not specified in the original project scope, or structural changes to the anchorage or frame.</td>
+            </tr>
+            <tr>
+              <td>Third-Party Tampering</td>
+              <td>Damage or malfunction resulting from attempted repair, adjustment, or modification of the motorised system, electrical components, or mechanical assemblies by any party not certified by Wasleen.</td>
+            </tr>
+            <tr>
+              <td>Neglect &amp; Improper Maintenance</td>
+              <td>Failure arising from failure to perform the recommended routine maintenance as set out in your Installation &amp; Care Manual, including failure to clear the rail tracks of debris, failure to lubricate the roller system annually, or failure to operate the retraction mechanism under extreme conditions contrary to the operating guidelines.</td>
+            </tr>
+            <tr>
+              <td>Physical Damage</td>
+              <td>Impact damage from vehicles, tools, falling objects, or deliberate acts. Scratches, dents, or surface abrasion resulting from daily use, cleaning with abrasive materials, or contact with sharp objects.</td>
+            </tr>
+            <tr>
+              <td>Cosmetic Wear &amp; Tear</td>
+              <td>Normal surface oxidation, minor surface scratches, or minor colour variation within the accepted AAMA 2605 tolerance after extended outdoor exposure — all of which are characteristics of all architectural aluminium products over time and do not constitute defects.</td>
+            </tr>
+            <tr>
+              <td>Electrical Supply Issues</td>
+              <td>Damage to the motorised system resulting from power surges, voltage fluctuations, incorrect electrical supply at the installation site, or failure to fit the recommended surge protector as advised at handover.</td>
+            </tr>
+            <tr>
+              <td>Site Conditions &amp; Foundation</td>
+              <td>Any issue attributable to the condition, movement, or failure of the foundation, ground, or permanent structure to which the installation is anchored — including subsidence, concrete failure, or incompatible substrate — where these conditions were not disclosed or discoverable at the time of our site survey.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 5. How to Claim -->
+      <div class="policy-section" id="w-claims">
+        <div class="section-number">Section 05</div>
+        <h2 class="section-title">Making a Warranty Claim</h2>
+        <div class="sub-section">
+          <div class="sub-title">Step-by-step claim process</div>
+          <div class="sub-body">
+            <p>We have designed our claims process to be as frictionless as possible. Our goal is to resolve every genuine warranty matter within a defined timeframe, with minimal disruption to you.</p>
+          </div>
+          <ul class="policy-list">
+            <li data-n="1"><strong>Notify Us in Writing:</strong> Submit your warranty claim via email to <em>warranty@wasleen.com</em> or via WhatsApp to your assigned project manager. Include your project reference number, the date of installation, a clear description of the issue, and supporting photographs.</li>
+            <li data-n="2"><strong>Initial Assessment (Within 48 hours):</strong> Our technical team will review your submission and provide an initial assessment within two (2) business days, confirming whether the reported issue falls within warranty scope and scheduling a site inspection where required.</li>
+            <li data-n="3"><strong>Site Inspection (Within 5 Business Days):</strong> For claims that require on-site assessment, a Wasleen-certified engineer will attend the installation address within five (5) business days of claim submission.</li>
+            <li data-n="4"><strong>Resolution (Within 14 Business Days):</strong> All confirmed warranty repairs or replacements will be completed within fourteen (14) business days of claim confirmation, subject to component availability. Where a specific component requires factory fabrication, you will be advised of the lead time in writing.</li>
+            <li data-n="5"><strong>Confirmation of Completion:</strong> Upon resolution, Wasleen will issue a written Warranty Completion Certificate confirming the work carried out and confirming the remainder of your warranty period remains in force.</li>
+          </ul>
+        </div>
+
+        <div class="alert-box">
+          <div class="alert-title">Warranty Transferability</div>
+          <div class="alert-body">Your Wasleen warranty is registered to the installation address and transfers automatically to any subsequent owner of the property within the warranty period. To update ownership records and ensure seamless service continuity, please notify us at <em>warranty@wasleen.com</em> with proof of ownership transfer. There is no transfer fee.</div>
+        </div>
+      </div>
+
+    </div><!-- /tab-warranty -->
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- TAB 2: RETURNS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="tab-returns" class="tab-panel">
+
+      <div class="doc-strip">
+        <div class="doc-strip-text">
+          <strong>Returns, Exchanges &amp; Refund Policy</strong>
+          Effective 1 June 2025 · Custom-manufactured structures
+        </div>
+        <button class="print-btn" onclick="window.print()">Download PDF</button>
+      </div>
+
+      <!-- Intro -->
+      <div class="policy-section" id="r-intro">
+        <div class="section-number">Section 01</div>
+        <h2 class="section-title">30-Day Structural Integrity &amp; Modification Policy</h2>
+        <p class="section-intro">"Because every Wasleen structure is custom-manufactured and permanently installed at your property, standard retail return policies do not apply. However, your absolute satisfaction and safety are our highest priorities."</p>
+        <div class="sub-body">
+          <p>Every Wasleen retractable garage is engineered and fabricated to your precise specifications — your chosen dimensions, material selection, colour finish, and configuration are custom-produced upon order confirmation. Unlike off-the-shelf products, a Wasleen structure cannot be restocked, resold, or repurposed once fabricated and installed.</p>
+          <p>This policy is written to be fair to both parties: to give you meaningful, substantive protections and a genuine resolution pathway for any structural concern, while accurately reflecting the bespoke nature of the product you have commissioned. We believe clarity here protects everyone, and we have structured our terms accordingly.</p>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- Structural Resolution -->
+      <div class="policy-section" id="r-structural">
+        <div class="section-number">Section 02</div>
+        <h2 class="section-title">Structural Issue Resolution — Within 30 Days</h2>
+        <div class="sub-body">
+          <p>If you identify any structural issue, manufacturing defect, or installation concern within thirty (30) calendar days of the installation completion date, please notify your Wasleen project manager immediately. This 30-day period is your primary window for raising installation-related concerns, and we treat all matters raised within this period as priority cases.</p>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-title">Our Commitment — Priority Resolution at No Cost</div>
+          <div class="sub-body">
+            <p>Upon receipt of a structural concern raised within the 30-day window, Wasleen will dispatch our engineering team for a comprehensive site assessment within three (3) business days. All confirmed structural issues, manufacturing defects, or installation workmanship concerns identified within this period will be resolved entirely at Wasleen's cost — including materials, fabrication, labour, and any required disassembly and reinstallation.</p>
+            <p>This is unconditional. We will not charge you for resolving any issue that originates from our manufacturing or installation process, and we will not require you to demonstrate negligence on our part. Our standard is simple: if it is not right, we make it right.</p>
+          </div>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-title">Refund Protocol — Catastrophic Structural Failure</div>
+          <div class="sub-body">
+            <p>In the highly unlikely event of a catastrophic structural failure that our engineering team determines cannot be remedied through repair or component replacement to Wasleen's exacting standards, a full return and refund protocol will be initiated. This applies where, in the professional judgment of Wasleen's lead engineer, the installation cannot be brought to specification and the only appropriate resolution is complete removal and full reimbursement.</p>
+          </div>
+          <div class="alert-box">
+            <div class="alert-title">Refund Process &amp; Timeline</div>
+            <div class="alert-body">Upon confirmation of a qualifying catastrophic failure: (1) Wasleen will remove the structure at our cost within ten (10) business days. (2) A full refund of the total amount paid — including the deposit — will be processed within fifteen (15) business days of structure removal. (3) Refunds are issued via the original payment method where possible, or by bank transfer to a UAE account.</div>
+          </div>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-title">What Does Not Qualify for Refund</div>
+          <div class="sub-body">
+            <p>To be explicit and fair: a change of preference, a change of circumstance, or a decision that you no longer require the structure after installation does not constitute grounds for a refund. This is a custom-manufactured, permanently installed structure commissioned at your instruction. We take responsibility for what we make and how we install it — not for decisions made after handover.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- Exchanges -->
+      <div class="policy-section" id="r-exchange">
+        <div class="section-number">Section 03</div>
+        <h2 class="section-title">Component Exchanges &amp; Upgrades — Within 30 Days</h2>
+        <div class="sub-body">
+          <p>We understand that seeing your structure fully installed may prompt a desire to modify certain cosmetic or functional elements — a different panel tint, an upgraded motor system, an additional lighting integration. We accommodate exchange requests within the first thirty (30) days of installation and are happy to facilitate adjustments that enhance your satisfaction with the finished result.</p>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-title">What Can Be Exchanged</div>
+          <table class="policy-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Exchange Available?</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Polycarbonate panel tint/colour</td><td>Yes</td><td>Subject to exchange fee. New panels custom-cut to specification.</td></tr>
+              <tr><td>Glass panel type (PC to laminated glass)</td><td>Yes</td><td>Subject to exchange fee + material cost differential.</td></tr>
+              <tr><td>Frame colour (powder coat)</td><td>Limited</td><td>Assessed case by case. Factory refinishing required.</td></tr>
+              <tr><td>Motor system upgrade (manual → automatic)</td><td>Yes</td><td>Subject to upgrade fee. Full motor kit installation included.</td></tr>
+              <tr><td>LED lighting addition</td><td>Yes</td><td>Standard add-on. Quoted separately. No exchange fee applies.</td></tr>
+              <tr><td>Structure dimensions</td><td>No</td><td>Custom-fabricated to original specification. Cannot be altered post-installation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-title">Understanding Exchange Fees — Why They Apply</div>
+          <div class="sub-body">
+            <p>Exchange fees are not a commercial penalty. They are a transparent recovery of the genuine costs incurred when custom components are replaced. Specifically, exchange fees cover the cost of new custom-cut or factory-fabricated replacement materials, the skilled labour required to safely dismantle the existing components without structural damage, the reinstallation of the new components to our installation standard, and the safe disposal or return-to-factory of the removed originals.</p>
+            <p>We provide a fully itemised exchange quotation — broken down by material, fabrication, and labour — for your review and written approval before any exchange work begins. No work commences without your explicit written confirmation of the quoted exchange fee. This is our commitment to complete financial transparency.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- Deposit Policy -->
+      <div class="policy-section" id="r-deposit">
+        <div class="section-number">Section 04</div>
+        <h2 class="section-title">Deposit &amp; Cancellation Policy</h2>
+        <div class="sub-section">
+          <div class="sub-title">Payment Schedule</div>
+          <table class="policy-table">
+            <thead>
+              <tr><th>Stage</th><th>Amount</th><th>When Due</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Reservation Deposit</td><td>20% of total project value</td><td>Upon order confirmation. Secures your installation slot and initiates custom fabrication.</td></tr>
+              <tr><td>Pre-Installation Payment</td><td>60% of total project value</td><td>7 days prior to confirmed installation date.</td></tr>
+              <tr><td>Completion Payment</td><td>20% of total project value</td><td>Upon installation completion and client sign-off.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-title">Cancellation Before Fabrication Commences</div>
+          <div class="sub-body">
+            <p>If you choose to cancel your order within seventy-two (72) hours of placing it, and prior to any custom fabrication commencing, your reservation deposit will be refunded in full. To confirm whether fabrication has commenced, contact your project manager immediately — we will advise you within four (4) business hours.</p>
+          </div>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-title">Cancellation After Fabrication Has Commenced</div>
+          <div class="sub-body">
+            <p>Once custom fabrication has been initiated using your approved specifications, material and fabrication costs are committed and non-recoverable. In this event, the reservation deposit is non-refundable as it represents a direct offset against committed fabrication costs. If additional payments have been made, Wasleen will provide a transparent accounting of committed costs and will refund any amount in excess of those actual costs incurred to the date of cancellation.</p>
+          </div>
+          <div class="alert-box caution">
+            <div class="alert-title">Important — Custom Fabrication Begins Promptly</div>
+            <div class="alert-body">Wasleen initiates the custom fabrication process within five (5) business days of order confirmation and deposit receipt. If you have any concern about your order, please contact your project manager immediately. Prompt communication ensures the best possible outcome for both parties.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-returns -->
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- TAB 3: TERMS & CONDITIONS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="tab-terms" class="tab-panel">
+
+      <div class="doc-strip">
+        <div class="doc-strip-text">
+          <strong>Terms &amp; Conditions of Sale and Service</strong>
+          Effective 1 June 2025 · Wasleen Foldable Garage, UAE
+        </div>
+        <button class="print-btn" onclick="window.print()">Download PDF</button>
+      </div>
+
+      <!-- 1. Parties -->
+      <div class="policy-section" id="t-parties">
+        <div class="section-number">Section 01</div>
+        <h2 class="section-title">Parties &amp; Agreement</h2>
+        <div class="sub-body">
+          <p>These Terms and Conditions ("Terms") constitute a legally binding agreement between Wasleen Foldable Garage ("Wasleen," "we," "our," or "us"), operating under Wasleen Premium Products in the Emirate of Dubai, United Arab Emirates, and you, the customer ("Client," "you," or "your"), in relation to the design, fabrication, supply, and installation of retractable garage and carport structures.</p>
+          <p>By placing a deposit, signing a project quotation, or instructing Wasleen to commence work, you confirm that you have read, understood, and accepted these Terms in their entirety. These Terms govern all current and future commercial transactions between Wasleen and the Client unless explicitly superseded in writing by a signed project agreement.</p>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 2. Quotations & Orders -->
+      <div class="policy-section" id="t-orders">
+        <div class="section-number">Section 02</div>
+        <h2 class="section-title">Quotations, Orders &amp; Custom Specifications</h2>
+        <div class="sub-body">
+          <p>All quotations provided by Wasleen are valid for fourteen (14) calendar days from the date of issue, unless stated otherwise in writing. Quotations are prepared based on information provided by the Client at the time of site survey and are subject to revision if site conditions differ materially from those surveyed.</p>
+          <p>A quotation becomes a binding order upon the Client's written confirmation of the specified design, materials, and dimensions, and the receipt of the reservation deposit as specified in Section 04 of our Returns Policy. The Client is responsible for verifying all specifications — dimensions, colour selection, material choice, and motor configuration — prior to providing written confirmation. Wasleen will not be responsible for errors in specification that were approved in writing by the Client.</p>
+          <p>Any change to an approved specification — including dimensional adjustments, material substitutions, or configuration changes — requested after written order confirmation must be submitted in writing to the project manager. Changes are subject to feasibility assessment, and any associated costs or lead time extensions will be communicated to the Client for approval prior to implementation.</p>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 3. Site & Installation -->
+      <div class="policy-section" id="t-installation">
+        <div class="section-number">Section 03</div>
+        <h2 class="section-title">Site Conditions &amp; Installation</h2>
+        <div class="sub-section">
+          <div class="sub-title">Client Obligations — Site Readiness</div>
+          <div class="sub-body">
+            <p>The Client is responsible for ensuring that the installation site is accessible, cleared, and prepared in accordance with the requirements communicated by Wasleen's site survey team. Specifically: the installation surface must be level concrete or equivalent hard standing capable of supporting the structure's load; power supply (230V AC) must be available within 5 metres of the installation point for motorised units; and the Client must obtain any applicable NOC from their building management or master developer prior to the agreed installation date.</p>
+            <p>Any delay to the installation schedule resulting from incomplete site preparation, inaccessibility, or absence of a required permit will be documented, and any associated rescheduling costs will be the Client's responsibility.</p>
+          </div>
+        </div>
+        <div class="sub-section">
+          <div class="sub-title">Installation Completion &amp; Handover</div>
+          <div class="sub-body">
+            <p>Upon completion of installation, Wasleen's installation lead will conduct a comprehensive handover inspection in the presence of the Client or their authorised representative. The Client will be given a demonstration of the retraction mechanism and all operational features. The Client or their representative must sign the Installation Completion Certificate at handover. The date of this signature constitutes the official installation completion date for all warranty and return policy purposes.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 4. Liability -->
+      <div class="policy-section" id="t-liability">
+        <div class="section-number">Section 04</div>
+        <h2 class="section-title">Limitation of Liability</h2>
+        <div class="sub-body">
+          <p>Wasleen's total liability to the Client for any claim arising under these Terms — whether in contract, tort, or otherwise — shall not exceed the total value of the project as stated in the signed quotation.</p>
+          <p>Wasleen shall not be liable for any indirect, consequential, or economic losses arising from the use or unavailability of the installed structure, including but not limited to: vehicle damage occurring while the structure is in use; loss of use of the structure during a warranty repair period; or damage to property adjacent to the installation arising from structural failure caused by an event excluded from warranty coverage.</p>
+          <p>Wasleen maintains professional indemnity and public liability insurance appropriate to the nature of our installation activities. Evidence of this insurance is available upon written request.</p>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 5. Disputes -->
+      <div class="policy-section" id="t-disputes">
+        <div class="section-number">Section 05</div>
+        <h2 class="section-title">Dispute Resolution &amp; Governing Law</h2>
+        <div class="sub-body">
+          <p>These Terms are governed by the laws of the United Arab Emirates and, where applicable, the laws of the Emirate of Dubai. In the event of any dispute arising under these Terms that cannot be resolved through good-faith direct discussion between the parties, both parties agree to first submit to non-binding mediation administered by the Dubai Chamber of Commerce and Industry before initiating any formal legal proceeding.</p>
+          <p>Should mediation fail to produce resolution within sixty (60) days, disputes shall be referred to the exclusive jurisdiction of the courts of the Emirate of Dubai.</p>
+        </div>
+        <div class="alert-box">
+          <div class="alert-title">Our Commitment to Fair Resolution</div>
+          <div class="alert-body">In our experience, disputes that reach the formal mediation stage are rare — because we communicate proactively, document everything in writing, and treat every client concern as a priority. Our project managers are your first and most effective point of resolution, and we encourage direct communication above all else.</div>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <!-- 6. General -->
+      <div class="policy-section" id="t-general">
+        <div class="section-number">Section 06</div>
+        <h2 class="section-title">General Provisions</h2>
+        <ul class="policy-list">
+          <li data-n="1"><strong>Entire Agreement:</strong> These Terms, together with the signed project quotation, constitute the entire agreement between the parties and supersede all prior representations, discussions, or correspondence relating to the subject matter of the project.</li>
+          <li data-n="2"><strong>Severability:</strong> If any provision of these Terms is found by a competent authority to be invalid or unenforceable, the remaining provisions shall continue in full force and effect.</li>
+          <li data-n="3"><strong>Waiver:</strong> Failure by Wasleen to enforce any provision of these Terms on one occasion shall not constitute a waiver of our right to enforce that provision on any subsequent occasion.</li>
+          <li data-n="4"><strong>Assignment:</strong> The Client may not assign rights or obligations under these Terms without Wasleen's prior written consent. Wasleen may assign performance of the installation to a qualified subcontractor while retaining full responsibility for the quality and outcome of all work carried out.</li>
+          <li data-n="5"><strong>Force Majeure:</strong> Neither party shall be liable for delay or failure to perform obligations under these Terms arising from events genuinely outside their reasonable control, including but not limited to natural disasters, pandemics, government orders, or civil unrest. Both parties shall notify the other promptly of any force majeure event and shall cooperate to minimise its impact.</li>
+          <li data-n="6"><strong>Policy Updates:</strong> Wasleen reserves the right to update these Terms periodically. Updated Terms take effect from their published effective date and apply to orders placed after that date. Existing orders are governed by the Terms in force at the time of order confirmation.</li>
+        </ul>
+      </div>
+
+    </div><!-- /tab-terms -->
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- TAB 4: PRIVACY -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="tab-privacy" class="tab-panel">
+
+      <div class="doc-strip">
+        <div class="doc-strip-text">
+          <strong>Privacy Policy</strong>
+          Effective 1 June 2025 · foldablegarage.wasleen.com
+        </div>
+        <button class="print-btn" onclick="window.print()">Download PDF</button>
+      </div>
+
+      <div class="policy-section" id="p-intro">
+        <div class="section-number">Section 01</div>
+        <h2 class="section-title">Your Privacy — Our Responsibility</h2>
+        <p class="section-intro">"We collect only what we need, use it only for the purpose it was given, and never sell your personal information to any third party. Your data is not our product."</p>
+        <div class="sub-body">
+          <p>Wasleen Foldable Garage respects your privacy and is committed to protecting your personal data in compliance with UAE Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data. This policy explains what data we collect, why we collect it, how we use it, and what rights you have in relation to it.</p>
+        </div>
+      </div>
+
+      <hr class="section-rule">
+
+      <div class="policy-section" id="p-collect">
+        <div class="section-number">Section 02</div>
+        <h2 class="section-title">What We Collect &amp; Why</h2>
+        <table class="policy-table">
+          <thead>
+            <tr><th>Data Collected</th><th>Purpose</th><th>Retention</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Name, phone number, email address</td><td>To respond to your enquiry, prepare your quotation, and communicate regarding your project.</td><td>Duration of the project + 5 years (warranty service requirement).</td></tr>
+            <tr><td>Installation address</td><td>Site survey scheduling, installation logistics, and warranty registration.</td><td>Duration of warranty period.</td></tr>
+            <tr><td>Payment information</td><td>Processed entirely through Paddle. Wasleen does not store card numbers or payment credentials on our systems.</td><td>Not stored by Wasleen.</td></tr>
+            <tr><td>Website usage data (analytics)</td><td>To understand how visitors use our website and to improve the user experience. Analytics data is aggregated and anonymised.</td><td>13 months, then auto-deleted.</td></tr>
+            <tr><td>WhatsApp conversation content</td><td>Project communication, support, and service delivery. Retained to maintain a complete project record.</td><td>Duration of project + 2 years.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="section-rule">
+
+      <div class="policy-section" id="p-rights">
+        <div class="section-number">Section 03</div>
+        <h2 class="section-title">Your Rights</h2>
+        <ul class="policy-list">
+          <li data-n="1"><strong>Right to Access:</strong> You may request a copy of all personal data we hold about you at any time by emailing <em>privacy@wasleen.com</em>. We will respond within fifteen (15) business days.</li>
+          <li data-n="2"><strong>Right to Correction:</strong> If any personal data we hold is inaccurate, you may request correction and we will update our records promptly.</li>
+          <li data-n="3"><strong>Right to Deletion:</strong> You may request deletion of your personal data where it is no longer required for the purpose for which it was collected, subject to any legal or warranty service retention obligations.</li>
+          <li data-n="4"><strong>Right to Opt Out of Marketing:</strong> Any marketing communications from Wasleen include an unsubscribe option. You may also opt out at any time by contacting your project manager or emailing us directly. Opting out of marketing does not affect your receipt of essential project or service communications.</li>
+          <li data-n="5"><strong>Right to Complain:</strong> If you believe we have handled your personal data unlawfully, you have the right to lodge a complaint with the UAE Data Office at dataoffice.ae.</li>
+        </ul>
+
+        <div class="alert-box">
+          <div class="alert-title">We Never Sell Your Data</div>
+          <div class="alert-body">Wasleen does not sell, rent, or trade your personal information to any third party under any circumstance. The only third parties who receive your data are those essential to delivering your project — payment processing (Paddle), communication (WhatsApp Business), and email (Resend). Each is governed by its own GDPR-compliant privacy policy.</div>
+        </div>
+      </div>
+
+    </div><!-- /tab-privacy -->
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Wasleen<span>.</span></div>
+      <p>Premium retractable garages for the UAE.<br>foldablegarage.wasleen.com</p>
+    </div>
+    <div>
+      <p><strong style="color:rgba(255,255,255,0.7)">Legal enquiries</strong><br>legal@wasleen.com</p>
+      <p style="margin-top:12px"><strong style="color:rgba(255,255,255,0.7)">Warranty claims</strong><br>warranty@wasleen.com</p>
+    </div>
+    <div>
+      <p style="margin-bottom:8px">© 2025 Wasleen Premium Products.<br>All rights reserved.</p>
+      <p>These policies are governed by the laws<br>of the Emirate of Dubai, UAE.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Tab switching ────────────────────────────────
+const tabData = {
+  warranty: [
+    { href: '#w-intro',    label: 'Introduction' },
+    { href: '#w-coverage', label: 'Coverage Tiers' },
+    { href: '#w-covered',  label: 'What Is Covered' },
+    { href: '#w-exclusions', label: 'Exclusions' },
+    { href: '#w-claims',   label: 'Making a Claim' },
+  ],
+  returns: [
+    { href: '#r-intro',      label: 'Overview' },
+    { href: '#r-structural', label: 'Structural Resolution' },
+    { href: '#r-exchange',   label: 'Exchanges & Upgrades' },
+    { href: '#r-deposit',    label: 'Deposit & Cancellation' },
+  ],
+  terms: [
+    { href: '#t-parties',      label: 'Parties & Agreement' },
+    { href: '#t-orders',       label: 'Orders & Specifications' },
+    { href: '#t-installation', label: 'Site & Installation' },
+    { href: '#t-liability',    label: 'Limitation of Liability' },
+    { href: '#t-disputes',     label: 'Dispute Resolution' },
+    { href: '#t-general',      label: 'General Provisions' },
+  ],
+  privacy: [
+    { href: '#p-intro',   label: 'Our Commitment' },
+    { href: '#p-collect', label: 'What We Collect' },
+    { href: '#p-rights',  label: 'Your Rights' },
+  ],
+};
+
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  updateSidebar(id);
+  window.scrollTo({ top: document.querySelector('.tab-strip').offsetTop - 10, behavior: 'smooth' });
+}
+
+function updateSidebar(id) {
+  const nav = document.getElementById('sidebar-nav');
+  nav.innerHTML = (tabData[id] || []).map(item =>
+    `<li><a href="${item.href}">${item.label}</a></li>`
+  ).join('');
+  // Highlight on scroll
+  setupScrollSpy();
+}
+
+function setupScrollSpy() {
+  const links = document.querySelectorAll('.sidebar-nav a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const match = document.querySelector(`.sidebar-nav a[href="#${e.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.policy-section').forEach(s => observer.observe(s));
+}
+
+// Init
+updateSidebar('warranty');
+</script>
+</body>
+</html>

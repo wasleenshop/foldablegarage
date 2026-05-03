@@ -72,10 +72,10 @@ export function StepColourAndOptions({
             <button
               key={colour.id}
               onClick={() => handleColourSelect(colour.id as ColourOption)}
-              className={`flex items-center gap-4 rounded-xl border p-4 text-left transition-all ${
+              className={`flex items-center gap-4 rounded-xl border p-4 text-left backdrop-blur-sm transition-all ${
                 config.colour === colour.id
                   ? 'border-accent-gold bg-accent-gold/5'
-                  : 'border-border-subtle bg-bg-card hover:border-text-tertiary'
+                  : 'border-white/10 bg-white/[0.02] hover:border-white/20'
               }`}
             >
               {/* Colour swatch */}
@@ -128,12 +128,12 @@ export function StepColourAndOptions({
                 }
               }}
               disabled={option.disabled}
-              className={`flex w-full items-center justify-between rounded-xl border p-4 text-left transition-all ${
+              className={`flex w-full items-center justify-between rounded-xl border p-4 text-left backdrop-blur-sm transition-all ${
                 option.disabled
-                  ? 'cursor-not-allowed border-border-subtle opacity-40'
+                  ? 'cursor-not-allowed border-white/10 opacity-40'
                   : option.selected
                   ? 'border-accent-gold bg-accent-gold/5'
-                  : 'border-border-subtle bg-bg-card hover:border-text-tertiary'
+                  : 'border-white/10 bg-white/[0.02] hover:border-white/20'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -179,7 +179,7 @@ export function StepColourAndOptions({
       <div className="flex gap-4">
         <button
           onClick={onBack}
-          className="flex-1 rounded-xl border border-border-subtle bg-bg-card py-3.5 text-center font-medium text-text-secondary transition-colors hover:border-text-tertiary"
+          className="flex-1 rounded-xl border border-white/10 bg-white/[0.03] py-3.5 text-center font-medium text-text-secondary backdrop-blur-sm transition-colors hover:border-white/20"
         >
           Back
         </button>

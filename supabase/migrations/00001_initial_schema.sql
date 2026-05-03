@@ -119,6 +119,17 @@ CREATE POLICY "Anyone can insert reviews"
   ON reviews FOR INSERT
   WITH CHECK (true);
 
-CREATE POLICY "Service role full access"
-  ON orders FOR ALL
-  USING (auth.jwt() ->> 'role' = 'service_role');
+-- Orders: Allow anonymous inserts (used by /api/quote) and reads (thank-you page)
+CREATE POLICY "Anyone can insert orders"
+  ON orders FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Anyone can read orders"
+  ON orders FOR SELECT
+  USING (true);
+
+-- Orders: Allow updates from Paddle webhook (uses anon key via server client)
+CREATE POLICY "Anyone can update orders"
+  ON orders FOR UPDATE
+  USING (true)
+  WITH CHECK (true);

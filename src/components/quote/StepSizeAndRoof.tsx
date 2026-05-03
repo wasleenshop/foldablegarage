@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { DIMENSIONS, PRICING } from '@/lib/constants';
 import { formatPrice, calculatePrice } from '@/lib/utils';
@@ -14,20 +15,75 @@ interface StepSizeAndRoofProps {
 
 /**
  * Step 1 of the quote configurator.
- * Select width, length, and roof type (polycarbonate or glass).
+ * Select width, length (manual text input), and roof type (polycarbonate or glass).
  */
 export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofProps) {
   const { minWidth, maxWidth, minLength, maxLength, step } = DIMENSIONS;
 
-  // Generate dimension options
-  const widthOptions: number[] = [];
-  for (let w = minWidth; w <= maxWidth; w += step) {
-    widthOptions.push(w);
-  }
-  const lengthOptions: number[] = [];
-  for (let l = minLength; l <= maxLength; l += step) {
-    lengthOptions.push(l);
-  }
+  const [widthInput, setWidthInput] = useState(String(config.width));
+  const [lengthInput, setLengthInput] = useState(String(config.length));
+  const [widthError, setWidthError] = useState('');
+  const [lengthError, setLengthError] = useState('');
+
+  const sanitiseDimension = useCallback((value: string, min: number, max: number): number | null => {
+    const num = parseFloat(value);
+    if (isNaN(num)) return null;
+    // Round to nearest step
+    const rounded = Math.round(num / step) * step;
+    return Math.min(Math.max(rounded, min), max);
+  }, [step]);
+
+  const handleWidthBlur = useCallback(() => {
+    const sanitised = sanitiseDimension(widthInput, minWidth, maxWidth);
+    if (sanitised === null) {
+      setWidthError('Please enter a valid number');
+      return;
+    }
+    if (sanitised < minWidth || sanitised > maxWidth) {
+      setWidthError(`Width must be between ${minWidth}m and ${maxWidth}m`);
+      return;
+    }
+    setWidthError('');
+    setWidthInput(String(sanitised));
+    onUpdate({ width: sanitised });
+  }, [widthInput, minWidth, maxWidth, sanitiseDimension, onUpdate]);
+
+  const handleLengthBlur = useCallback(() => {
+    const sanitised = sanitiseDimension(lengthInput, minLength, maxLength);
+    if (sanitised === null) {
+      setLengthError('Please enter a valid number');
+      return;
+    }
+    if (sanitised < minLength || sanitised > maxLength) {
+      setLengthError(`Length must be between ${minLength}m and ${maxLength}m`);
+      return;
+    }
+    setLengthError('');
+    setLengthInput(String(sanitised));
+    onUpdate({ length: sanitised });
+  }, [lengthInput, minLength, maxLength, sanitiseDimension, onUpdate]);
+
+  const handleWidthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setWidthInput(e.target.value);
+    if (widthError) setWidthError('');
+  }, [widthError]);
+
+  const handleLengthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setLengthInput(e.target.value);
+    if (lengthError) setLengthError('');
+  }, [lengthError]);
+
+  const handleWidthKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      (e.target as HTMLInputElement).blur();
+    }
+  }, []);
+
+  const handleLengthKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      (e.target as HTMLInputElement).blur();
+    }
+  }, []);
 
   const area = config.width * config.length;
   const partialPrice = calculatePrice(config);
@@ -44,48 +100,84 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
       exit={{ opacity: 0, x: -20 }}
       className="space-y-8"
     >
-      {/* Width selector */}
+      {/* Width input */}
       <div>
         <label className="mb-3 block text-sm font-medium text-text-secondary">
-          Width: <span className="text-text-primary">{config.width}m</span>
+          Width (metres)
         </label>
-        <div className="flex flex-wrap gap-2">
-          {widthOptions.map((w) => (
-            <button
-              key={w}
-              onClick={() => onUpdate({ width: w })}
-              className={`rounded-lg border px-4 py-2 text-sm transition-all ${
-                config.width === w
-                  ? 'border-accent-gold bg-accent-gold/10 text-accent-gold'
-                  : 'border-border-subtle text-text-secondary hover:border-text-tertiary hover:text-text-primary'
-              }`}
-            >
-              {w}m
-            </button>
-          ))}
+        <div className="relative">
+          <input
+            type="number"
+            step={step}
+            min={minWidth}
+            max={maxWidth}
+            value={widthInput}
+            onChange={handleWidthChange}
+            onBlur={handleWidthBlur}
+            onKeyDown={handleWidthKeyDown}
+            placeholder={`${minWidth} – ${maxWidth} m`}
+            className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3.5 text-lg font-semibold text-text-primary placeholder:text-text-tertiary/50 backdrop-blur-sm transition-all focus:outline-none ${
+              widthError
+                ? 'border-error ring-1 ring-error/20'
+                : 'border-white/10 focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20'
+            }`}
+          />
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-text-tertiary">
+            metres
+          </span>
         </div>
+        {widthError && (
+          <p className="mt-1.5 text-xs text-error flex items-center gap-1">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
+              <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
+              <path d="M6 3.5v3M6 8v.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+            </svg>
+            {widthError}
+          </p>
+        )}
+        <p className="mt-1.5 text-xs text-text-tertiary">
+          Range: {minWidth}m – {maxWidth}m (in {step}m increments)
+        </p>
       </div>
 
-      {/* Length selector */}
+      {/* Length input */}
       <div>
         <label className="mb-3 block text-sm font-medium text-text-secondary">
-          Length: <span className="text-text-primary">{config.length}m</span>
+          Length (metres)
         </label>
-        <div className="flex max-h-[200px] flex-wrap gap-2 overflow-y-auto">
-          {lengthOptions.map((l) => (
-            <button
-              key={l}
-              onClick={() => onUpdate({ length: l })}
-              className={`rounded-lg border px-4 py-2 text-sm transition-all ${
-                config.length === l
-                  ? 'border-accent-gold bg-accent-gold/10 text-accent-gold'
-                  : 'border-border-subtle text-text-secondary hover:border-text-tertiary hover:text-text-primary'
-              }`}
-            >
-              {l}m
-            </button>
-          ))}
+        <div className="relative">
+          <input
+            type="number"
+            step={step}
+            min={minLength}
+            max={maxLength}
+            value={lengthInput}
+            onChange={handleLengthChange}
+            onBlur={handleLengthBlur}
+            onKeyDown={handleLengthKeyDown}
+            placeholder={`${minLength} – ${maxLength} m`}
+            className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3.5 text-lg font-semibold text-text-primary placeholder:text-text-tertiary/50 backdrop-blur-sm transition-all focus:outline-none ${
+              lengthError
+                ? 'border-error ring-1 ring-error/20'
+                : 'border-white/10 focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20'
+            }`}
+          />
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-text-tertiary">
+            metres
+          </span>
         </div>
+        {lengthError && (
+          <p className="mt-1.5 text-xs text-error flex items-center gap-1">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
+              <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
+              <path d="M6 3.5v3M6 8v.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+            </svg>
+            {lengthError}
+          </p>
+        )}
+        <p className="mt-1.5 text-xs text-text-tertiary">
+          Range: {minLength}m – {maxLength}m (in {step}m increments)
+        </p>
       </div>
 
       {/* Roof type selection */}
@@ -96,10 +188,10 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
         <div className="grid grid-cols-2 gap-4">
           <button
             onClick={() => handleRoofSelect('polycarbonate')}
-            className={`rounded-xl border p-5 text-left transition-all ${
+            className={`rounded-xl border p-5 text-left transition-all backdrop-blur-sm ${
               config.roofType === 'polycarbonate'
                 ? 'border-accent-gold bg-accent-gold/5'
-                : 'border-border-subtle bg-bg-card hover:border-text-tertiary'
+                : 'border-white/10 bg-white/[0.02] hover:border-white/20'
             }`}
           >
             <span className="mb-2 block text-2xl">💎</span>
@@ -115,10 +207,10 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
           </button>
           <button
             onClick={() => handleRoofSelect('glass')}
-            className={`rounded-xl border p-5 text-left transition-all ${
+            className={`rounded-xl border p-5 text-left transition-all backdrop-blur-sm ${
               config.roofType === 'glass'
                 ? 'border-accent-gold bg-accent-gold/5'
-                : 'border-border-subtle bg-bg-card hover:border-text-tertiary'
+                : 'border-white/10 bg-white/[0.02] hover:border-white/20'
             }`}
           >
             <span className="mb-2 block text-2xl">🪟</span>
@@ -136,7 +228,7 @@ export function StepSizeAndRoof({ config, onUpdate, onNext }: StepSizeAndRoofPro
       </div>
 
       {/* Area & price preview */}
-      <div className="rounded-xl border border-border-subtle bg-bg-card p-4">
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm text-text-secondary">Coverage Area</p>

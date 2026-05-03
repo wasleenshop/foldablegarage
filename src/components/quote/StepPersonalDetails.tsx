@@ -78,8 +78,8 @@ export function StepPersonalDetails({
           type="text"
           value={data.fullName}
           onChange={(e) => onUpdate({ fullName: e.target.value })}
-          className={`w-full rounded-lg border bg-bg-primary px-4 py-2.5 text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none ${
-            errors.fullName ? 'border-error' : 'border-border-subtle focus:border-accent-gold/50'
+          className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-text-primary placeholder:text-text-tertiary/50 backdrop-blur-sm transition-all focus:outline-none ${
+            errors.fullName ? 'border-error ring-1 ring-error/20' : 'border-white/10 focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20'
           }`}
           placeholder="Your full name"
         />
@@ -96,8 +96,8 @@ export function StepPersonalDetails({
           type="tel"
           value={data.phone}
           onChange={(e) => onUpdate({ phone: e.target.value })}
-          className={`w-full rounded-lg border bg-bg-primary px-4 py-2.5 text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none ${
-            errors.phone ? 'border-error' : 'border-border-subtle focus:border-accent-gold/50'
+          className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-text-primary placeholder:text-text-tertiary/50 backdrop-blur-sm transition-all focus:outline-none ${
+            errors.phone ? 'border-error ring-1 ring-error/20' : 'border-white/10 focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20'
           }`}
           placeholder="+971 50 123 4567"
         />
@@ -114,8 +114,8 @@ export function StepPersonalDetails({
           type="email"
           value={data.email}
           onChange={(e) => onUpdate({ email: e.target.value })}
-          className={`w-full rounded-lg border bg-bg-primary px-4 py-2.5 text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none ${
-            errors.email ? 'border-error' : 'border-border-subtle focus:border-accent-gold/50'
+          className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-text-primary placeholder:text-text-tertiary/50 backdrop-blur-sm transition-all focus:outline-none ${
+            errors.email ? 'border-error ring-1 ring-error/20' : 'border-white/10 focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20'
           }`}
           placeholder="your@email.com"
         />
@@ -132,8 +132,8 @@ export function StepPersonalDetails({
             id="quote-emirate"
             value={data.emirate}
             onChange={(e) => onUpdate({ emirate: e.target.value as Emirate })}
-            className={`w-full rounded-lg border bg-bg-primary px-4 py-2.5 text-sm text-text-primary focus:outline-none ${
-              errors.emirate ? 'border-error' : 'border-border-subtle focus:border-accent-gold/50'
+            className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-text-primary backdrop-blur-sm transition-all focus:outline-none ${
+              errors.emirate ? 'border-error ring-1 ring-error/20' : 'border-white/10 focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20'
             }`}
           >
             <option value="">Select...</option>
@@ -151,8 +151,8 @@ export function StepPersonalDetails({
             id="quote-property"
             value={data.propertyType}
             onChange={(e) => onUpdate({ propertyType: e.target.value as PropertyType })}
-            className={`w-full rounded-lg border bg-bg-primary px-4 py-2.5 text-sm text-text-primary focus:outline-none ${
-              errors.propertyType ? 'border-error' : 'border-border-subtle focus:border-accent-gold/50'
+            className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-text-primary backdrop-blur-sm transition-all focus:outline-none ${
+              errors.propertyType ? 'border-error ring-1 ring-error/20' : 'border-white/10 focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20'
             }`}
           >
             <option value="">Select...</option>
@@ -174,7 +174,7 @@ export function StepPersonalDetails({
           rows={3}
           value={data.message || ''}
           onChange={(e) => onUpdate({ message: e.target.value })}
-          className="w-full resize-none rounded-lg border border-border-subtle bg-bg-primary px-4 py-2.5 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent-gold/50 focus:outline-none"
+          className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-text-primary placeholder:text-text-tertiary/50 backdrop-blur-sm transition-all focus:border-accent-gold/50 focus:outline-none focus:ring-1 focus:ring-accent-gold/20"
           placeholder="Any specific requirements..."
         />
       </div>
@@ -184,7 +184,7 @@ export function StepPersonalDetails({
         <button
           onClick={onBack}
           disabled={isSubmitting}
-          className="flex-1 rounded-xl border border-border-subtle bg-bg-card py-3.5 text-center font-medium text-text-secondary transition-colors hover:border-text-tertiary disabled:opacity-50"
+          className="flex-1 rounded-xl border border-white/10 bg-white/[0.03] py-3.5 text-center font-medium text-text-secondary backdrop-blur-sm transition-colors hover:border-white/20 disabled:opacity-50"
         >
           Back
         </button>

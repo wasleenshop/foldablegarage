@@ -54,7 +54,7 @@ export function PriceSummary({ config, compact = false }: PriceSummaryProps) {
 
   if (compact) {
     return (
-      <div className="rounded-xl border border-border-subtle bg-bg-card p-4">
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm">
         <div className="mb-3 flex items-center justify-between">
           <span className="text-sm text-text-secondary">Estimated Total</span>
           <span className="font-sans text-xl font-bold text-accent-gold">
@@ -71,7 +71,7 @@ export function PriceSummary({ config, compact = false }: PriceSummaryProps) {
 
   return (
     <motion.div
-      className="rounded-xl border border-border-subtle bg-bg-card p-5"
+      className="rounded-xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
     >
