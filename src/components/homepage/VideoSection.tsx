@@ -1,14 +1,35 @@
 'use client';
 
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { pushGTMEvent } from '@/lib/gtm';
 
 /**
  * Section 7 — Mechanism video showcase.
- * Phase 1: Placeholder poster with play button overlay.
- * Phase 2: Replace with actual H.264 MP4 video + scroll-scrubbing.
+ * Phase 1: Video player with play/pause controls.
+ * Phase 2 will add scroll-scrubbing via GSAP ScrollTrigger.
  */
 export function VideoSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlayPause = () => {
+    if (!videoRef.current) return;
+
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+      pushGTMEvent('video_played', { source: 'mechanism_showcase' });
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleVideoEnded = () => {
+    setIsPlaying(false);
+  };
+
   return (
     <section className="relative bg-bg-secondary py-20 md:py-24">
       {/* Subtle divider */}
@@ -22,28 +43,35 @@ export function VideoSection() {
         />
 
         <motion.div
-          className="relative mx-auto mt-12 aspect-video max-w-[900px] overflow-hidden rounded-2xl border border-border-subtle bg-bg-card md:mt-16"
+          className="relative mx-auto mt-12 aspect-video max-w-[900px] overflow-hidden rounded-2xl border border-border-subtle bg-black md:mt-16"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          {/* Video poster placeholder */}
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-bg-card to-bg-primary">
-            {/* Grid pattern overlay */}
-            <div
-              className="absolute inset-0 opacity-5"
-              style={{
-                backgroundImage:
-                  'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-                backgroundSize: '40px 40px',
-              }}
-            />
+          {/* Actual video */}
+          <video
+            ref={videoRef}
+            className="h-full w-full object-cover"
+            playsInline
+            preload="metadata"
+            onEnded={handleVideoEnded}
+            poster="/images/foldable-garage-wasleen-pergolas-dubai-hero-image.webp"
+          >
+            <source src="/videos/foldable-garage-wasleen-pergolas-video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
 
-            {/* Content */}
-            <div className="relative z-10 text-center">
-              {/* Play button */}
-              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-accent-gold/50 bg-accent-gold/10 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-accent-gold/20 md:h-24 md:w-24">
+          {/* Gradient overlay at bottom for controls readability */}
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+
+          {/* Play/Pause overlay — visible when paused */}
+          {!isPlaying && (
+            <div
+              className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/30 backdrop-blur-[1px] transition-all hover:bg-black/20"
+              onClick={handlePlayPause}
+            >
+              <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-accent-gold/50 bg-accent-gold/10 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-accent-gold/20 md:h-24 md:w-24">
                 <svg
                   width="32"
                   height="32"
@@ -57,11 +85,30 @@ export function VideoSection() {
                   />
                 </svg>
               </div>
-
-              <p className="text-sm text-text-tertiary">
-                Video coming soon — mechanism in action
-              </p>
             </div>
+          )}
+
+          {/* Bottom controls bar */}
+          <div className="absolute inset-x-0 bottom-0 z-10 flex items-center gap-3 px-4 py-3">
+            <button
+              onClick={handlePlayPause}
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+            >
+              {isPlaying ? (
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                  <rect x="2" y="1" width="3" height="10" rx="1" />
+                  <rect x="7" y="1" width="3" height="10" rx="1" />
+                </svg>
+              ) : (
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                  <polygon points="2,1 11,6 2,11" />
+                </svg>
+              )}
+            </button>
+            <span className="text-xs text-white/60">
+              Wasleen Foldable Garage — Mechanism in Action
+            </span>
           </div>
         </motion.div>
 

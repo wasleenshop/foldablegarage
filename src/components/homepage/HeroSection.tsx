@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { KineticBackground } from './KineticBackground';
 import { HeroText } from './HeroText';
@@ -7,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { pushGTMEvent } from '@/lib/gtm';
 
 /**
- * Section 1 — Full-screen hero with kinetic lasers, staggered headline, and CTAs.
+ * Section 1 — Full-screen hero with hero image background, kinetic lasers, staggered headline, and CTAs.
  */
 export function HeroSection() {
   const handleQuoteClick = () => {
@@ -16,11 +17,28 @@ export function HeroSection() {
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg-primary">
-      {/* Kinetic laser background */}
-      <KineticBackground />
+      {/* Hero background image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/foldable-garage-wasleen-pergolas-dubai-hero-image.webp"
+          alt="Wasleen Foldable Premium Garage — Dubai installation showcasing retractable carport"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-60"
+        />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-bg-primary/80 via-bg-primary/60 to-bg-primary/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-bg-primary/30" />
+      </div>
+
+      {/* Kinetic laser background overlay */}
+      <div className="absolute inset-0 z-[1]">
+        <KineticBackground />
+      </div>
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg-primary/60" />
+      <div className="absolute inset-0 z-[2] bg-gradient-to-b from-transparent via-transparent to-bg-primary/60" />
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-[1200px] px-4 text-center md:px-6 lg:px-8">

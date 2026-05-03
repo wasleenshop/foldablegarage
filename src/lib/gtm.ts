@@ -19,7 +19,8 @@ export type GTMEvent =
   | 'deposit_failed'
   | 'whatsapp_clicked'
   | 'abandoned_quote'
-  | 'spec_downloaded';
+  | 'spec_downloaded'
+  | 'video_played';
 
 /**
  * Pushes an event to the GTM dataLayer.

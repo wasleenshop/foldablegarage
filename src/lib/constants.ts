@@ -75,7 +75,7 @@ export const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const SITE_URL = 'https://foldablegarage.wasleen.com';
 export const COMPANY_EMAIL = 'info@wasleen.com';
 
-// ─── Emirates ──────────────────────────────────────
+// ─── Emirates / Locations ──────────────────────────
 
 export const EMIRATES = [
   'Dubai',
@@ -85,6 +85,31 @@ export const EMIRATES = [
   'Ras Al Khaimah',
   'Fujairah',
   'Umm Al Quwain',
+] as const;
+
+// ─── International Locations ───────────────────────
+
+export const INTERNATIONAL_LOCATIONS = [
+  'United Arab Emirates',
+  'Saudi Arabia',
+  'Qatar',
+  'Kuwait',
+  'Bahrain',
+  'Oman',
+  'United States',
+  'United Kingdom',
+  'Australia',
+  'Poland',
+  'Ecuador',
+  'South Africa',
+  'Malaysia',
+  'India',
+  'Germany',
+  'France',
+  'Canada',
+  'Switzerland',
+  'Singapore',
+  'New Zealand',
 ] as const;
 
 // ─── Property Types ────────────────────────────────

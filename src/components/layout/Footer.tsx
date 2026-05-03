@@ -4,14 +4,24 @@ import { Container } from '@/components/ui/Container';
 import { WHATSAPP_LINK, COMPANY_EMAIL } from '@/lib/constants';
 
 /**
- * 4-column footer with logo, links, contact info, and legal pages.
+ * 4-column footer with logo, links, contact info, legal pages, and SVG background pattern.
  */
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border-subtle bg-bg-secondary">
-      <Container className="py-16">
+    <footer className="relative border-t border-border-subtle bg-bg-secondary overflow-hidden">
+      {/* SVG Background — Blueprint/Architectural pattern */}
+      <div className="absolute inset-0 opacity-[0.15] pointer-events-none">
+        <object
+          data="/foldable-garage-svg.svg"
+          type="image/svg+xml"
+          className="h-full w-full"
+          aria-label=""
+        />
+      </div>
+
+      <Container className="relative z-10 py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Column 1 — Logo & Description */}
           <div className="space-y-4">
@@ -109,7 +119,7 @@ export function Footer() {
       </Container>
 
       {/* Bottom Bar */}
-      <div className="border-t border-border-subtle">
+      <div className="relative z-10 border-t border-border-subtle">
         <Container className="flex flex-col items-center justify-between py-6 md:flex-row">
           <p className="text-xs text-text-tertiary">
             © {currentYear} Wasleen. All rights reserved.

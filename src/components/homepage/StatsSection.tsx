@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { STATS } from '@/lib/constants';
@@ -12,7 +13,7 @@ type StatEntry = (typeof STATS)[number];
 
 /**
  * Section 3 — Stats counter with spring-animated count-up.
- * Each stat animates when scrolled into view.
+ * Each stat animates when scrolled into view. Background image shows the product diagram.
  */
 
 function CountUp({
@@ -102,11 +103,22 @@ function AnimatedStat({ stat, index }: { stat: StatEntry; index: number }) {
 
 export function StatsSection() {
   return (
-    <section className="relative bg-bg-secondary py-20 md:py-24">
+    <section className="relative bg-bg-primary py-20 md:py-24 overflow-hidden">
+      {/* Background image — subtle engineering diagram */}
+      <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
+        <Image
+          src="/images/foldable-garage-diagram-aluminium-alloy-by-wasleen-pergolas.webp"
+          alt=""
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+      </div>
+
       {/* Subtle top divider */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
 
-      <div className="mx-auto max-w-[1200px] px-4 md:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-[1200px] px-4 md:px-6 lg:px-8">
         <SectionHeading
           title="Trusted Across the UAE"
           subtitle="Numbers that reflect our commitment to quality and excellence in every installation."

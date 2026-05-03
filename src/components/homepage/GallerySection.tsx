@@ -6,37 +6,36 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
 /**
- * Gallery images — placeholder references.
- * Replace with actual SEO-named files from public/images/.
+ * Gallery images — actual SEO-named files from public/images/.
  */
 const GALLERY_IMAGES = [
   {
-    src: '/images/foldable-and-retractable-carport-engineering-specification-drawing-by-wasleen-pergolas.jpg',
+    src: '/images/foldable-and-retractable-carport-engineering-specification-drawing-by-wasleen-pergolas.webp',
     alt: 'Wasleen Foldable Garage engineering specification drawing showing dimensions and retraction mechanism',
     caption: 'Engineering Precision',
   },
   {
-    src: '/images/foldable-carport-color-selection-guide-by-wasleen-pergolas.jpg',
+    src: '/images/foldable-carport-color-selection-guide-by-wasleen-pergolas.webp',
     alt: 'Wasleen carport colour selection guide with five colour options for UAE villas',
     caption: 'Colour Selection Guide',
   },
   {
-    src: '/images/foldable-carport-material-choice-by-wasleen-pergolas.jpg',
+    src: '/images/foldable-carport-material-choice-by-wasleen-pergolas.webp',
     alt: 'Wasleen foldable carport material choice comparison between polycarbonate and glass panels',
     caption: 'Material Excellence',
   },
   {
-    src: '/images/foldable-garage-alluminium-alloy-cross-section-image-aluminium-alloy-by-wasleen-pergolas-2.jpg',
+    src: '/images/foldable-garage-alluminium-alloy-cross-section-image-aluminium-alloy-by-wasleen-pergolas-2.webp',
     alt: 'Wasleen foldable garage 6063-T5 aluminium alloy cross-section detail engineering view',
     caption: 'Structural Integrity',
   },
   {
-    src: '/images/retractable-carport-aluminium-alloy-by-wasleen-pergolas.jpg',
+    src: '/images/retractable-carport-aluminium-alloy-by-wasleen-pergolas.webp',
     alt: 'Wasleen retractable carport aluminium alloy frame installed on a UAE villa parking area',
     caption: 'Installation Showcase',
   },
   {
-    src: '/images/specification-foldable-and-retractable-garage.jpg',
+    src: '/images/specification-foldable-and-retractable-garage.webp',
     alt: 'Wasleen foldable and retractable garage technical specification sheet with dimensions',
     caption: 'Technical Specifications',
   },
@@ -61,7 +60,10 @@ export function GallerySection() {
   };
 
   return (
-    <section className="relative bg-bg-primary py-20 md:py-24">
+    <section className="relative bg-bg-secondary py-20 md:py-24">
+      {/* Subtle top divider */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
+
       <div className="mx-auto max-w-[1200px] px-4 md:px-6 lg:px-8">
         <SectionHeading
           title="Precision in Every Detail"

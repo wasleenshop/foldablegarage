@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { FEATURES } from '@/lib/constants';
@@ -10,11 +11,18 @@ import { FEATURES } from '@/lib/constants';
 type FeatureEntry = (typeof FEATURES)[number];
 
 /**
- * Section 6 — Feature cards with spec lists.
+ * Section 6 — Feature cards with spec lists and real product images.
  * 5 cards showcasing key product benefits.
  */
 
-const FEATURE_ICONS = ['⚙', '🔩', '🎨', '🛡', '📡'];
+const FEATURE_IMAGES: Record<string, string> = {
+  'precision-rail': '/images/foldable-garage-alluminium-alloy-cross-section-image-aluminium-alloy-by-wasleen-pergolas.webp',
+  'heavy-duty-roller': '/images/foldable-garage-alluminium-alloy-cross-section-image-aluminium-alloy-by-wasleen-pergolas-2.webp',
+  'pvdf-coating': '/images/foldable-carport-color-selection-guide-by-wasleen-pergolas.webp',
+  'polycarbonate-panels': '/images/foldable-carport-material-choice-by-wasleen-pergolas.webp',
+  'smart-automation': '/images/retractable-carport-aluminium-alloy-by-wasleen-pergolas.webp',
+};
+
 const FEATURE_DESCRIPTIONS: Record<string, string> = {
   'precision-rail':
     'Our precision rail system ensures smooth, silent operation for decades. Manufactured from 6063-T5 aluminium, each rail is anodised for maximum corrosion resistance in the UAE coastal climate.',
@@ -42,6 +50,7 @@ export function FeaturesSection() {
           {FEATURES.map((feature, index) => {
             const f = feature as FeatureEntry;
             const isReversed = index % 2 === 1;
+            const imageSrc = FEATURE_IMAGES[f.id];
 
             return (
               <motion.div
@@ -54,16 +63,15 @@ export function FeaturesSection() {
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.7, delay: index * 0.1 }}
               >
-                {/* Visual placeholder */}
-                <div className="relative flex aspect-[3/2] w-full items-center justify-center overflow-hidden rounded-2xl border border-border-subtle bg-gradient-to-br from-bg-card to-bg-secondary md:w-1/2">
-                  <div className="text-center">
-                    <span className="text-6xl opacity-30 md:text-7xl">
-                      {FEATURE_ICONS[index]}
-                    </span>
-                    <p className="mt-4 text-xs text-text-tertiary">
-                      {f.title}
-                    </p>
-                  </div>
+                {/* Feature image */}
+                <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl border border-border-subtle bg-bg-card md:w-1/2">
+                  <Image
+                    src={imageSrc}
+                    alt={`Wasleen ${f.title.toLowerCase()} — engineering detail and material quality`}
+                    fill
+                    className="object-cover transition-all duration-500 hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
 
                 {/* Content */}

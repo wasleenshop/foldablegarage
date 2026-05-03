@@ -1,19 +1,49 @@
 'use client';
 
-import { WHATSAPP_LINK } from '@/lib/constants';
+import { usePathname } from 'next/navigation';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 import { pushGTMEvent } from '@/lib/gtm';
 
 /**
+ * Page-specific WhatsApp message templates.
+ * Each message is customized to the page the user is currently viewing.
+ */
+const PAGE_MESSAGES: Record<string, string> = {
+  '/': 'Hello! I\'m interested in the Wasleen Foldable Garage. I was browsing your homepage and would like more information.',
+  '/product': 'Hello! I\'d like to know more about the Foldable Premium Garage product — specifications, dimensions, and pricing.',
+  '/gallery': 'Hello! I was viewing your gallery and would like more details about the installations shown.',
+  '/about': 'Hello! I\'d like to learn more about Wasleen and your team.',
+  '/contact': 'Hello! I\'d like to get in touch about your foldable garages. Please contact me.',
+  '/quote': 'Hello! I was using your quote configurator and have a question about my configuration.',
+  '/thank-you': 'Hello! I\'ve just submitted a quote request and would like to follow up.',
+  '/blog': 'Hello! I was reading your blog and would like more information about your products.',
+  '/warranty': 'Hello! I have a question about your warranty policy.',
+  '/returns': 'Hello! I have a question about your returns and exchanges policy.',
+  '/terms': 'Hello! I have a question about your terms and conditions.',
+  '/privacy': 'Hello! I have a question about your privacy policy.',
+};
+
+/**
+ * Default message if no page-specific message exists.
+ */
+const DEFAULT_MESSAGE = 'Hello! I\'m interested in the Wasleen Foldable Garage. Can you provide more information?';
+
+/**
  * Floating WhatsApp button — fixed bottom-right, pulse animation.
+ * Custom message per page using the current pathname.
  */
 export function WhatsAppButton() {
+  const pathname = usePathname();
+  const message = PAGE_MESSAGES[pathname] || DEFAULT_MESSAGE;
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
   const handleClick = () => {
-    pushGTMEvent('whatsapp_clicked', { source: 'floating_button' });
+    pushGTMEvent('whatsapp_clicked', { source: 'floating_button', page: pathname });
   };
 
   return (
     <a
-      href={WHATSAPP_LINK}
+      href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleClick}

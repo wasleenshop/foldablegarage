@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { StarRating } from '@/components/ui/StarRating';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
-import { EMIRATES, PROPERTY_TYPES } from '@/lib/constants';
+import { INTERNATIONAL_LOCATIONS, PROPERTY_TYPES } from '@/lib/constants';
 
 interface WriteReviewProps {
   isOpen: boolean;
@@ -16,6 +16,7 @@ interface FormData {
   name: string;
   email: string;
   location: string;
+  nationality: string;
   rating: number;
   title: string;
   content: string;
@@ -25,7 +26,8 @@ interface FormData {
 const INITIAL_FORM: FormData = {
   name: '',
   email: '',
-  location: 'Dubai',
+  location: 'United Arab Emirates',
+  nationality: '',
   rating: 5,
   title: '',
   content: '',
@@ -185,11 +187,25 @@ export function WriteReview({ isOpen, onClose }: WriteReviewProps) {
                     />
                   </div>
 
-                  {/* Location + Property Type */}
+                  {/* Nationality + Location */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
+                      <label htmlFor="review-nationality" className="mb-1.5 block text-sm font-medium text-text-secondary">
+                        Nationality *
+                      </label>
+                      <input
+                        id="review-nationality"
+                        type="text"
+                        value={form.nationality}
+                        onChange={(e) => update('nationality', e.target.value)}
+                        className="w-full rounded-lg border border-border-subtle bg-bg-primary px-4 py-2.5 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent-gold/50 focus:outline-none"
+                        placeholder="e.g. Emirati, American, British"
+                        required
+                      />
+                    </div>
+                    <div>
                       <label htmlFor="review-location" className="mb-1.5 block text-sm font-medium text-text-secondary">
-                        Emirate
+                        Location
                       </label>
                       <select
                         id="review-location"
@@ -197,26 +213,28 @@ export function WriteReview({ isOpen, onClose }: WriteReviewProps) {
                         onChange={(e) => update('location', e.target.value)}
                         className="w-full rounded-lg border border-border-subtle bg-bg-primary px-4 py-2.5 text-sm text-text-primary focus:border-accent-gold/50 focus:outline-none"
                       >
-                        {EMIRATES.map((e) => (
-                          <option key={e} value={e}>{e}</option>
+                        {INTERNATIONAL_LOCATIONS.map((loc) => (
+                          <option key={loc} value={loc}>{loc}</option>
                         ))}
                       </select>
                     </div>
-                    <div>
-                      <label htmlFor="review-property" className="mb-1.5 block text-sm font-medium text-text-secondary">
-                        Property Type
-                      </label>
-                      <select
-                        id="review-property"
-                        value={form.propertyType}
-                        onChange={(e) => update('propertyType', e.target.value)}
-                        className="w-full rounded-lg border border-border-subtle bg-bg-primary px-4 py-2.5 text-sm text-text-primary focus:border-accent-gold/50 focus:outline-none"
-                      >
-                        {PROPERTY_TYPES.map((p) => (
-                          <option key={p} value={p}>{p}</option>
-                        ))}
-                      </select>
-                    </div>
+                  </div>
+
+                  {/* Property Type */}
+                  <div>
+                    <label htmlFor="review-property" className="mb-1.5 block text-sm font-medium text-text-secondary">
+                      Property Type
+                    </label>
+                    <select
+                      id="review-property"
+                      value={form.propertyType}
+                      onChange={(e) => update('propertyType', e.target.value)}
+                      className="w-full rounded-lg border border-border-subtle bg-bg-primary px-4 py-2.5 text-sm text-text-primary focus:border-accent-gold/50 focus:outline-none"
+                    >
+                      {PROPERTY_TYPES.map((p) => (
+                        <option key={p} value={p}>{p}</option>
+                      ))}
+                    </select>
                   </div>
 
                   {/* Title */}
