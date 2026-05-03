@@ -374,6 +374,71 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════
+   Brochure Page — Animated Gradient Text & Grid
+   ═══════════════════════════════════════════════════ */
+
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gridGlowFlow {
+  0% {
+    opacity: 0.03;
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    opacity: 0.07;
+    transform: scale(1.02) rotate(90deg);
+  }
+  50% {
+    opacity: 0.05;
+    transform: scale(1.01) rotate(180deg);
+  }
+  75% {
+    opacity: 0.07;
+    transform: scale(1.02) rotate(270deg);
+  }
+  100% {
+    opacity: 0.03;
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes glassBorderPulse {
+  0%, 100% {
+    border-color: rgba(201, 168, 76, 0.15);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.03);
+  }
+  50% {
+    border-color: rgba(0, 212, 255, 0.25);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.06);
+  }
+}
+
+@keyframes gradientOrbFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  50% {
+    transform: translate(-20px, 30px) scale(0.95);
+  }
+  75% {
+    transform: translate(20px, 20px) scale(1.02);
+  }
+}
+
+/* ═══════════════════════════════════════════════════
    Utility Classes
    ═══════════════════════════════════════════════════ */
 
@@ -389,6 +454,13 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-effect-strong {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .noise-overlay {

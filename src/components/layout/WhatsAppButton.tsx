@@ -21,6 +21,7 @@ const PAGE_MESSAGES: Record<string, string> = {
   '/returns': 'Hello! I have a question about your returns and exchanges policy.',
   '/terms': 'Hello! I have a question about your terms and conditions.',
   '/privacy': 'Hello! I have a question about your privacy policy.',
+  '/brochure': 'Hello! I was viewing the Wasleen Foldable Garage brochure and would like to request the PDF brochure sent to me. Please share more details.',
 };
 
 /**

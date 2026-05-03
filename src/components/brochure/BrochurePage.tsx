@@ -5,12 +5,16 @@
 // ═══════════════════════════════════════════════════
 //
 // Features:
-// - Immersive hero with kinetic background + cascading text
+// - Immersive hero with full-bleed bg image + kinetic lasers
 // - Brochure preview carousel/grid
+// - Feature section with mechanism video background,
+//   glassmorphism cards, animated gradient heading,
+//   and explanatory images per feature
 // - Lead capture form (name, email, phone)
 // - WhatsApp CTA
 // - GTM event on download
 // - Framer Motion staggered reveals
+// - Colourful gradient sections throughout
 
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
@@ -20,6 +24,29 @@ import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { pushGTMEvent } from '@/lib/gtm';
 import { WHATSAPP_LINK, WHATSAPP_NUMBER, SITE_URL, FEATURES, COLOURS, STATS } from '@/lib/constants';
+
+// ─── Feature Images & Descriptions (like homepage FeaturesSection) ──
+
+const FEATURE_IMAGES: Record<string, string> = {
+  'precision-rail': '/images/foldable-garage-alluminium-alloy-cross-section-image-aluminium-alloy-by-wasleen-pergolas.webp',
+  'heavy-duty-roller': '/images/foldable-garage-alluminium-alloy-cross-section-image-aluminium-alloy-by-wasleen-pergolas-2.webp',
+  'pvdf-coating': '/images/foldable-carport-color-selection-guide-by-wasleen-pergolas.webp',
+  'polycarbonate-panels': '/images/foldable-carport-material-choice-by-wasleen-pergolas.webp',
+  'smart-automation': '/images/retractable-carport-aluminium-alloy-by-wasleen-pergolas.webp',
+};
+
+const FEATURE_DESCRIPTIONS: Record<string, string> = {
+  'precision-rail':
+    'Our precision rail system ensures smooth, silent operation for decades. Manufactured from 6063-T5 aluminium, each rail is anodised for maximum corrosion resistance in the UAE coastal climate.',
+  'heavy-duty-roller':
+    'Built to withstand heavy daily use, our roller assembly features sealed ball bearings rated to 500 kg each and self-lubricating polymer bushings for maintenance-free operation.',
+  'pvdf-coating':
+    'Using Kynar 500® PVDF resin, our coatings deliver 15+ years of colour retention without fading, chalking, or delamination — even under intense UAE sun exposure.',
+  'polycarbonate-panels':
+    '6mm twin-wall polycarbonate panels offer 99.9% UV protection while diffusing natural light. 50 times more impact-resistant than glass, they provide safety and comfort.',
+  'smart-automation':
+    'Control your foldable garage from anywhere. Remote operation, rain and heat sensors, and smartphone app compatibility make daily use effortless.',
+};
 
 // ─── Animation Variants ────────────────────────────
 
@@ -133,27 +160,48 @@ export function BrochurePage() {
   // ── Format WhatsApp number for display ───────────
   const displayPhone = `+${WHATSAPP_NUMBER.slice(0, 3)} ${WHATSAPP_NUMBER.slice(3, 5)} ${WHATSAPP_NUMBER.slice(5, 8)} ${WHATSAPP_NUMBER.slice(8)}`;
 
+  // ── WhatsApp brochure send URL ──────────────────
+  const brochureWhatsAppMessage = encodeURIComponent(
+    'Hello! I viewed the Wasleen Foldable Garage brochure online and would like to receive the complete PDF brochure. Please send it to me. Thank you!'
+  );
+  const brochureWhatsAppUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${brochureWhatsAppMessage}`;
+
   return (
     <main className="relative bg-bg-primary min-h-screen overflow-hidden">
       {/* ═══ HERO SECTION ═══ */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        {/* Kinetic background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-bg-primary via-bg-primary to-bg-secondary">
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-[0.07]"
-            style={{
-              backgroundImage: `
-                linear-gradient(135deg, #00D4FF 1px, transparent 1px),
-                linear-gradient(225deg, #7C3AED 1px, transparent 1px)
-              `,
-              backgroundSize: '80px 80px, 100px 100px',
-            }}
+        {/* Full-bleed background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/retractable-carport-aluminium-alloy-by-wasleen-pergolas.webp"
+            alt="Wasleen Foldable Premium Garage — retractable carport aluminium alloy structure"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-50"
           />
-          {/* Radial glow */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-gold/5 rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-accent-cyan/5 rounded-full blur-[100px]" />
+          {/* Dark overlays for readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-bg-primary/85 via-bg-primary/65 to-bg-primary/85" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/40 to-transparent" />
         </div>
+
+        {/* Kinetic laser overlay */}
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `
+              linear-gradient(135deg, #00D4FF 1px, transparent 1px),
+              linear-gradient(225deg, #7C3AED 1px, transparent 1px)
+            `,
+            backgroundSize: '80px 80px, 100px 100px',
+          }}
+        />
+
+        {/* Colourful glow orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent-cyan/8 rounded-full blur-[120px] animate-[gradientOrbFloat_10s_ease-in-out_infinite]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] bg-accent-violet/8 rounded-full blur-[100px] animate-[gradientOrbFloat_12s_ease-in-out_infinite_2s]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-gold/5 rounded-full blur-[120px]" />
 
         <Container className="relative z-10 pt-24 pb-16">
           <motion.div
@@ -211,9 +259,9 @@ export function BrochurePage() {
                 Download Free Brochure
               </a>
 
-              {/* WhatsApp CTA */}
+              {/* WhatsApp CTA — auto-send brochure request */}
               <a
-                href={WHATSAPP_LINK}
+                href={brochureWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => pushGTMEvent('whatsapp_clicked', { source: 'brochure-hero' })}
@@ -222,7 +270,7 @@ export function BrochurePage() {
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
-                {displayPhone}
+                Send Brochure via WhatsApp
               </a>
             </motion.div>
 
@@ -256,7 +304,11 @@ export function BrochurePage() {
       </section>
 
       {/* ═══ BROCHURE PREVIEW ═══ */}
-      <section className="relative py-24 bg-bg-secondary">
+      <section className="relative py-24 overflow-hidden bg-gradient-to-b from-bg-secondary via-bg-secondary to-[#0f1117]">
+        {/* Colourful background orbs */}
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-accent-gold/4 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 right-0 w-[350px] h-[350px] bg-accent-cyan/4 rounded-full blur-[100px]" />
+
         <Container>
           <motion.div
             initial="hidden"
@@ -376,9 +428,54 @@ export function BrochurePage() {
         </Container>
       </section>
 
-      {/* ═══ FEATURES HIGHLIGHTS ═══ */}
-      <section className="relative py-24 bg-bg-primary">
-        <Container>
+      {/* ═══ FEATURES HIGHLIGHTS — Engineering Excellence ═══ */}
+      <section className="relative py-24 overflow-hidden bg-gradient-to-b from-bg-primary via-[#0c0e14] to-bg-primary">
+        {/* Mechanism video background (subtle, low-opacity) */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-[0.06] scale-110"
+          >
+            <source src="/videos/foldable-garage-mechanism-video.mp4" type="video/mp4" />
+          </video>
+          {/* Dark overlay over video */}
+          <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/80 via-bg-primary/60 to-bg-primary/80" />
+        </div>
+
+        {/* Animated grid background — light gradient animation */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div
+            className="absolute inset-0 animate-[gridGlowFlow_20s_linear_infinite]"
+            style={{
+              background: `
+                radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 20%, rgba(201, 168, 76, 0.04) 0%, transparent 50%)
+              `,
+            }}
+          />
+          {/* Grid lines */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(201, 168, 76, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px',
+            }}
+          />
+        </div>
+
+        {/* Colourful floating orbs */}
+        <div className="absolute top-[10%] left-[5%] w-[300px] h-[300px] bg-accent-cyan/6 rounded-full blur-[100px] animate-[gradientOrbFloat_8s_ease-in-out_infinite]" />
+        <div className="absolute bottom-[15%] right-[8%] w-[350px] h-[350px] bg-accent-violet/6 rounded-full blur-[100px] animate-[gradientOrbFloat_10s_ease-in-out_infinite_1.5s]" />
+        <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[400px] h-[400px] bg-accent-gold/4 rounded-full blur-[120px] animate-[gradientOrbFloat_12s_ease-in-out_infinite_3s]" />
+
+        <Container className="relative z-10">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -391,44 +488,118 @@ export function BrochurePage() {
                 Features
               </span>
             </motion.div>
-            <SectionHeading
-              title="Engineering Excellence"
-              subtitle="Every detail engineered for the UAE climate — from precision rails to smart automation."
-            />
 
+            {/* Animated Gradient Heading */}
+            <motion.h2
+              className="text-center text-[clamp(2rem,3.5vw,3rem)] font-bold leading-[1.1] mb-3"
+              variants={fadeUp}
+            >
+              <span
+                className="bg-gradient-to-r from-accent-gold via-accent-cyan to-accent-violet bg-[length:200%_auto] animate-[gradientText_4s_ease_infinite]"
+                style={{
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Engineering Excellence
+              </span>
+            </motion.h2>
+
+            <motion.p
+              className="text-center text-text-secondary text-[clamp(0.875rem,1vw,1rem)] max-w-2xl mx-auto mb-12 leading-relaxed"
+              variants={fadeUp}
+              custom={1}
+            >
+              Every detail engineered for the UAE climate — from precision rails to smart automation.
+              Discover the technology behind Wasleen's German-engineered retractable carports.
+            </motion.p>
+
+            {/* Glassmorphism Grid */}
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               variants={staggerContainer}
             >
-              {FEATURES.map((feature) => (
-                <motion.div
-                  key={feature.id}
-                  className="p-6 rounded-xl bg-bg-card border border-border-subtle hover:border-accent-gold/30 transition-all duration-300"
-                  variants={fadeUp}
-                >
-                  <div className="w-10 h-10 rounded-lg bg-accent-gold/10 flex items-center justify-center mb-4">
-                    <svg className="w-5 h-5 text-accent-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-base font-bold text-text-primary mb-2">{feature.title}</h3>
-                  <ul className="space-y-1.5">
-                    {feature.specs.map((spec, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
-                        <span className="mt-1.5 w-1 h-1 rounded-full bg-accent-gold flex-shrink-0" />
-                        {spec}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
+              {FEATURES.map((feature, index) => {
+                const imageSrc = FEATURE_IMAGES[feature.id];
+                const description = FEATURE_DESCRIPTIONS[feature.id];
+
+                return (
+                  <motion.div
+                    key={feature.id}
+                    className="group rounded-xl overflow-hidden backdrop-blur-[16px] bg-white/[0.04] border border-white/[0.08] hover:border-accent-gold/30 transition-all duration-500 animate-[glassBorderPulse_4s_ease-in-out_infinite]"
+                    style={{ animationDelay: `${index * 0.5}s` }}
+                    variants={fadeUp}
+                    custom={index}
+                  >
+                    {/* Feature image */}
+                    {imageSrc && (
+                      <div className="relative aspect-[3/2] overflow-hidden">
+                        <Image
+                          src={imageSrc}
+                          alt={`Wasleen ${feature.title.toLowerCase()} — engineering detail`}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        />
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        {/* Feature number badge */}
+                        <div className="absolute top-3 left-3 px-2 py-1 rounded-md bg-black/40 backdrop-blur-[8px] border border-white/10">
+                          <span className="text-[0.55rem] font-semibold tracking-[0.15em] text-accent-gold uppercase">
+                            Feature {(index + 1).toString().padStart(2, '0')}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Content */}
+                    <div className="p-5">
+                      <div className="flex items-center gap-3 mb-3">
+                        {/* Gold icon */}
+                        <div className="w-9 h-9 rounded-lg bg-accent-gold/10 flex items-center justify-center shrink-0">
+                          <svg className="w-4 h-4 text-accent-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-base font-bold text-text-primary group-hover:text-accent-gold transition-colors duration-300">
+                          {feature.title}
+                        </h3>
+                      </div>
+
+                      {/* Description */}
+                      {description && (
+                        <p className="text-sm text-text-secondary leading-relaxed mb-4">
+                          {description}
+                        </p>
+                      )}
+
+                      {/* Specs */}
+                      {feature.specs && feature.specs.length > 0 && (
+                        <ul className="space-y-1.5">
+                          {feature.specs.map((spec, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-text-secondary/80">
+                              <span className="mt-1.5 w-1 h-1 rounded-full bg-accent-cyan flex-shrink-0" />
+                              {spec}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </motion.div>
         </Container>
       </section>
 
       {/* ═══ COLOUR OPTIONS ═══ */}
-      <section className="relative py-24 bg-bg-secondary">
+      <section className="relative py-24 overflow-hidden bg-gradient-to-b from-bg-secondary via-[#12141a] to-bg-secondary">
+        {/* Colourful orbs */}
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent-violet/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-accent-gold/5 rounded-full blur-[100px]" />
+
         <Container>
           <motion.div
             initial="hidden"
@@ -451,17 +622,23 @@ export function BrochurePage() {
               className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-12"
               variants={staggerContainer}
             >
-              {COLOURS.map((colour) => (
+              {COLOURS.map((colour, index) => (
                 <motion.div
                   key={colour.id}
-                  className="p-5 rounded-xl bg-bg-card border border-border-subtle text-center group hover:border-accent-gold/40 transition-all duration-300"
+                  className="p-5 rounded-xl bg-white/[0.03] backdrop-blur-[12px] border border-white/[0.06] text-center group hover:border-accent-gold/40 transition-all duration-300"
                   variants={scaleIn}
                 >
-                  {/* Colour swatch */}
-                  <div
-                    className="w-12 h-12 rounded-full mx-auto mb-3 ring-2 ring-border-subtle group-hover:ring-accent-gold/50 transition-all duration-300"
-                    style={{ backgroundColor: colour.hex }}
-                  />
+                  {/* Colour swatch with glow */}
+                  <div className="relative mb-3 flex justify-center">
+                    <div
+                      className="w-14 h-14 rounded-full ring-2 ring-white/10 group-hover:ring-accent-gold/50 transition-all duration-300"
+                      style={{ backgroundColor: colour.hex }}
+                    />
+                    <div
+                      className="absolute inset-0 w-14 h-14 rounded-full mx-auto blur-[12px] opacity-30 transition-opacity duration-300 group-hover:opacity-60"
+                      style={{ backgroundColor: colour.hex }}
+                    />
+                  </div>
                   <h4 className="text-sm font-semibold text-text-primary mb-0.5">
                     {colour.name}
                   </h4>
@@ -481,10 +658,11 @@ export function BrochurePage() {
       {/* ═══ LEAD CAPTURE + DOWNLOAD ═══ */}
       <section
         id="download-form"
-        className="relative py-24 bg-bg-primary overflow-hidden"
+        className="relative py-24 overflow-hidden bg-gradient-to-b from-bg-primary via-[#0c0e14] to-bg-primary"
       >
-        {/* Background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-gold/5 rounded-full blur-[120px]" />
+        {/* Colourful background glows */}
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-accent-gold/6 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent-cyan/6 rounded-full blur-[100px]" />
 
         <Container className="relative z-10">
           <motion.div
@@ -526,7 +704,7 @@ export function BrochurePage() {
                     value={form.name}
                     onChange={handleChange('name')}
                     placeholder="John Doe"
-                    className="w-full px-4 py-3 rounded-lg bg-bg-card border border-border-subtle text-text-primary placeholder:text-text-tertiary text-sm focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20 transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-white/[0.04] backdrop-blur-[8px] border border-white/[0.08] text-text-primary placeholder:text-text-tertiary text-sm focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20 transition-all"
                   />
                 </div>
 
@@ -542,7 +720,7 @@ export function BrochurePage() {
                     onChange={handleChange('email')}
                     placeholder="john@example.com"
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-bg-card border border-border-subtle text-text-primary placeholder:text-text-tertiary text-sm focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20 transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-white/[0.04] backdrop-blur-[8px] border border-white/[0.08] text-text-primary placeholder:text-text-tertiary text-sm focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20 transition-all"
                   />
                 </div>
               </div>
@@ -558,7 +736,7 @@ export function BrochurePage() {
                   value={form.phone}
                   onChange={handleChange('phone')}
                   placeholder="+971 50 123 4567"
-                  className="w-full px-4 py-3 rounded-lg bg-bg-card border border-border-subtle text-text-primary placeholder:text-text-tertiary text-sm focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20 transition-all"
+                  className="w-full px-4 py-3 rounded-lg bg-white/[0.04] backdrop-blur-[8px] border border-white/[0.08] text-text-primary placeholder:text-text-tertiary text-sm focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/20 transition-all"
                 />
               </div>
 
@@ -613,17 +791,17 @@ export function BrochurePage() {
               )}
             </motion.form>
 
-            {/* WhatsApp alternative */}
+            {/* WhatsApp alternative — auto-send brochure request */}
             <motion.div
               className="mt-8 text-center"
               variants={fadeUp}
               custom={4}
             >
               <p className="text-xs text-text-tertiary mb-3">
-                Prefer to chat? Get the brochure on WhatsApp
+                Prefer to chat? Get the brochure sent instantly on WhatsApp
               </p>
               <a
-                href={WHATSAPP_LINK}
+                href={brochureWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => pushGTMEvent('whatsapp_clicked', { source: 'brochure-form' })}
@@ -632,7 +810,7 @@ export function BrochurePage() {
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
-                Send via WhatsApp
+                Send Brochure via WhatsApp
               </a>
             </motion.div>
           </motion.div>
@@ -640,7 +818,11 @@ export function BrochurePage() {
       </section>
 
       {/* ═══ FINAL CTA ═══ */}
-      <section className="relative py-20 bg-bg-secondary">
+      <section className="relative py-20 overflow-hidden bg-gradient-to-b from-bg-secondary via-[#0f1117] to-bg-secondary">
+        {/* Colourful orbs */}
+        <div className="absolute top-1/3 left-[10%] w-[300px] h-[300px] bg-accent-gold/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/3 right-[10%] w-[300px] h-[300px] bg-accent-cyan/5 rounded-full blur-[100px]" />
+
         <Container>
           <motion.div
             initial="hidden"
@@ -675,7 +857,7 @@ export function BrochurePage() {
                 Configure Online →
               </a>
               <a
-                href={WHATSAPP_LINK}
+                href={brochureWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => pushGTMEvent('whatsapp_clicked', { source: 'brochure-cta' })}
@@ -684,7 +866,7 @@ export function BrochurePage() {
                 <svg className="w-4 h-4 text-whatsapp" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
-                {displayPhone}
+                Send Brochure via WhatsApp
               </a>
             </motion.div>
           </motion.div>
