@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wasleen Foldable Garage — "W-Shape Pergola" Logo Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: #FAFAFA;
+      color: #1A1A1A;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+    
+    h1 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      margin-bottom: 4px;
+    }
+    h2 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #666666;
+      margin-bottom: 48px;
+      line-height: 1.6;
+    }
+    .subtitle strong { color: #1A1A1A; }
+
+    .section { margin-bottom: 64px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #E5E5E5;
+      padding-bottom: 8px;
+    }
+
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .logo-card {
+      background: #FFFFFF;
+      border: 1px solid #E5E5E5;
+      border-radius: 16px;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .logo-card:hover {
+      border-color: #D4A02B40;
+      box-shadow: 0 4px 24px rgba(212, 160, 43, 0.08);
+    }
+    .logo-card .label {
+      font-size: 11px;
+      color: #999;
+      margin-top: 16px;
+      letter-spacing: 0.05em;
+    }
+    .logo-card .size-tag {
+      font-size: 10px;
+      color: #CCC;
+      margin-top: 4px;
+      font-family: monospace;
+    }
+    .logo-card-wide {
+      grid-column: 1 / -1;
+      padding: 48px;
+    }
+
+    .logo-card-dark {
+      background: #1A1A1A;
+      border-color: #333;
+    }
+    .logo-card-dark .label { color: #999; }
+    .logo-card-dark .size-tag { color: #666; }
+
+    .flex-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .type-row {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .type-sample {
+      font-size: 32px;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+
+    .rule-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .rule {
+      background: #FFFFFF;
+      border: 1px solid #E5E5E5;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .rule .title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 4px;
+    }
+    .rule .desc {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.5;
+    }
+    .rule .desc code {
+      color: #1A1A1A;
+      font-family: monospace;
+      font-weight: 600;
+    }
+
+    .concept-diagram {
+      background: #FFFFFF;
+      border: 1px solid #E5E5E5;
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      justify-content: center;
+    }
+    .concept-diagram pre {
+      font-family: monospace;
+      font-size: 16px;
+      line-height: 1.3;
+      color: #1A1A1A;
+      letter-spacing: 1px;
+    }
+
+    .color-chip {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-right: 4px;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #E5E5E5;
+      margin: 48px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <h1>Brand Identity</h1>
+    <h2>Wasleen <span style="color:#D4A02B;">Foldable</span> Garage</h2>
+    <div class="subtitle">
+      <strong>"W-Shape Pergola"</strong> — A premium architectural mark.<br />
+      W-shaped roof profile with two peaks, horizontal rafters, decorative grill/lattice work,
+      and a rich <span style="color:#D4A02B; font-weight:600;">gold-to-copper gradient</span> for a luxury Middle Eastern aesthetic.
+    </div>
+
+    <!-- Concept diagram -->
+    <div class="section">
+      <div class="section-label">Design Concept — W-Shape Pergola</div>
+      <div class="concept-diagram">
+        <pre>
+               /\            /\          ← W-shaped roof (two peaks)
+              /  \          /  \
+             /    \________/    \
+            /                    \
+           ╱──────────────────────╲    ← Rafter beams
+          ╱                        ╲
+         ╱     ╱╲  ╱╲  ╱╲          ╲   ← Grill / lattice pattern
+        ╱     ╱  ╲╱  ╲╱  ╲         ╲
+       ╱     ╱              ╲        ╲
+      ┃                        ┃         ← Two supporting columns
+      ┃  ╱╲  ╱╲  ╱╲  ╱╲  ╱╲  ┃         ← Decorative grills
+      ┃  ╲╱  ╲╱  ╲╱  ╲╱  ╲╱  ┃
+      ┃                        ┃
+      ┗━━━━━━━━━━━━━━━━━━━━━━━━┛         ← Base platform
+
+      W-roof  →  Two peaks = foldable/retractable mechanism
+      Rafters  →  Horizontal roof support beams
+      Grills   →  Decorative lattice (pergola trellis detail)
+      Columns  →  Support + stability
+      Gold     →  Premium UAE luxury aesthetic
+        </pre>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- Size Spectrum -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Size Spectrum</div>
+      <div class="logo-grid">
+
+        <!-- 24px -->
+        <div class="logo-card">
+          <svg viewBox="0 0 200 200" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="s1-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#F9D976"/><stop offset="25%" stop-color="#E8B84B"/>
+                <stop offset="60%" stop-color="#D4A02B"/><stop offset="100%" stop-color="#A67C00"/>
+              </linearGradient>
+              <linearGradient id="s1-copper" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E8A87C"/><stop offset="50%" stop-color="#CD7F32"/><stop offset="100%" stop-color="#A0652A"/>
+              </linearGradient>
+              <linearGradient id="s1-hl" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#F9D976" stop-opacity="0"/><stop offset="40%" stop-color="#F9D976" stop-opacity="0.4"/><stop offset="100%" stop-color="#F9D976" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="s1-glow" x="-10%" y="-10%" width="120%" height="130%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="0" dy="1"/>
+                <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" stroke="url(#s1-gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#s1-glow)"/>
+            <line x1="42" y1="72" x2="158" y2="72" stroke="url(#s1-gold)" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+            <line x1="38" y1="82" x2="162" y2="82" stroke="url(#s1-gold)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="35" y1="92" x2="165" y2="92" stroke="url(#s1-gold)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+            <rect x="30" y="95" width="10" height="88" rx="4" fill="url(#s1-gold)"/>
+            <rect x="32" y="97" width="6" height="84" rx="2" fill="url(#s1-hl)" opacity="0.5"/>
+            <rect x="160" y="95" width="10" height="88" rx="4" fill="url(#s1-gold)"/>
+            <rect x="162" y="97" width="6" height="84" rx="2" fill="url(#s1-hl)" opacity="0.5"/>
+            <rect x="28" y="93" width="14" height="4" rx="2" fill="url(#s1-gold)" opacity="0.8"/>
+            <rect x="158" y="93" width="14" height="4" rx="2" fill="url(#s1-gold)" opacity="0.8"/>
+            <g stroke="url(#s1-copper)" stroke-width="1.5">
+              <line x1="40" y1="110" x2="160" y2="150" opacity="0.45"/><line x1="40" y1="130" x2="160" y2="170" opacity="0.45"/>
+              <line x1="40" y1="150" x2="160" y2="190" opacity="0.35"/><line x1="160" y1="110" x2="40" y2="150" opacity="0.45"/>
+              <line x1="160" y1="130" x2="40" y2="170" opacity="0.45"/><line x1="160" y1="150" x2="40" y2="190" opacity="0.35"/>
+            </g>
+            <g stroke="url(#s1-gold)" stroke-width="1.5">
+              <line x1="40" y1="120" x2="160" y2="120" opacity="0.35"/><line x1="40" y1="140" x2="160" y2="140" opacity="0.35"/>
+              <line x1="40" y1="160" x2="160" y2="160" opacity="0.35"/>
+            </g>
+            <rect x="26" y="183" width="148" height="4" rx="2" fill="url(#s1-gold)" opacity="0.25"/>
+          </svg>
+          <div class="label">Favicon (24px)</div>
+          <div class="size-tag">size=24</div>
+        </div>
+
+        <!-- 32px -->
+        <div class="logo-card">
+          <svg viewBox="0 0 200 200" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="s2-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#F9D976"/><stop offset="25%" stop-color="#E8B84B"/>
+                <stop offset="60%" stop-color="#D4A02B"/><stop offset="100%" stop-color="#A67C00"/>
+              </linearGradient>
+              <linearGradient id="s2-copper" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E8A87C"/><stop offset="50%" stop-color="#CD7F32"/><stop offset="100%" stop-color="#A0652A"/>
+              </linearGradient>
+              <linearGradient id="s2-hl" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#F9D976" stop-opacity="0"/><stop offset="40%" stop-color="#F9D976" stop-opacity="0.4"/><stop offset="100%" stop-color="#F9D976" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="s2-glow" x="-10%" y="-10%" width="120%" height="130%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="0" dy="1"/>
+                <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" stroke="url(#s2-gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#s2-glow)"/>
+            <line x1="42" y1="72" x2="158" y2="72" stroke="url(#s2-gold)" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+            <line x1="38" y1="82" x2="162" y2="82" stroke="url(#s2-gold)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="35" y1="92" x2="165" y2="92" stroke="url(#s2-gold)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+            <rect x="30" y="95" width="10" height="88" rx="4" fill="url(#s2-gold)"/>
+            <rect x="32" y="97" width="6" height="84" rx="2" fill="url(#s2-hl)" opacity="0.5"/>
+            <rect x="160" y="95" width="10" height="88" rx="4" fill="url(#s2-gold)"/>
+            <rect x="162" y="97" width="6" height="84" rx="2" fill="url(#s2-hl)" opacity="0.5"/>
+            <rect x="28" y="93" width="14" height="4" rx="2" fill="url(#s2-gold)" opacity="0.8"/>
+            <rect x="158" y="93" width="14" height="4" rx="2" fill="url(#s2-gold)" opacity="0.8"/>
+            <g stroke="url(#s2-copper)" stroke-width="1.5">
+              <line x1="40" y1="110" x2="160" y2="150" opacity="0.45"/><line x1="40" y1="130" x2="160" y2="170" opacity="0.45"/>
+              <line x1="40" y1="150" x2="160" y2="190" opacity="0.35"/><line x1="160" y1="110" x2="40" y2="150" opacity="0.45"/>
+              <line x1="160" y1="130" x2="40" y2="170" opacity="0.45"/><line x1="160" y1="150" x2="40" y2="190" opacity="0.35"/>
+            </g>
+            <g stroke="url(#s2-gold)" stroke-width="1.5">
+              <line x1="40" y1="120" x2="160" y2="120" opacity="0.35"/><line x1="40" y1="140" x2="160" y2="140" opacity="0.35"/>
+              <line x1="40" y1="160" x2="160" y2="160" opacity="0.35"/>
+            </g>
+            <rect x="26" y="183" width="148" height="4" rx="2" fill="url(#s2-gold)" opacity="0.25"/>
+          </svg>
+          <div class="label">Navbar (32px)</div>
+          <div class="size-tag">size=32</div>
+        </div>
+
+        <!-- 48px -->
+        <div class="logo-card">
+          <svg viewBox="0 0 200 200" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="s3-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#F9D976"/><stop offset="25%" stop-color="#E8B84B"/>
+                <stop offset="60%" stop-color="#D4A02B"/><stop offset="100%" stop-color="#A67C00"/>
+              </linearGradient>
+              <linearGradient id="s3-copper" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E8A87C"/><stop offset="50%" stop-color="#CD7F32"/><stop offset="100%" stop-color="#A0652A"/>
+              </linearGradient>
+              <linearGradient id="s3-hl" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#F9D976" stop-opacity="0"/><stop offset="40%" stop-color="#F9D976" stop-opacity="0.4"/><stop offset="100%" stop-color="#F9D976" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="s3-glow" x="-10%" y="-10%" width="120%" height="130%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="0" dy="1"/>
+                <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" stroke="url(#s3-gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#s3-glow)"/>
+            <line x1="42" y1="72" x2="158" y2="72" stroke="url(#s3-gold)" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+            <line x1="38" y1="82" x2="162" y2="82" stroke="url(#s3-gold)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="35" y1="92" x2="165" y2="92" stroke="url(#s3-gold)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+            <rect x="30" y="95" width="10" height="88" rx="4" fill="url(#s3-gold)"/>
+            <rect x="32" y="97" width="6" height="84" rx="2" fill="url(#s3-hl)" opacity="0.5"/>
+            <rect x="160" y="95" width="10" height="88" rx="4" fill="url(#s3-gold)"/>
+            <rect x="162" y="97" width="6" height="84" rx="2" fill="url(#s3-hl)" opacity="0.5"/>
+            <rect x="28" y="93" width="14" height="4" rx="2" fill="url(#s3-gold)" opacity="0.8"/>
+            <rect x="158" y="93" width="14" height="4" rx="2" fill="url(#s3-gold)" opacity="0.8"/>
+            <g stroke="url(#s3-copper)" stroke-width="1.5">
+              <line x1="40" y1="110" x2="160" y2="150" opacity="0.45"/><line x1="40" y1="130" x2="160" y2="170" opacity="0.45"/>
+              <line x1="40" y1="150" x2="160" y2="190" opacity="0.35"/><line x1="160" y1="110" x2="40" y2="150" opacity="0.45"/>
+              <line x1="160" y1="130" x2="40" y2="170" opacity="0.45"/><line x1="160" y1="150" x2="40" y2="190" opacity="0.35"/>
+            </g>
+            <g stroke="url(#s3-gold)" stroke-width="1.5">
+              <line x1="40" y1="120" x2="160" y2="120" opacity="0.35"/><line x1="40" y1="140" x2="160" y2="140" opacity="0.35"/>
+              <line x1="40" y1="160" x2="160" y2="160" opacity="0.35"/>
+            </g>
+            <rect x="26" y="183" width="148" height="4" rx="2" fill="url(#s3-gold)" opacity="0.25"/>
+          </svg>
+          <div class="label">Card Header (48px)</div>
+          <div class="size-tag">size=48</div>
+        </div>
+
+        <!-- 120px -->
+        <div class="logo-card">
+          <svg viewBox="0 0 200 200" width="120" height="120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="s4-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#F9D976"/><stop offset="25%" stop-color="#E8B84B"/>
+                <stop offset="60%" stop-color="#D4A02B"/><stop offset="100%" stop-color="#A67C00"/>
+              </linearGradient>
+              <linearGradient id="s4-copper" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E8A87C"/><stop offset="50%" stop-color="#CD7F32"/><stop offset="100%" stop-color="#A0652A"/>
+              </linearGradient>
+              <linearGradient id="s4-hl" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#F9D976" stop-opacity="0"/><stop offset="40%" stop-color="#F9D976" stop-opacity="0.4"/><stop offset="100%" stop-color="#F9D976" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="s4-glow" x="-10%" y="-10%" width="120%" height="130%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="0" dy="1"/>
+                <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" stroke="url(#s4-gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#s4-glow)"/>
+            <line x1="42" y1="72" x2="158" y2="72" stroke="url(#s4-gold)" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+            <line x1="38" y1="82" x2="162" y2="82" stroke="url(#s4-gold)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="35" y1="92" x2="165" y2="92" stroke="url(#s4-gold)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+            <rect x="30" y="95" width="10" height="88" rx="4" fill="url(#s4-gold)"/>
+            <rect x="32" y="97" width="6" height="84" rx="2" fill="url(#s4-hl)" opacity="0.5"/>
+            <rect x="160" y="95" width="10" height="88" rx="4" fill="url(#s4-gold)"/>
+            <rect x="162" y="97" width="6" height="84" rx="2" fill="url(#s4-hl)" opacity="0.5"/>
+            <rect x="28" y="93" width="14" height="4" rx="2" fill="url(#s4-gold)" opacity="0.8"/>
+            <rect x="158" y="93" width="14" height="4" rx="2" fill="url(#s4-gold)" opacity="0.8"/>
+            <g stroke="url(#s4-copper)" stroke-width="1.5">
+              <line x1="40" y1="110" x2="160" y2="150" opacity="0.45"/><line x1="40" y1="130" x2="160" y2="170" opacity="0.45"/>
+              <line x1="40" y1="150" x2="160" y2="190" opacity="0.35"/><line x1="160" y1="110" x2="40" y2="150" opacity="0.45"/>
+              <line x1="160" y1="130" x2="40" y2="170" opacity="0.45"/><line x1="160" y1="150" x2="40" y2="190" opacity="0.35"/>
+            </g>
+            <g stroke="url(#s4-gold)" stroke-width="1.5">
+              <line x1="40" y1="120" x2="160" y2="120" opacity="0.35"/><line x1="40" y1="140" x2="160" y2="140" opacity="0.35"/>
+              <line x1="40" y1="160" x2="160" y2="160" opacity="0.35"/>
+            </g>
+            <rect x="26" y="183" width="148" height="4" rx="2" fill="url(#s4-gold)" opacity="0.25"/>
+          </svg>
+          <div class="label">Hero / Marketing (120px)</div>
+          <div class="size-tag">size=120</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- Background Variants -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Background Variants</div>
+      <div class="logo-grid">
+        <!-- On White (Gold Gradient) -->
+        <div class="logo-card">
+          <svg viewBox="0 0 200 200" width="80" height="80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="b1-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#F9D976"/><stop offset="25%" stop-color="#E8B84B"/>
+                <stop offset="60%" stop-color="#D4A02B"/><stop offset="100%" stop-color="#A67C00"/>
+              </linearGradient>
+              <linearGradient id="b1-copper" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E8A87C"/><stop offset="50%" stop-color="#CD7F32"/><stop offset="100%" stop-color="#A0652A"/>
+              </linearGradient>
+              <linearGradient id="b1-hl" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#F9D976" stop-opacity="0"/><stop offset="40%" stop-color="#F9D976" stop-opacity="0.4"/><stop offset="100%" stop-color="#F9D976" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="b1-glow" x="-10%" y="-10%" width="120%" height="130%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="0" dy="1"/>
+                <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" stroke="url(#b1-gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#b1-glow)"/>
+            <line x1="42" y1="72" x2="158" y2="72" stroke="url(#b1-gold)" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+            <line x1="38" y1="82" x2="162" y2="82" stroke="url(#b1-gold)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="35" y1="92" x2="165" y2="92" stroke="url(#b1-gold)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+            <rect x="30" y="95" width="10" height="88" rx="4" fill="url(#b1-gold)"/>
+            <rect x="32" y="97" width="6" height="84" rx="2" fill="url(#b1-hl)" opacity="0.5"/>
+            <rect x="160" y="95" width="10" height="88" rx="4" fill="url(#b1-gold)"/>
+            <rect x="162" y="97" width="6" height="84" rx="2" fill="url(#b1-hl)" opacity="0.5"/>
+            <rect x="28" y="93" width="14" height="4" rx="2" fill="url(#b1-gold)" opacity="0.8"/>
+            <rect x="158" y="93" width="14" height="4" rx="2" fill="url(#b1-gold)" opacity="0.8"/>
+            <g stroke="url(#b1-copper)" stroke-width="1.5">
+              <line x1="40" y1="110" x2="160" y2="150" opacity="0.45"/><line x1="40" y1="130" x2="160" y2="170" opacity="0.45"/>
+              <line x1="40" y1="150" x2="160" y2="190" opacity="0.35"/><line x1="160" y1="110" x2="40" y2="150" opacity="0.45"/>
+              <line x1="160" y1="130" x2="40" y2="170" opacity="0.45"/><line x1="160" y1="150" x2="40" y2="190" opacity="0.35"/>
+            </g>
+            <g stroke="url(#b1-gold)" stroke-width="1.5">
+              <line x1="40" y1="120" x2="160" y2="120" opacity="0.35"/><line x1="40" y1="140" x2="160" y2="140" opacity="0.35"/>
+              <line x1="40" y1="160" x2="160" y2="160" opacity="0.35"/>
+            </g>
+            <rect x="26" y="183" width="148" height="4" rx="2" fill="url(#b1-gold)" opacity="0.25"/>
+          </svg>
+          <div class="label">On White Background (Gold Gradient)</div>
+          <div class="size-tag">#FAFAFA (default)</div>
+        </div>
+
+        <!-- On Dark (White solid) -->
+        <div class="logo-card logo-card-dark">
+          <svg viewBox="0 0 200 200" width="80" height="80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Inverted white version for dark backgrounds -->
+            <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <line x1="42" y1="72" x2="158" y2="72" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+            <line x1="38" y1="82" x2="162" y2="82" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="35" y1="92" x2="165" y2="92" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+            <rect x="30" y="95" width="10" height="88" rx="4" fill="#FFFFFF"/>
+            <rect x="160" y="95" width="10" height="88" rx="4" fill="#FFFFFF"/>
+            <rect x="28" y="93" width="14" height="4" rx="2" fill="#FFFFFF" opacity="0.8"/>
+            <rect x="158" y="93" width="14" height="4" rx="2" fill="#FFFFFF" opacity="0.8"/>
+            <g opacity="0.35" stroke="#FFFFFF" stroke-width="1.5">
+              <line x1="40" y1="110" x2="160" y2="150"/><line x1="40" y1="130" x2="160" y2="170"/>
+              <line x1="40" y1="150" x2="160" y2="190"/><line x1="160" y1="110" x2="40" y2="150"/>
+              <line x1="160" y1="130" x2="40" y2="170"/><line x1="160" y1="150" x2="40" y2="190"/>
+            </g>
+            <g opacity="0.25" stroke="#FFFFFF" stroke-width="1.5">
+              <line x1="40" y1="120" x2="160" y2="120"/><line x1="40" y1="140" x2="160" y2="140"/>
+              <line x1="40" y1="160" x2="160" y2="160"/>
+            </g>
+            <rect x="26" y="183" width="148" height="4" rx="2" fill="#FFFFFF" opacity="0.2"/>
+          </svg>
+          <div class="label">On Dark Background (White Solid)</div>
+          <div class="size-tag">#1A1A1A · inverted</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- Full Logo with Wordmark -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Full Logo — Icon + Wordmark</div>
+      <div class="logo-grid">
+        <div class="logo-card logo-card-wide">
+          <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; justify-content:center;">
+            <svg viewBox="0 0 200 200" width="80" height="80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="w1-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#F9D976"/><stop offset="25%" stop-color="#E8B84B"/>
+                  <stop offset="60%" stop-color="#D4A02B"/><stop offset="100%" stop-color="#A67C00"/>
+                </linearGradient>
+                <linearGradient id="w1-copper" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#E8A87C"/><stop offset="50%" stop-color="#CD7F32"/><stop offset="100%" stop-color="#A0652A"/>
+                </linearGradient>
+                <linearGradient id="w1-hl" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#F9D976" stop-opacity="0"/><stop offset="40%" stop-color="#F9D976" stop-opacity="0.4"/><stop offset="100%" stop-color="#F9D976" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="w1-glow" x="-10%" y="-10%" width="120%" height="130%">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="0" dy="1"/>
+                  <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+                  <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" stroke="url(#w1-gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#w1-glow)"/>
+              <line x1="42" y1="72" x2="158" y2="72" stroke="url(#w1-gold)" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+              <line x1="38" y1="82" x2="162" y2="82" stroke="url(#w1-gold)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+              <line x1="35" y1="92" x2="165" y2="92" stroke="url(#w1-gold)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+              <rect x="30" y="95" width="10" height="88" rx="4" fill="url(#w1-gold)"/>
+              <rect x="32" y="97" width="6" height="84" rx="2" fill="url(#w1-hl)" opacity="0.5"/>
+              <rect x="160" y="95" width="10" height="88" rx="4" fill="url(#w1-gold)"/>
+              <rect x="162" y="97" width="6" height="84" rx="2" fill="url(#w1-hl)" opacity="0.5"/>
+              <rect x="28" y="93" width="14" height="4" rx="2" fill="url(#w1-gold)" opacity="0.8"/>
+              <rect x="158" y="93" width="14" height="4" rx="2" fill="url(#w1-gold)" opacity="0.8"/>
+              <g stroke="url(#w1-copper)" stroke-width="1.5">
+                <line x1="40" y1="110" x2="160" y2="150" opacity="0.45"/><line x1="40" y1="130" x2="160" y2="170" opacity="0.45"/>
+                <line x1="40" y1="150" x2="160" y2="190" opacity="0.35"/><line x1="160" y1="110" x2="40" y2="150" opacity="0.45"/>
+                <line x1="160" y1="130" x2="40" y2="170" opacity="0.45"/><line x1="160" y1="150" x2="40" y2="190" opacity="0.35"/>
+              </g>
+              <g stroke="url(#w1-gold)" stroke-width="1.5">
+                <line x1="40" y1="120" x2="160" y2="120" opacity="0.35"/><line x1="40" y1="140" x2="160" y2="140" opacity="0.35"/>
+                <line x1="40" y1="160" x2="160" y2="160" opacity="0.35"/>
+              </g>
+              <rect x="26" y="183" width="148" height="4" rx="2" fill="url(#w1-gold)" opacity="0.25"/>
+            </svg>
+            <div style="text-align:left;">
+              <div style="font-size:28px; font-weight:600; color:#1A1A1A; letter-spacing:0.02em;">Wasleen</div>
+              <div style="font-size:12px; color:#D4A02B; letter-spacing:0.15em; margin-top:4px; font-weight:500;">FOLDABLE GARAGE</div>
+            </div>
+          </div>
+          <div class="label" style="margin-top:20px;">Full Logo — Icon + Wordmark</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- Logo Anatomy -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Logo Anatomy</div>
+      <div class="logo-grid">
+        <div class="logo-card logo-card-wide" style="padding: 24px 32px;">
+          <svg viewBox="0 0 200 200" width="100%" height="auto" style="max-width:400px;" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Faded logo in background for context -->
+            <defs>
+              <linearGradient id="a1-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#F9D976"/><stop offset="25%" stop-color="#E8B84B"/>
+                <stop offset="60%" stop-color="#D4A02B"/><stop offset="100%" stop-color="#A67C00"/>
+              </linearGradient>
+              <linearGradient id="a1-copper" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E8A87C"/><stop offset="50%" stop-color="#CD7F32"/><stop offset="100%" stop-color="#A0652A"/>
+              </linearGradient>
+            </defs>
+            <!-- Faded logo elements -->
+            <g opacity="0.2">
+              <path d="M 37,85 L 65,25 L 100,55 L 135,25 L 163,85" stroke="url(#a1-gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <line x1="42" y1="72" x2="158" y2="72" stroke="url(#a1-gold)" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="38" y1="82" x2="162" y2="82" stroke="url(#a1-gold)" stroke-width="3" stroke-linecap="round"/>
+              <rect x="30" y="95" width="10" height="88" rx="4" fill="url(#a1-gold)"/>
+              <rect x="160" y="95" width="10" height="88" rx="4" fill="url(#a1-gold)"/>
+              <g stroke="url(#a1-copper)" stroke-width="1.5">
+                <line x1="40" y1="110" x2="160" y2="150"/><line x1="40" y1="130" x2="160" y2="170"/>
+                <line x1="40" y1="150" x2="160" y2="190"/><line x1="160" y1="110" x2="40" y2="150"/>
+                <line x1="160" y1="130" x2="40" y2="170"/><line x1="160" y1="150" x2="40" y2="190"/>
+              </g>
+              <g stroke="url(#a1-gold)" stroke-width="1.5">
+                <line x1="40" y1="120" x2="160" y2="120"/><line x1="40" y1="140" x2="160" y2="140"/>
+                <line x1="40" y1="160" x2="160" y2="160"/>
+              </g>
+              <rect x="26" y="183" width="148" height="4" rx="2" fill="url(#a1-gold)"/>
+            </g>
+
+            <!-- Annotation labels -->
+            <text x="100" y="15" text-anchor="middle" fill="#D4A02B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="7" font-weight="600" letter-spacing="0.03em">W-SHAPE ROOF</text>
+            <text x="100" y="24" text-anchor="middle" fill="#999" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="5" letter-spacing="0.02em">Two peaks · foldable mechanism</text>
+
+            <text x="100" y="45" text-anchor="middle" fill="#D4A02B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="6" font-weight="600" letter-spacing="0.03em">RAFTERS</text>
+            <text x="100" y="52" text-anchor="middle" fill="#999" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="5" letter-spacing="0.02em">Horizontal support beams</text>
+
+            <text x="100" y="68" text-anchor="middle" fill="#D4A02B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="5" font-weight="600" letter-spacing="0.03em">GRILL / LATTICE</text>
+
+            <!-- Left column label -->
+            <text x="15" y="150" text-anchor="middle" fill="#D4A02B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="6" font-weight="600" letter-spacing="0.03em" transform="rotate(-90, 15, 150)">COLUMN</text>
+            
+            <!-- Right column label -->
+            <text x="185" y="150" text-anchor="middle" fill="#D4A02B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="6" font-weight="600" letter-spacing="0.03em" transform="rotate(90, 185, 150)">COLUMN</text>
+
+            <!-- Base label -->
+            <text x="100" y="197" text-anchor="middle" fill="#999" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="5" letter-spacing="0.02em">BASE PLATFORM</text>
+          </svg>
+          <div class="label">Architectural anatomy — W-shaped roof, horizontal rafters, decorative grill/lattice, two columns, base platform</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- Color & Gradient Spec -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Color Palette — Gold / Copper Gradient</div>
+      <div class="rule-list">
+        <div class="rule">
+          <div class="title"><span class="color-chip" style="background:linear-gradient(180deg, #F9D976, #E8B84B);"></span>Gold Gradient</div>
+          <div class="desc">
+            <code>#F9D976</code> → <code>#E8B84B</code> → <code>#D4A02B</code> → <code>#A67C00</code><br />
+            Vertical gradient applied to W-roof, rafters, and columns.
+          </div>
+        </div>
+        <div class="rule">
+          <div class="title"><span class="color-chip" style="background:linear-gradient(135deg, #E8A87C, #CD7F32);"></span>Copper Accent</div>
+          <div class="desc">
+            <code>#E8A87C</code> → <code>#CD7F32</code> → <code>#A0652A</code><br />
+            Diagonal gradient used for grill/lattice lines.
+          </div>
+        </div>
+        <div class="rule">
+          <div class="title"><span class="color-chip" style="background:#FFFFFF; border-color:#DDD;"></span>Inverted (White)</div>
+          <div class="desc">
+            <code>#FFFFFF</code> solid white for dark backgrounds.<br />
+            All elements rendered as solid white, opacity-based layering preserved.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div style="text-align:center; font-size:11px; color:#999; line-height:1.8;">
+      Logo designed by code · "W-Shape Pergola" concept · Gold/Copper gradient<br />
+      <span style="font-family:monospace;">Logo/wasleen-garage-logo.svg</span> (SVG master) · 
+      <span style="font-family:monospace;">Logo/WasleenGarageLogo.tsx</span> (React component)<br />
+      Wasleen Foldable Garage — foldablegarage.wasleen.com
+    </div>
+
+  </div>
+</body>
+</html>
