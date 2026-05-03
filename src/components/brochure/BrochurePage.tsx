@@ -429,51 +429,38 @@ export function BrochurePage() {
       </section>
 
       {/* ═══ FEATURES HIGHLIGHTS — Engineering Excellence ═══ */}
-      <section className="relative py-24 overflow-hidden bg-gradient-to-b from-bg-primary via-[#0c0e14] to-bg-primary">
-        {/* Mechanism video background (subtle, low-opacity) */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-[0.06] scale-110"
-          >
-            <source src="/videos/foldable-garage-mechanism-video.mp4" type="video/mp4" />
-          </video>
-          {/* Dark overlay over video */}
-          <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/80 via-bg-primary/60 to-bg-primary/80" />
-        </div>
-
-        {/* Animated grid background — light gradient animation */}
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-bg-primary via-[#0a0e1a] to-[#0c0a1a]">
+        {/* Static gradient background — non-animated */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          {/* Static radial gradients */}
           <div
-            className="absolute inset-0 animate-[gridGlowFlow_20s_linear_infinite]"
+            className="absolute inset-0"
             style={{
               background: `
-                radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 20%, rgba(201, 168, 76, 0.04) 0%, transparent 50%)
+                radial-gradient(ellipse at 15% 40%, rgba(201, 168, 76, 0.07) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 60%, rgba(0, 212, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 10%, rgba(201, 168, 76, 0.04) 0%, transparent 40%)
               `,
             }}
           />
-          {/* Grid lines */}
+          {/* Grid lines — subtle & static */}
           <div
-            className="absolute inset-0 opacity-[0.04]"
+            className="absolute inset-0 opacity-[0.035]"
             style={{
               backgroundImage: `
-                linear-gradient(rgba(201, 168, 76, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.3) 1px, transparent 1px)
+                linear-gradient(rgba(201, 168, 76, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.2) 1px, transparent 1px)
               `,
               backgroundSize: '60px 60px',
             }}
           />
         </div>
 
-        {/* Colourful floating orbs */}
-        <div className="absolute top-[10%] left-[5%] w-[300px] h-[300px] bg-accent-cyan/6 rounded-full blur-[100px] animate-[gradientOrbFloat_8s_ease-in-out_infinite]" />
-        <div className="absolute bottom-[15%] right-[8%] w-[350px] h-[350px] bg-accent-violet/6 rounded-full blur-[100px] animate-[gradientOrbFloat_10s_ease-in-out_infinite_1.5s]" />
-        <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[400px] h-[400px] bg-accent-gold/4 rounded-full blur-[120px] animate-[gradientOrbFloat_12s_ease-in-out_infinite_3s]" />
+        {/* Static glow orbs */}
+        <div className="absolute top-[10%] left-[5%] w-[300px] h-[300px] bg-accent-cyan/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-[15%] right-[8%] w-[350px] h-[350px] bg-accent-violet/5 rounded-full blur-[100px]" />
+        <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[400px] h-[400px] bg-accent-gold/3 rounded-full blur-[120px]" />
 
         <Container className="relative z-10">
           <motion.div
