@@ -1,147 +1,129 @@
 import { NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
-import crypto from 'crypto';
-
-/**
- * Verifies that a webhook request genuinely came from Paddle.
- *
- * Paddle sends a `Paddle-Signature` header containing:
- *   ts=<unix_timestamp>;h1=<hmac_hex_digest>
- *
- * We recompute the HMAC-SHA256 of `ts:body` using the webhook secret
- * and compare it against the `h1` value.
- */
-function verifyPaddleSignature(
-  rawBody: string,
-  paddleSignature: string | null,
-  secret: string,
-): boolean {
-  if (!paddleSignature || !secret) return false;
-
-  // Parse the signature header: ts=...;h1=...
-  const parts = paddleSignature.split(';');
-  let ts = '';
-  let h1 = '';
-  for (const part of parts) {
-    const [key, value] = part.split('=');
-    if (key === 'ts') ts = value;
-    if (key === 'h1') h1 = value;
-  }
-  if (!ts || !h1) return false;
-
-  // Recompute the HMAC: timestamp + ':' + raw body
-  const signedPayload = `${ts}:${rawBody}`;
-  const computedHmac = crypto
-    .createHmac('sha256', secret)
-    .update(signedPayload, 'utf8')
-    .digest('hex');
-
-  // Constant-time comparison to prevent timing attacks
-  return crypto.timingSafeEqual(Buffer.from(computedHmac), Buffer.from(h1));
-}
 
 /**
  * POST /api/paddle-webhook
  *
- * Handles Paddle Billing transaction webhook events.
- * Verifies the Paddle-Signature header before processing.
+ * Handles Paddle Classic webhook alerts. Paddle Classic sends form-encoded
+ * POST data with an `alert_name` field identifying the event type.
  *
  * Events handled:
- * - transaction.completed → Mark lead as converted, create order
- * - transaction.past_due  → Mark lead as contacted
- * - transaction.cancelled → Mark lead as lost
+ * - payment_succeeded    → Mark lead as converted, create order record
+ * - payment_refunded     → Mark lead as contacted
  *
- * @see https://developer.paddle.com/webhook-reference/verify-webhooks
+ * @see https://developer.paddle.com/classic/reference/ZG9jOjI1MzUzOTg1-alerts-reference
  */
 export async function POST(request: Request) {
   try {
-    // 1. Read raw body (needed for signature verification)
-    const rawBody = await request.text();
-    const body = JSON.parse(rawBody);
-
-    // 2. Verify the Paddle signature
-    const secret = process.env.PADDLE_WEBHOOK_SECRET;
-    if (!secret) {
-      console.error('PADDLE_WEBHOOK_SECRET is not configured');
-      return NextResponse.json(
-        { error: 'Webhook secret not configured' },
-        { status: 500 },
-      );
+    // Paddle Classic sends form-encoded data, not JSON
+    const formData = await request.formData();
+    const payload: Record<string, string> = {};
+    for (const [key, value] of formData.entries()) {
+      payload[key] = String(value);
     }
 
-    const paddleSignature = request.headers.get('Paddle-Signature');
-    const isValid = verifyPaddleSignature(rawBody, paddleSignature, secret);
+    const alertName = payload.alert_name;
 
-    if (!isValid) {
-      console.error('Paddle webhook: Invalid signature');
+    if (!alertName) {
       return NextResponse.json(
-        { error: 'Invalid signature' },
-        { status: 401 },
-      );
-    }
-
-    // 3. Process the event
-    const { event_type, data } = body;
-
-    if (!event_type || !data) {
-      return NextResponse.json(
-        { error: 'Invalid webhook payload' },
+        { error: 'Invalid webhook payload: missing alert_name' },
         { status: 400 },
       );
     }
 
+    console.log(`Paddle Classic webhook received: ${alertName} (alert_id: ${payload.alert_id})`);
+
     const supabase = await createServerSupabaseClient();
 
-    switch (event_type) {
-      case 'transaction.completed': {
-        const transactionId = data.id;
-        const customData = data.custom_data || {};
+    switch (alertName) {
+      case 'payment_succeeded': {
+        const orderId = payload.order_id;
+        const paymentId = payload.payment_id;
+        const checkoutId = payload.checkout_id;
+        const customerEmail = payload.email;
+        const saleGross = parseFloat(payload.sale_gross || '0');
+        const currency = payload.currency || 'USD';
+        const customConfig = payload.custom_config || '';
+        const productId = payload.product_id;
 
-        // Update lead status
-        if (customData.lead_id) {
+        // Parse config from custom data if present
+        let config: Record<string, unknown> | null = null;
+        try {
+          if (customConfig) {
+            config = JSON.parse(customConfig);
+          }
+        } catch {
+          console.warn('Paddle webhook: Failed to parse custom_config JSON');
+        }
+
+        // Find a matching lead by checkout_id or config
+        let leadId: string | null = null;
+
+        if (config && typeof config === 'object' && 'lead_id' in config) {
+          leadId = config.lead_id as string;
+        }
+
+        if (leadId) {
+          // Update lead status to converted
           await supabase
             .from('leads')
             .update({ status: 'converted' })
-            .eq('id', customData.lead_id);
+            .eq('id', leadId);
 
           // Create order record
           await supabase.from('orders').insert({
-            lead_id: customData.lead_id,
-            paddle_transaction_id: transactionId,
-            total_amount: data.details?.totals?.grand_total
-              ? parseFloat(data.details.totals.grand_total) / 100
-              : 0,
-            currency: data.currency_code || 'AED',
+            lead_id: leadId,
+            paddle_order_id: orderId,
+            paddle_payment_id: paymentId,
+            paddle_checkout_id: checkoutId,
+            paddle_product_id: productId,
+            total_amount: saleGross,
+            currency,
+            customer_email: customerEmail,
+            config: customConfig,
+            status: 'paid',
+          });
+        } else {
+          // No lead_id in custom data — just log the sale
+          console.log(
+            `Paddle sale completed: Order ${orderId}, Payment ${paymentId}, ` +
+            `Amount ${currency} ${saleGross}, Email: ${customerEmail}`,
+          );
+
+          // Still create a minimal order record
+          await supabase.from('orders').insert({
+            paddle_order_id: orderId,
+            paddle_payment_id: paymentId,
+            paddle_checkout_id: checkoutId,
+            paddle_product_id: productId,
+            total_amount: saleGross,
+            currency,
+            customer_email: customerEmail,
+            config: customConfig,
             status: 'paid',
           });
         }
 
-        console.log(`Paddle: Transaction ${transactionId} completed`);
         break;
       }
 
-      case 'transaction.past_due': {
-        if (data.custom_data?.lead_id) {
-          await supabase
-            .from('leads')
-            .update({ status: 'contacted' })
-            .eq('id', data.custom_data.lead_id);
-        }
-        break;
-      }
+      case 'payment_refunded':
+      case 'subscription_payment_refunded': {
+        const refundOrderId = payload.order_id;
+        console.log(`Paddle: Order ${refundOrderId} was refunded`);
 
-      case 'transaction.cancelled': {
-        if (data.custom_data?.lead_id) {
+        // Update order status to refunded
+        if (refundOrderId) {
           await supabase
-            .from('leads')
-            .update({ status: 'lost' })
-            .eq('id', data.custom_data.lead_id);
+            .from('orders')
+            .update({ status: 'refunded' })
+            .eq('paddle_order_id', refundOrderId);
         }
         break;
       }
 
       default:
-        console.log(`Paddle: Unhandled event type: ${event_type}`);
+        console.log(`Paddle: Unhandled alert_name: ${alertName}`);
     }
 
     // Always return 200 to acknowledge receipt

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { calculatePrice, formatPrice } from '@/lib/utils';
 import { pushGTMEvent } from '@/lib/gtm';
+import { openPaddleCheckout } from '@/lib/paddle';
 import type { ProductConfig } from '@/lib/types';
 
 interface CheckoutBuyButtonProps {
@@ -13,8 +14,9 @@ interface CheckoutBuyButtonProps {
 }
 
 /**
- * "Buy Now — AED X" button that creates a custom Paddle transaction
- * with the exact calculated amount and redirects to Paddle checkout.
+ * "Buy Now — $X" button that opens the Paddle Classic checkout overlay
+ * directly in the browser with the exact calculated amount as a price
+ * override. No server-side API call needed.
  */
 export function CheckoutBuyButton({ config, className }: CheckoutBuyButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,25 +43,18 @@ export function CheckoutBuyButton({ config, className }: CheckoutBuyButtonProps)
         hasGlassTint: config.hasGlassTint,
       });
 
-      // Create a custom Paddle transaction with the exact amount
-      const res = await fetch('/api/create-transaction', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ config }),
+      // Open Paddle Classic checkout overlay directly in-browser
+      // Paddle.Checkout.open() handles the payment modal — no redirect needed
+      await openPaddleCheckout({
+        price: totalPrice,
+        customData: {
+          config: JSON.stringify(config),
+        },
+        successUrl: `${window.location.origin}/thank-you`,
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to create transaction');
-      }
-
-      if (!data.checkoutUrl) {
-        throw new Error('No checkout URL returned');
-      }
-
-      // Redirect to Paddle hosted checkout
-      window.location.href = data.checkoutUrl;
+      // Reset loading after checkout modal closes
+      setIsLoading(false);
     } catch (err) {
       console.error('Buy Now error:', err);
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');

@@ -8,6 +8,7 @@ import { StepPersonalDetails } from './StepPersonalDetails';
 import { PriceSummary } from './PriceSummary';
 import { pushGTMEvent } from '@/lib/gtm';
 import { openPaddleCheckout } from '@/lib/paddle';
+import { calculatePrice } from '@/lib/utils';
 import type { ProductConfig, QuoteFormData, ColourOption, RoofType } from '@/lib/types';
 
 const INITIAL_CONFIG: ProductConfig = {
@@ -75,8 +76,9 @@ export function QuoteConfigurator() {
 
       const data = await res.json();
 
-      // Open Paddle checkout with lead and order IDs
+      // Open Paddle Classic checkout with calculated price + lead info
       await openPaddleCheckout({
+        price: calculatePrice(config),
         customData: {
           lead_id: data.leadId,
           order_id: data.orderId || '',
