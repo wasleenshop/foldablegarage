@@ -11,6 +11,7 @@ import { pushGTMEvent } from '@/lib/gtm';
 const PAGE_MESSAGES: Record<string, string> = {
   '/': 'Hello! I\'m interested in the Wasleen Foldable Garage. I was browsing your homepage and would like more information.',
   '/product': 'Hello! I\'d like to know more about the Foldable Premium Garage product — specifications, dimensions, and pricing.',
+  '/checkout': 'Hello! I was configuring my Foldable Garage on the checkout page and have a question before completing my purchase.',
   '/gallery': 'Hello! I was viewing your gallery and would like more details about the installations shown.',
   '/about': 'Hello! I\'d like to learn more about Wasleen and your team.',
   '/contact': 'Hello! I\'d like to get in touch about your foldable garages. Please contact me.',

@@ -14,8 +14,8 @@ import { pushGTMEvent } from '@/lib/gtm';
 const SAMPLE_REVIEWS = [
   {
     id: '1',
-    name: 'Ahmed Al Maktoum',
-    location: 'Dubai, United Arab Emirates',
+    name: 'Ahmed Hassan',
+    location: 'Dubai, UAE',
     nationality: 'Emirati',
     rating: 5,
     text: 'Exceptional quality and craftsmanship. The installation team was professional and completed the project ahead of schedule. The automated system works flawlessly.',
@@ -23,14 +23,14 @@ const SAMPLE_REVIEWS = [
   {
     id: '2',
     name: 'Sarah Johnson',
-    location: 'London, United Kingdom',
+    location: 'London, UK',
     nationality: 'British',
     rating: 5,
     text: 'We installed the Smart system with glass panels. The difference in temperature under the carport is remarkable. Our car stays cool even in peak summer.',
   },
   {
     id: '3',
-    name: 'Khalid Al Saud',
+    name: 'Khalid Al-Rashid',
     location: 'Riyadh, Saudi Arabia',
     nationality: 'Saudi',
     rating: 4,
@@ -38,7 +38,7 @@ const SAMPLE_REVIEWS = [
   },
   {
     id: '4',
-    name: 'Fatima Al Hashimi',
+    name: 'Fatima Al-Mansouri',
     location: 'Doha, Qatar',
     nationality: 'Qatari',
     rating: 5,

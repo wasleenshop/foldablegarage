@@ -35,12 +35,12 @@ export function calculatePrice(config: ProductConfig): number {
 }
 
 /**
- * Formats a number as AED currency.
+ * Formats a number as USD currency.
  */
 export function formatPrice(amount: number): string {
-  return new Intl.NumberFormat('en-AE', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'AED',
+    currency: 'USD',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);

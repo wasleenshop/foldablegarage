@@ -38,11 +38,11 @@ export interface ColourInfo {
 // ─── Pricing ───────────────────────────────────────
 
 export interface PricingConfig {
-  polycarbonateRate: number; // 1050 AED/sqm
-  glassRate: number; // 1530 AED/sqm
-  automaticSystemPrice: number; // 10283 AED
-  rollerShutterPrice: number; // 6620 AED
-  glassTintRate: number; // 552 AED/sqm
+  polycarbonateRate: number; // 286 USD/sqm
+  glassRate: number; // 417 USD/sqm
+  automaticSystemPrice: number; // 2802 USD
+  rollerShutterPrice: number; // 1804 USD
+  glassTintRate: number; // 150 USD/sqm
 }
 
 // ─── Quote / Lead ──────────────────────────────────

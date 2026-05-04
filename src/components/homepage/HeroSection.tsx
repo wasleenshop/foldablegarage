@@ -162,7 +162,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          Architectural-grade retractable carports for the UAE — engineered from 6063-T5 aluminium with precision automation.
+          Architectural-grade retractable carports — engineered from 6063-T5 aluminium with precision automation.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -172,6 +172,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.0 }}
         >
+          <Button variant="primary" size="lg" href="/checkout">
+            Buy Now
+          </Button>
           <Button variant="primary" size="lg" href="/quote" onClick={handleQuoteClick}>
             Request a Consultation
           </Button>

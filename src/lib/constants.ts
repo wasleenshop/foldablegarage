@@ -51,11 +51,11 @@ export const COLOUR_MAP: Record<ColourOption, ColourInfo> = Object.fromEntries(
 // ─── Pricing ───────────────────────────────────────
 
 export const PRICING: PricingConfig = {
-  polycarbonateRate: 1050,
-  glassRate: 1530,
-  automaticSystemPrice: 10283,
-  rollerShutterPrice: 6620,
-  glassTintRate: 552,
+  polycarbonateRate: 286,
+  glassRate: 417,
+  automaticSystemPrice: 2802,
+  rollerShutterPrice: 1804,
+  glassTintRate: 150,
 };
 
 // ─── Dimensions ────────────────────────────────────
@@ -172,13 +172,13 @@ export const PRICING_TIERS = [
   {
     id: 'manual',
     title: 'Manual',
-    priceFrom: '12,000',
+    priceFrom: '3,270',
     features: ['Manual retraction system', 'Polycarbonate panels', '5-year warranty', 'Free shipping'],
   },
   {
     id: 'automatic',
     title: 'Smart',
-    priceFrom: '25,000',
+    priceFrom: '6,812',
     popular: true as const,
     features: ['Automatic retraction system', 'Polycarbonate panels', '5-year warranty', 'Smart sensor ready'],
   },

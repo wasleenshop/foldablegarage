@@ -22,7 +22,7 @@ export function Footer() {
       </div>
 
       <Container className="relative z-10 py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           {/* Column 1 — Logo & Description */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -118,6 +118,65 @@ export function Footer() {
               </li>
               <li className="text-sm text-text-tertiary">Dubai, United Arab Emirates</li>
               <li className="text-sm text-text-tertiary">Sat–Thu: 9AM – 7PM</li>
+            </ul>
+          </div>
+
+          {/* Column 5 — Our Services */}
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-primary">
+              Our Services
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="https://www.wasleen.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-text-secondary transition-colors hover:text-accent-gold"
+                >
+                  Interior & Fitout
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.pergolas.wasleen.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-text-secondary transition-colors hover:text-accent-gold"
+                >
+                  Premium Pergolas
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.shop.wasleen.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-text-secondary transition-colors hover:text-accent-gold"
+                >
+                  Pergola Shop
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.wasafseo.wasleen.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-text-secondary transition-colors hover:text-accent-gold"
+                >
+                  WasafSEO App
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.kavyfin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-text-secondary transition-colors hover:text-accent-gold"
+                >
+                  KavyFin AI
+                </a>
+              </li>
             </ul>
           </div>
         </div>

@@ -61,8 +61,8 @@ export async function POST(request: Request) {
               price: {
                 description: `Wasleen Foldable Garage (${config.width}×${config.length}m — ${config.roofType === 'glass' ? 'Glass' : 'Polycarbonate'})`,
                 unit_price: {
-                  amount: String(Math.round(amount * 100)), // Paddle expects cents (fils)
-                  currency_code: 'AED',
+                  amount: String(Math.round(amount * 100)), // Paddle expects cents
+                  currency_code: 'USD',
                 },
                 quantity: {
                   maximum: 1,

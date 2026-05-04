@@ -50,9 +50,9 @@ export function Navbar() {
         <nav className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-4 md:px-6 lg:px-8">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2" aria-label="Wasleen Foldable Garage — Home">
-            <WasleenGarageLogo size={36} inverted />
-            <span className="hidden text-sm font-semibold text-white sm:inline">
-              Wasleen
+            <WasleenGarageLogo size={36} />
+            <span className="hidden bg-gradient-to-r from-[#F9D976] via-[#E8B84B] to-[#A67C00] bg-clip-text text-sm font-semibold text-transparent sm:inline">
+              Wasleen Pergolas
             </span>
           </Link>
 
