@@ -1,62 +1,107 @@
 import { NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 
-/**
- * POST /api/paddle-webhook
- *
- * Handles Paddle Classic webhook alerts. Paddle Classic sends form-encoded
- * POST data with an `alert_name` field identifying the event type.
- *
- * Events handled:
- * - payment_succeeded    → Mark lead as converted, create order record
- * - payment_refunded     → Mark lead as contacted
- *
- * @see https://developer.paddle.com/classic/reference/ZG9jOjI1MzUzOTg1-alerts-reference
- */
+// ═══════════════════════════════════════════════════
+// Paddle Billing — Webhook Handler
+// ═══════════════════════════════════════════════════
+//
+// Paddle Billing sends webhook events as JSON POST payloads.
+// Each event has an `event_type` and `data` object.
+//
+// Events handled:
+//   transaction.completed    → Mark lead as converted, create order
+//   transaction.paid         → Same as completed (payment confirmed)
+//   transaction.canceled     → Mark order as cancelled
+//
+// @see https://developer.paddle.com/webhooks/overview
+// ═══════════════════════════════════════════════════
+
+interface PaddleBillingWebhook {
+  event_id: string;
+  event_type: string;
+  occurred_at: string;
+  data: {
+    id: string;
+    status: string;
+    customer?: {
+      id: string;
+      email?: string;
+      name?: string;
+    };
+    items?: Array<{
+      price: {
+        id: string;
+        product_id: string;
+      };
+      quantity: number;
+    }>;
+    details?: {
+      totals?: {
+        total: string;
+        currency_code: string;
+      };
+      line_items?: Array<{
+        product: {
+          id: string;
+        };
+        total: string;
+      }>;
+    };
+    custom_data?: Record<string, string>;
+    created_at: string;
+    updated_at: string;
+  };
+}
+
 export async function POST(request: Request) {
   try {
-    // Paddle Classic sends form-encoded data, not JSON
-    const formData = await request.formData();
-    const payload: Record<string, string> = {};
-    for (const [key, value] of formData.entries()) {
-      payload[key] = String(value);
-    }
+    // Paddle Billing sends JSON payloads (not form-encoded like Classic)
+    const payload: PaddleBillingWebhook = await request.json();
 
-    const alertName = payload.alert_name;
+    const { event_type, data: transaction } = payload;
 
-    if (!alertName) {
+    if (!event_type) {
       return NextResponse.json(
-        { error: 'Invalid webhook payload: missing alert_name' },
+        { error: 'Invalid webhook payload: missing event_type' },
         { status: 400 },
       );
     }
 
-    console.log(`Paddle Classic webhook received: ${alertName} (alert_id: ${payload.alert_id})`);
+    console.log(
+      `[Paddle Billing] Webhook received: ${event_type} (txn: ${transaction?.id})`,
+    );
 
     const supabase = await createServerSupabaseClient();
 
-    switch (alertName) {
-      case 'payment_succeeded': {
-        const orderId = payload.order_id;
-        const paymentId = payload.payment_id;
-        const checkoutId = payload.checkout_id;
-        const customerEmail = payload.email;
-        const saleGross = parseFloat(payload.sale_gross || '0');
-        const currency = payload.currency || 'USD';
-        const customConfig = payload.custom_config || '';
-        const productId = payload.product_id;
+    switch (event_type) {
+      case 'transaction.completed':
+      case 'transaction.paid': {
+        const transactionId = transaction.id;
+        const customerEmail = transaction.customer?.email;
+        const customerName = transaction.customer?.name;
+        const totalAmount = transaction.details?.totals?.total
+          ? parseFloat(transaction.details.totals.total)
+          : 0;
+        const currency =
+          transaction.details?.totals?.currency_code || 'USD';
+        const customConfig =
+          transaction.custom_data?.config || '';
+        const calculatedPrice =
+          transaction.custom_data?.calculated_price || '';
 
-        // Parse config from custom data if present
+        // Parse config from custom data
         let config: Record<string, unknown> | null = null;
         try {
           if (customConfig) {
             config = JSON.parse(customConfig);
           }
         } catch {
-          console.warn('Paddle webhook: Failed to parse custom_config JSON');
+          console.warn(
+            '[Paddle Billing] Failed to parse custom_data.config JSON',
+          );
         }
 
-        // Find a matching lead by checkout_id or config
+        // Try to find a matching lead
         let leadId: string | null = null;
 
         if (config && typeof config === 'object' && 'lead_id' in config) {
@@ -73,33 +118,31 @@ export async function POST(request: Request) {
           // Create order record
           await supabase.from('orders').insert({
             lead_id: leadId,
-            paddle_order_id: orderId,
-            paddle_payment_id: paymentId,
-            paddle_checkout_id: checkoutId,
-            paddle_product_id: productId,
-            total_amount: saleGross,
+            paddle_transaction_id: transactionId,
+            total_amount: totalAmount,
             currency,
             customer_email: customerEmail,
+            customer_name: customerName,
             config: customConfig,
+            calculated_price: calculatedPrice,
             status: 'paid',
           });
         } else {
           // No lead_id in custom data — just log the sale
           console.log(
-            `Paddle sale completed: Order ${orderId}, Payment ${paymentId}, ` +
-            `Amount ${currency} ${saleGross}, Email: ${customerEmail}`,
+            `[Paddle Billing] Sale completed: Txn ${transactionId}, ` +
+              `Amount ${currency} ${totalAmount}, Email: ${customerEmail}`,
           );
 
           // Still create a minimal order record
           await supabase.from('orders').insert({
-            paddle_order_id: orderId,
-            paddle_payment_id: paymentId,
-            paddle_checkout_id: checkoutId,
-            paddle_product_id: productId,
-            total_amount: saleGross,
+            paddle_transaction_id: transactionId,
+            total_amount: totalAmount,
             currency,
             customer_email: customerEmail,
+            customer_name: customerName,
             config: customConfig,
+            calculated_price: calculatedPrice,
             status: 'paid',
           });
         }
@@ -107,29 +150,38 @@ export async function POST(request: Request) {
         break;
       }
 
-      case 'payment_refunded':
-      case 'subscription_payment_refunded': {
-        const refundOrderId = payload.order_id;
-        console.log(`Paddle: Order ${refundOrderId} was refunded`);
+      case 'transaction.canceled':
+      case 'transaction.past_due': {
+        const cancelledTxnId = transaction.id;
+        console.log(
+          `[Paddle Billing] Transaction ${cancelledTxnId} was ${event_type}`,
+        );
 
-        // Update order status to refunded
-        if (refundOrderId) {
+        // Update order status
+        if (cancelledTxnId) {
           await supabase
             .from('orders')
-            .update({ status: 'refunded' })
-            .eq('paddle_order_id', refundOrderId);
+            .update({
+              status:
+                event_type === 'transaction.canceled'
+                  ? 'cancelled'
+                  : 'pending',
+            })
+            .eq('paddle_transaction_id', cancelledTxnId);
         }
         break;
       }
 
       default:
-        console.log(`Paddle: Unhandled alert_name: ${alertName}`);
+        console.log(
+          `[Paddle Billing] Unhandled event_type: ${event_type}`,
+        );
     }
 
     // Always return 200 to acknowledge receipt
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error('Paddle webhook error:', error);
+    console.error('[Paddle Billing] Webhook error:', error);
     return NextResponse.json(
       { error: 'Webhook processing failed' },
       { status: 500 },

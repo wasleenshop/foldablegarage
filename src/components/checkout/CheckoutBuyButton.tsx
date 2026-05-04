@@ -14,9 +14,9 @@ interface CheckoutBuyButtonProps {
 }
 
 /**
- * "Buy Now — $X" button that opens the Paddle Classic checkout overlay
- * directly in the browser with the exact calculated amount as a price
- * override. No server-side API call needed.
+ * "Buy Now — $X" button that:
+ * 1. Calls the server-side /api/create-transaction to create a Paddle Billing transaction
+ * 2. Opens the Paddle Checkout overlay with the returned transaction ID
  */
 export function CheckoutBuyButton({ config, className }: CheckoutBuyButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,21 +43,19 @@ export function CheckoutBuyButton({ config, className }: CheckoutBuyButtonProps)
         hasGlassTint: config.hasGlassTint,
       });
 
-      // Open Paddle Classic checkout overlay directly in-browser
-      // Paddle.Checkout.open() handles the payment modal — no redirect needed
+      // Open Paddle Billing checkout via server-side transaction
       await openPaddleCheckout({
-        price: totalPrice,
-        customData: {
-          config: JSON.stringify(config),
-        },
-        successUrl: `${window.location.origin}/thank-you`,
+        config: config as unknown as Record<string, unknown>,
+        totalPrice,
       });
 
       // Reset loading after checkout modal closes
       setIsLoading(false);
     } catch (err) {
       console.error('Buy Now error:', err);
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      const message =
+        err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      setError(message);
       setIsLoading(false);
     }
   }, [config, totalPrice, isLoading]);

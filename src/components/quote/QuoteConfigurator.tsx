@@ -76,14 +76,12 @@ export function QuoteConfigurator() {
 
       const data = await res.json();
 
-      // Open Paddle Classic checkout with calculated price + lead info
+      // Open Paddle Billing checkout via server-side transaction
       await openPaddleCheckout({
-        price: calculatePrice(config),
-        customData: {
-          lead_id: data.leadId,
-          order_id: data.orderId || '',
-        },
-        successUrl: `${window.location.origin}/thank-you?orderId=${data.orderId || ''}`,
+        config: config as unknown as Record<string, unknown>,
+        totalPrice: calculatePrice(config),
+        customerEmail: form.email,
+        customerName: form.fullName,
       });
     } catch {
       // Fallback: redirect to thank-you page
