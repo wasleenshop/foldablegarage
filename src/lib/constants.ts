@@ -120,6 +120,7 @@ export const PROPERTY_TYPES = ['Villa', 'Apartment', 'Commercial', 'Other'] as c
 
 export const NAV_LINKS = [
   { label: 'Product', href: '/product' },
+  { label: 'Checkout', href: '/checkout' },
   { label: 'Brochure', href: '/brochure' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'About', href: '/about' },

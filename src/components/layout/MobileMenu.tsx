@@ -70,7 +70,7 @@ export function MobileMenu({ onClose }: MobileMenuProps) {
         </nav>
 
         {/* CTA */}
-        <div className="border-t border-border-subtle px-6 py-6">
+        <div className="border-t border-border-subtle space-y-3 px-6 py-6">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -78,6 +78,21 @@ export function MobileMenu({ onClose }: MobileMenuProps) {
           >
             <Button
               variant="primary"
+              size="lg"
+              className="w-full"
+              href="/checkout"
+              onClick={onClose}
+            >
+              Buy Now
+            </Button>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+          >
+            <Button
+              variant="outline"
               size="lg"
               className="w-full"
               href="/quote"

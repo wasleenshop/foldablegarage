@@ -54,6 +54,29 @@ export default function ProductPage() {
       {/* Hero with image gallery + product info */}
       <ProductHero />
 
+      {/* Buy Now CTA strip */}
+      <section className="border-y border-border-subtle bg-bg-secondary">
+        <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-6 px-4 py-6 md:px-6 lg:px-8">
+          <div>
+            <p className="text-sm text-text-secondary">Ready to purchase?</p>
+            <p className="font-sans text-lg font-semibold text-text-primary">
+              Get your exact price in seconds
+            </p>
+          </div>
+          <a
+            href="/checkout"
+            className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-accent-gold px-6 py-3 text-[0.9375rem] font-semibold text-bg-primary transition-all duration-200 hover:bg-accent-gold-hover"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 01-8 0" />
+            </svg>
+            Buy Now — from AED 33,600
+          </a>
+        </div>
+      </section>
+
       {/* Key specs strip (4 columns) */}
       <TechSpecs />
 

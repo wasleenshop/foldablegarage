@@ -21,7 +21,11 @@ export type GTMEvent =
   | 'abandoned_quote'
   | 'spec_downloaded'
   | 'video_played'
-  | 'brochure_downloaded';
+  | 'brochure_downloaded'
+  | 'checkout_viewed'
+  | 'config_updated'
+  | 'checkout_started'
+  | 'purchase_completed';
 
 /**
  * Pushes an event to the GTM dataLayer.

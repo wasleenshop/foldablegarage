@@ -70,8 +70,11 @@ export function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:block">
-            <Button variant="primary" size="sm" href="/quote">
+          <div className="hidden items-center gap-3 md:flex">
+            <Button variant="primary" size="sm" href="/checkout">
+              Buy Now
+            </Button>
+            <Button variant="outline" size="sm" href="/quote">
               Get a Quote
             </Button>
           </div>
