@@ -61,9 +61,10 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!PADDLE_API_KEY) {
+    if (!PADDLE_API_KEY || PADDLE_API_KEY.trim().length === 0) {
       console.error(
-        'PADDLE_API_KEY is not configured. Create-transaction will fail.',
+        '[Paddle Debug] PADDLE_API_KEY is empty or whitespace-only. Length:',
+        PADDLE_API_KEY.length,
       );
       return NextResponse.json(
         {
@@ -73,6 +74,15 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+
+    // Log masked key to verify what's being used
+    const maskedKey =
+      PADDLE_API_KEY.length > 10
+        ? PADDLE_API_KEY.substring(0, 8) + '...' + PADDLE_API_KEY.slice(-4)
+        : '(too short)';
+    console.log(
+      `[Paddle Debug] PADDLE_API_KEY length: ${PADDLE_API_KEY.length}, masked: ${maskedKey}, whitespace at ends: ${PADDLE_API_KEY !== PADDLE_API_KEY.trim()}`,
+    );
 
     // ─── Create Transaction via Paddle Billing API ───
 
